@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/murkrow/VMtranslator/src/Headers/TranslationTable.h
+stdio.h
+-
+
+/home/murkrow/VMtranslator/src/Headers/Utils.h
+stdio.h
+/home/murkrow/VMtranslator/src/Headers/stdio.h
+
+/home/murkrow/VMtranslator/src/TranslationTable.c
+Headers/TranslationTable.h
+/home/murkrow/VMtranslator/src/Headers/TranslationTable.h
+stdio.h
+-
+string.h
+-
+stdlib.h
+-
+Headers/Utils.h
+/home/murkrow/VMtranslator/src/Headers/Utils.h
+
