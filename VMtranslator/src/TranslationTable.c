@@ -8,7 +8,43 @@
 #include <stdlib.h>
 #include "Headers/Utils.h"
 
-const char dToStack[] = "@SP\nA=M\nM=D\n@SP\nM=M+1";
+//Base asm instructions to put op1 in D and op2 in M
+const char getOperands[] = "@SP\n"
+                      "A=M-1\n"
+                      "A=A-1\n"
+                      "D=M\n"
+                      "@SP\n"
+                      "A=M\n"
+                      "A=A-1";
+
+//Base asm instructions to put op1 in D
+const char getOperand[] = "@SP\n"
+                           "A=M-1\n"
+                           "D=M\n";
+
+//Base asm instructions to put the value of register D on the stack (2 slots above)
+const char resultOnStack[] = "@SP  \n"
+                           "A=M  \n"
+                           "A=A-1  \n"
+                           "A=A-1  \n"
+                           "M=D  \n"
+                           "@SP  \n"
+                           "M=M-1 ";
+
+//Base asm instructions to replace value indexed by SP with D register value
+const char resultOnValue[] = "@SP  \n"
+                             "A=M  \n"
+                             "A=A-1  \n"
+                             "M=D  \n";
+
+//Comparison
+const char comparisonOperation[] = "D=0\n"
+                                   "@END\n"
+                                   "0;JMP\n"
+                                   "(IF)\n"
+                                  "D=-1\n"
+                                  "(END)";
+
 const int maxInstructionLength = 900;
 
 //Receives instruction and string array and returns an index in that array if the instruction starts with any of the strings present
@@ -128,26 +164,7 @@ void translatePush(char instr[], char output[])
         sprintf(output, "@%s\nD=A\n", index);
 
     //Create full instruction
-    strcat(output, dToStack);
-}
-
-//Logic and Arithmetic translations
-void translateAdd(char output[]){
-    strcpy(output,"@SP\n"
-                  "A=M-1\n"
-                  "D=M\n"
-                  "@SP\n"
-                  "A=M\n"
-                  "A=A-1\n"
-                  "A=A-1\n"
-                  "D=D+M\n"
-                  "@SP\n"
-                  "A=M\n"
-                  "A=A-1\n"
-                  "A=A-1\n"
-                  "M=D\n"
-                  "@SP\n"
-                  "M=M-1");
+    strcat(output, "@SP\nA=M\nM=D\n@SP\nM=M+1");
 }
 
 //Init file stream with informations such as setting SP to 256
@@ -187,8 +204,27 @@ void decodeInstruction(char instr[], FILE *outputFile) {
 
     //Decode instruction
     char translated[maxInstructionLength];
-    if(instrType==0)
-        translateAdd(translated);
+    if(instrType==0) //Add
+        sprintf(translated,"%s\nD=D+M\n%s",getOperands,resultOnStack);
+    if(instrType==1) //Sub
+        sprintf(translated,"%s\nD=D-M\n%s",getOperands,resultOnStack);
+    if(instrType==2) //Neg
+        sprintf(translated,"%s\nD=!D\nD=D+1\n%s",getOperand,resultOnValue);
+    if(instrType==3) //Eq
+        sprintf(translated,"%s\nD=D-M\n@IF\nD;JEQ\n%s\n%s",getOperands,comparisonOperation,resultOnStack);
+    if(instrType==4) //Gt
+        sprintf(translated,"%s\nD=D-M\n@IF\nD;JGT\n%s\n%s",getOperands,comparisonOperation,resultOnStack);
+    if(instrType==5) //Lt
+        sprintf(translated,"%s\nD=D-M\n@IF\nD;JLT\n%s\n%s",getOperands,comparisonOperation,resultOnStack);
+    if(instrType==6) //And
+        sprintf(translated,"%s\nD=D&M\n%s",getOperands,resultOnStack);
+    if(instrType==7) //Or
+        sprintf(translated,"%s\nD=D|M\n%s",getOperands,resultOnStack);
+    if(instrType==8) //Not
+        sprintf(translated,"%s\nD=!D\n%s",getOperand,resultOnValue);
+
+    //POP
+
     if(instrType == 10)
         translatePush(instr, translated);
 

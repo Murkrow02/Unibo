@@ -8,9 +8,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/murkrow/VMtranslator/src/TranslationTable.c" "/home/murkrow/VMtranslator/src/cmake-build-debug/CMakeFiles/src.dir/TranslationTable.c.o"
-  "/home/murkrow/VMtranslator/src/Utils.c" "/home/murkrow/VMtranslator/src/cmake-build-debug/CMakeFiles/src.dir/Utils.c.o"
-  "/home/murkrow/VMtranslator/src/main.c" "/home/murkrow/VMtranslator/src/cmake-build-debug/CMakeFiles/src.dir/main.c.o"
+  "/home/murkrow/repo/Unibo/VMtranslator/src/TranslationTable.c" "/home/murkrow/repo/Unibo/VMtranslator/src/cmake-build-debug/CMakeFiles/src.dir/TranslationTable.c.o"
+  "/home/murkrow/repo/Unibo/VMtranslator/src/Utils.c" "/home/murkrow/repo/Unibo/VMtranslator/src/cmake-build-debug/CMakeFiles/src.dir/Utils.c.o"
+  "/home/murkrow/repo/Unibo/VMtranslator/src/main.c" "/home/murkrow/repo/Unibo/VMtranslator/src/cmake-build-debug/CMakeFiles/src.dir/main.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

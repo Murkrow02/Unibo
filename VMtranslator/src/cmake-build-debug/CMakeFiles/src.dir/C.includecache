@@ -6,17 +6,17 @@
 
 #IncludeRegexTransform: 
 
-/home/murkrow/VMtranslator/src/Headers/TranslationTable.h
+/home/murkrow/repo/Unibo/VMtranslator/src/Headers/TranslationTable.h
 stdio.h
 -
 
-/home/murkrow/VMtranslator/src/Headers/Utils.h
+/home/murkrow/repo/Unibo/VMtranslator/src/Headers/Utils.h
 stdio.h
-/home/murkrow/VMtranslator/src/Headers/stdio.h
+/home/murkrow/repo/Unibo/VMtranslator/src/Headers/stdio.h
 
-/home/murkrow/VMtranslator/src/TranslationTable.c
+/home/murkrow/repo/Unibo/VMtranslator/src/TranslationTable.c
 Headers/TranslationTable.h
-/home/murkrow/VMtranslator/src/Headers/TranslationTable.h
+/home/murkrow/repo/Unibo/VMtranslator/src/Headers/TranslationTable.h
 stdio.h
 -
 string.h
@@ -24,5 +24,5 @@ string.h
 stdlib.h
 -
 Headers/Utils.h
-/home/murkrow/VMtranslator/src/Headers/Utils.h
+/home/murkrow/repo/Unibo/VMtranslator/src/Headers/Utils.h
 

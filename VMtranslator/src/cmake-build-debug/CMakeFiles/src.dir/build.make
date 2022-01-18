@@ -53,10 +53,10 @@ RM = /home/murkrow/Software/clion-2021.2.3/bin/cmake/linux/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/murkrow/VMtranslator/src
+CMAKE_SOURCE_DIR = /home/murkrow/repo/Unibo/VMtranslator/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/murkrow/VMtranslator/src/cmake-build-debug
+CMAKE_BINARY_DIR = /home/murkrow/repo/Unibo/VMtranslator/src/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/src.dir/depend.make
@@ -68,42 +68,42 @@ include CMakeFiles/src.dir/flags.make
 
 CMakeFiles/src.dir/main.c.o: CMakeFiles/src.dir/flags.make
 CMakeFiles/src.dir/main.c.o: ../main.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/murkrow/VMtranslator/src/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/src.dir/main.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/src.dir/main.c.o -c /home/murkrow/VMtranslator/src/main.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/murkrow/repo/Unibo/VMtranslator/src/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/src.dir/main.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/src.dir/main.c.o -c /home/murkrow/repo/Unibo/VMtranslator/src/main.c
 
 CMakeFiles/src.dir/main.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/src.dir/main.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/murkrow/VMtranslator/src/main.c > CMakeFiles/src.dir/main.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/murkrow/repo/Unibo/VMtranslator/src/main.c > CMakeFiles/src.dir/main.c.i
 
 CMakeFiles/src.dir/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/src.dir/main.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/murkrow/VMtranslator/src/main.c -o CMakeFiles/src.dir/main.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/murkrow/repo/Unibo/VMtranslator/src/main.c -o CMakeFiles/src.dir/main.c.s
 
 CMakeFiles/src.dir/TranslationTable.c.o: CMakeFiles/src.dir/flags.make
 CMakeFiles/src.dir/TranslationTable.c.o: ../TranslationTable.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/murkrow/VMtranslator/src/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/src.dir/TranslationTable.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/src.dir/TranslationTable.c.o -c /home/murkrow/VMtranslator/src/TranslationTable.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/murkrow/repo/Unibo/VMtranslator/src/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/src.dir/TranslationTable.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/src.dir/TranslationTable.c.o -c /home/murkrow/repo/Unibo/VMtranslator/src/TranslationTable.c
 
 CMakeFiles/src.dir/TranslationTable.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/src.dir/TranslationTable.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/murkrow/VMtranslator/src/TranslationTable.c > CMakeFiles/src.dir/TranslationTable.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/murkrow/repo/Unibo/VMtranslator/src/TranslationTable.c > CMakeFiles/src.dir/TranslationTable.c.i
 
 CMakeFiles/src.dir/TranslationTable.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/src.dir/TranslationTable.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/murkrow/VMtranslator/src/TranslationTable.c -o CMakeFiles/src.dir/TranslationTable.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/murkrow/repo/Unibo/VMtranslator/src/TranslationTable.c -o CMakeFiles/src.dir/TranslationTable.c.s
 
 CMakeFiles/src.dir/Utils.c.o: CMakeFiles/src.dir/flags.make
 CMakeFiles/src.dir/Utils.c.o: ../Utils.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/murkrow/VMtranslator/src/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/src.dir/Utils.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/src.dir/Utils.c.o -c /home/murkrow/VMtranslator/src/Utils.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/murkrow/repo/Unibo/VMtranslator/src/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/src.dir/Utils.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/src.dir/Utils.c.o -c /home/murkrow/repo/Unibo/VMtranslator/src/Utils.c
 
 CMakeFiles/src.dir/Utils.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/src.dir/Utils.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/murkrow/VMtranslator/src/Utils.c > CMakeFiles/src.dir/Utils.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/murkrow/repo/Unibo/VMtranslator/src/Utils.c > CMakeFiles/src.dir/Utils.c.i
 
 CMakeFiles/src.dir/Utils.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/src.dir/Utils.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/murkrow/VMtranslator/src/Utils.c -o CMakeFiles/src.dir/Utils.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/murkrow/repo/Unibo/VMtranslator/src/Utils.c -o CMakeFiles/src.dir/Utils.c.s
 
 # Object files for target src
 src_OBJECTS = \
@@ -119,7 +119,7 @@ src: CMakeFiles/src.dir/TranslationTable.c.o
 src: CMakeFiles/src.dir/Utils.c.o
 src: CMakeFiles/src.dir/build.make
 src: CMakeFiles/src.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/murkrow/VMtranslator/src/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C executable src"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/murkrow/repo/Unibo/VMtranslator/src/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C executable src"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/src.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -131,6 +131,6 @@ CMakeFiles/src.dir/clean:
 .PHONY : CMakeFiles/src.dir/clean
 
 CMakeFiles/src.dir/depend:
-	cd /home/murkrow/VMtranslator/src/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/murkrow/VMtranslator/src /home/murkrow/VMtranslator/src /home/murkrow/VMtranslator/src/cmake-build-debug /home/murkrow/VMtranslator/src/cmake-build-debug /home/murkrow/VMtranslator/src/cmake-build-debug/CMakeFiles/src.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/murkrow/repo/Unibo/VMtranslator/src/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/murkrow/repo/Unibo/VMtranslator/src /home/murkrow/repo/Unibo/VMtranslator/src /home/murkrow/repo/Unibo/VMtranslator/src/cmake-build-debug /home/murkrow/repo/Unibo/VMtranslator/src/cmake-build-debug /home/murkrow/repo/Unibo/VMtranslator/src/cmake-build-debug/CMakeFiles/src.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/src.dir/depend
 
