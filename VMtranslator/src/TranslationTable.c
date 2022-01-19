@@ -37,15 +37,9 @@ const char resultOnValue[] = "@SP  \n"
                              "A=A-1  \n"
                              "M=D  \n";
 
-//Comparison
-const char comparisonOperation[] = "D=0\n"
-                                   "@END\n"
-                                   "0;JMP\n"
-                                   "(IF)\n"
-                                  "D=-1\n"
-                                  "(END)";
-
 const int maxInstructionLength = 900;
+
+char fileName[200];
 
 //Receives instruction and string array and returns an index in that array if the instruction starts with any of the strings present
 int indexInStringArray(const char instr[], char *arr[]){
@@ -154,8 +148,8 @@ void translatePush(char instr[], char output[])
         printError("L'argomento non è valido");
 
     //Static
-    if(segment == 0) //Prendi da indirizzo di memoria[index]
-        sprintf(output, "@%s\nD=M\n", index);
+    if(segment == 0)
+        sprintf(output, "@%s.%s\nD=M\n", fileName , index);
     //Local and argument
     else if(segment == 1 || segment == 2)
         sprintf(output, "@%d\nD=M\n@%s\nA=A+D\nD=M\n", segment, index); //Prendi da indirizzo di local o argument + argomento
@@ -165,6 +159,52 @@ void translatePush(char instr[], char output[])
 
     //Create full instruction
     strcat(output, "@SP\nA=M\nM=D\n@SP\nM=M+1");
+}
+
+/*
+ Pop value into desired segment:
+ 0: static
+ 1: local
+ 2: argument
+ 3: constant
+ */
+void translatePop(char instr[], char output[])
+{
+    int segment; //Segment index (0,1,2,3)
+    char index[15]; //Argument index or value if const
+
+    //Detect which segment to use
+    decodePushPop(instr, &segment, index);
+
+    //Security checks
+    if(segment == -1 || segment == 3) //Check if segment is valid
+        printError("Il segmento indicato non è valido");
+    //Check if index is a number
+    if(isNumber(index) == 0)
+        printError("L'argomento non è valido");
+
+    //Put value from stack into D register
+    char getFromStack[] = "@SP\nA=M-1\nD=M";
+
+    //Static
+    if(segment == 0)
+        sprintf(output, "%s\n@%s.%s\nM=D\n", getFromStack, fileName, index);
+    //Local and argument
+    else if(segment == 1 || segment == 2)
+    {
+        sprintf(output,"%s\n@%d\nA=M\n",getFromStack,segment);
+
+        //Increase pointer offset based on index
+        for (int i = 0; i < stringToInt(index); ++i) {
+            strcat(output, "A=A+1\n");
+        }
+
+        //Put D value into register
+        strcat(output, "M=D\n");
+    }
+
+    //Create full instruction
+    strcat(output, "A=A+1\n@SP\nM=M-1");
 }
 
 //Init file stream with informations such as setting SP to 256
@@ -211,22 +251,27 @@ void decodeInstruction(char instr[], FILE *outputFile) {
     if(instrType==2) //Neg
         sprintf(translated,"%s\nD=!D\nD=D+1\n%s",getOperand,resultOnValue);
     if(instrType==3) //Eq
-        sprintf(translated,"%s\nD=D-M\n@IF\nD;JEQ\n%s\n%s",getOperands,comparisonOperation,resultOnStack);
+        sprintf(translated,"%s\nD=D-M\n@IF%d\nD;JEQ\nD=0\n@END%d\n0;JMP\n(IF%d)\nD=-1\n(END%d)\n%s",getOperands,currentLine,currentLine,currentLine,currentLine,resultOnStack);
     if(instrType==4) //Gt
-        sprintf(translated,"%s\nD=D-M\n@IF\nD;JGT\n%s\n%s",getOperands,comparisonOperation,resultOnStack);
+        sprintf(translated,"%s\nD=D-M\n@IF%d\nD;JGT\nD=0\n@END%d\n0;JMP\n(IF%d)\nD=-1\n(END%d)\n%s",getOperands,currentLine,currentLine,currentLine,currentLine,resultOnStack);
     if(instrType==5) //Lt
-        sprintf(translated,"%s\nD=D-M\n@IF\nD;JLT\n%s\n%s",getOperands,comparisonOperation,resultOnStack);
+        sprintf(translated,"%s\nD=D-M\n@IF%d\nD;JLT\nD=0\n@END%d\n0;JMP\n(IF%d)\nD=-1\n(END%d)\n%s",getOperands,currentLine,currentLine,currentLine,currentLine,resultOnStack);
     if(instrType==6) //And
         sprintf(translated,"%s\nD=D&M\n%s",getOperands,resultOnStack);
     if(instrType==7) //Or
         sprintf(translated,"%s\nD=D|M\n%s",getOperands,resultOnStack);
     if(instrType==8) //Not
         sprintf(translated,"%s\nD=!D\n%s",getOperand,resultOnValue);
-
-    //POP
-
-    if(instrType == 10)
+    if(instrType == 9) //Pop
+        translatePop(instr, translated);
+    if(instrType == 10) //Push
         translatePush(instr, translated);
+    if(instrType == 11) //Label
+        sprintf(translated,"(%s)", instr);
+    if(instrType == 12) //Goto
+        sprintf(translated, "@%s\n0;JMP", instr);
+    if(instrType == 13) //If-Goto
+        sprintf(translated,"@SP\nAM=M-1\nD=M\n@%s\nD;JNE",instr);
 
     //Write instruction to file
     fprintf(outputFile, "%s", translated);
@@ -256,6 +301,10 @@ void translate(FILE *inputFile, FILE *outputFile) {
 
         //Check if end of the file
         //if(end == 1)continue;
+
+        //Comment current instruction
+        if(strlen(currentInstruction )>1)
+        fprintf(outputFile, "//%s\n", currentInstruction);
 
         //Decode current instruction and save it to output file
         decodeInstruction(currentInstruction, outputFile);

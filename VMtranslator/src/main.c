@@ -13,7 +13,7 @@ int main(int argc, char **argv) {
     }*/
 
     //Open input file
-    char fileName[] = "test.vm";
+    char fileName[] = "BasicTest.vm";
     FILE *inputFile;
     //inputFile = fopen(argv[1], "r");
     inputFile = fopen(fileName, "r");
@@ -27,10 +27,8 @@ int main(int argc, char **argv) {
     //Create file for final translation
     FILE *outputFile;
     translatedFileName = translateFileName(fileName);
-   // translatedFileName = translateFileName(argv[1]);
+    //translatedFileName = translateFileName(argv[1]);
     outputFile = fopen(translatedFileName, "w");
 
     translate(inputFile,outputFile);
-
-
 }

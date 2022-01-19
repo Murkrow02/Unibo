@@ -4,6 +4,7 @@
 extern int currentLine;
 extern int labelLine;
 extern char *translatedFileName;
+extern char fileName[200];
 
 void decToBinary(int n, int a[]);
 char* translateFileName(char inputFileName[]);

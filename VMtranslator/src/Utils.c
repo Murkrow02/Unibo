@@ -56,6 +56,10 @@ char* translateFileName(char inputFileName[])
     *(lastCharAddress-(sizeof(char) * 2)) = 's';
     *(lastCharAddress-(sizeof(char) * 3)) = 'a';
 
+    //Save filename for later use
+    strcpy(fileName, inputFileName);
+    fileName[strlen(inputFileName)-3] = '\0'; //Remove extension
+
     return translatedFileName;
 }
 
