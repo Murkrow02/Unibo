@@ -14,13 +14,15 @@ stdio.h
 stdio.h
 /home/murkrow/repo/Unibo/VMtranslator/src/Headers/stdio.h
 
-/home/murkrow/repo/Unibo/VMtranslator/src/main.c
+/home/murkrow/repo/Unibo/VMtranslator/src/TranslationTable.c
+Headers/TranslationTable.h
+/home/murkrow/repo/Unibo/VMtranslator/src/Headers/TranslationTable.h
 stdio.h
 -
 string.h
 -
+stdlib.h
+-
 Headers/Utils.h
 /home/murkrow/repo/Unibo/VMtranslator/src/Headers/Utils.h
-Headers/TranslationTable.h
-/home/murkrow/repo/Unibo/VMtranslator/src/Headers/TranslationTable.h
 

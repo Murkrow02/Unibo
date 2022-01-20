@@ -13,7 +13,7 @@ int main(int argc, char **argv) {
     }*/
 
     //Open input file
-    char fileName[] = "BasicTest.vm";
+    char fileName[] = "FibonacciElement.vm";
     FILE *inputFile;
     //inputFile = fopen(argv[1], "r");
     inputFile = fopen(fileName, "r");

@@ -37,39 +37,12 @@ const char resultOnValue[] = "@SP  \n"
                              "A=A-1  \n"
                              "M=D  \n";
 
+//Push the value of D register on top of the stack
+const char pushD[] = "@SP\nA=M\nM=D\n@SP\nM=M+1";
+
 const int maxInstructionLength = 900;
 
 char fileName[200];
-
-//Receives instruction and string array and returns an index in that array if the instruction starts with any of the strings present
-int indexInStringArray(const char instr[], char *arr[]){
-
-    //Detect which operation is decoded
-    int codeIndex = -1, found = 0;
-
-    //Search through possible operations
-    for (int i = 0; i < 17; ++i) {
-        found = 0;
-
-        //Check that each char is equal with that operation
-        for (int j = 0; j < strlen(arr[i]); ++j) {
-            if(instr[j] == arr[i][j])
-                continue;
-            else
-            {
-                found = -1;
-                break;
-            }
-        }
-
-        //Operation found, return operation index
-        if(found != -1)
-        {
-            codeIndex = i;
-            break;
-        }
-    }
-}
 
 //Receives clean operation as input and returns index code of that operation if matched, -1 if operation is not valid
 //This function also removes operation name from string for later decoding
@@ -143,8 +116,10 @@ void translatePush(char instr[], char output[])
     //Security checks
     if(segment == -1) //Check if segment is valid
         printError("Il segmento indicato non è valido");
+
     //Check if index is a number
-    if(isNumber(index) == 0)
+    trim(index);
+    if(isNumber( index) == 0)
         printError("L'argomento non è valido");
 
     //Static
@@ -158,7 +133,7 @@ void translatePush(char instr[], char output[])
         sprintf(output, "@%s\nD=A\n", index);
 
     //Create full instruction
-    strcat(output, "@SP\nA=M\nM=D\n@SP\nM=M+1");
+    strcat(output, pushD);
 }
 
 /*
@@ -207,6 +182,174 @@ void translatePop(char instr[], char output[])
     strcat(output, "A=A+1\n@SP\nM=M-1");
 }
 
+//Receives instruction as input and outputs the name of the function and how many arguments declared
+void extractNameArgs(char instr[], int *argCount, char funcName[]){
+
+    for (int i = 0; i < strlen(instr); ++i) {
+        if(instr[i] == ' ')
+        {
+            //Trunc string and create func name
+            strcpy(funcName, instr);
+            funcName[i] = '\0';
+
+            //Trunc string and create argCount
+            removeUntilIndexString(instr,i+1);
+            *argCount = stringToInt(instr);
+            break;
+        }
+    }
+}
+
+void translateCall(char instr[], char output[]){
+
+    //Extract name and arguments count
+    int argCount = -1;
+    char funcName[300];
+    extractNameArgs(instr, &argCount, funcName);
+
+    //Check if argCount is found
+    if(argCount == -1)
+        printError("Il numero di argomenti per la funzione non è valido");
+
+
+    sprintf(output,"//PUSH RETURN ADDRESS (using line n)\n"
+                   "@$%d\n"
+                   "D=A\n"
+                   "%s\n"
+                   "//PUSH LCL\n"
+                   "@LCL\n"
+                   "D=M\n"
+                   "%s\n"
+                   "//PUSH ARG\n"
+                   "@ARG\n"
+                   "D=M\n"
+                   "%s\n"
+                   "//PUSH THIS\n"
+                   "@THIS\n"
+                   "D=M\n"
+                   "%s\n"
+                   "//PUSH THAT\n"
+                   "@THAT\n"
+                   "D=M\n"
+                   "%s\n"
+                   "//ARG=S-n-5\n"
+                   "@SP\n"
+                   "D=M\n"
+                   "@5\n"
+                   "D=D-A\n"
+                   "@%d\n"
+                   "D=D-A\n"
+                   "@ARG\n"
+                   "M=D\n"
+                   "//LCL=SP\n"
+                   "@SP\n"
+                   "D=M\n"
+                   "@LCL\n"
+                   "M=D\n"
+                   "//GOTO F\n"
+                   "@%s\n"
+                   "0;JMP\n"
+                   "//(RETURN ADDRESS)\n"
+                   "($%d)", currentLine, pushD, pushD, pushD, pushD, pushD, argCount,funcName,currentLine);
+
+}
+
+
+
+void translateFunction(char instr[], char output[]){
+
+    //Extract name and arguments count
+    int argCount = -1;
+    char funcName[300];
+    extractNameArgs(instr, &argCount, funcName);
+
+    //Check if argCount is found
+    if(argCount == -1)
+        printError("Il numero di argomenti per la funzione non è valido");
+
+    //Insert function tag
+    sprintf(output, "(%s)\n",funcName);
+
+
+    //Alloc space for local
+    for (int i = 0; i < argCount; ++i) {
+        strcat(output,"@SP\n"
+                       "A=M\n"
+                       "M=0\n"
+                       "@SP\n"
+                       "M=M+1\n");
+        }
+}
+
+void translateReturn(char output[]){
+    sprintf(output,"//FRAME = LCL\n"
+                   "@LCL\n"
+                   "D=M\n"
+                   "@FRAME\n"
+                   "M=D\n"
+                   "//RET = *(FRAME-5)\n"
+                   "@5\n"
+                   "D=A\n"
+                   "@FRAME\n"
+                   "A=M-D\n"
+                   "D=M\n"
+                   "@RET\n"
+                   "M=D\n"
+                   "\n"
+                   "//*ARG=pop()\n"
+                   "@ARG\n"
+                   "D=M\n"
+                   "@R13\n"
+                   "M=D\n"
+                   "@SP\n"
+                   "AM=M-1\n"
+                   "D=M\n"
+                   "@R13\n"
+                   "A=M\n"
+                   "M=D\n"
+                   "//SP = ARG+1\n"
+                   "@ARG\n"
+                   "D=M+1\n"
+                   "@SP\n"
+                   "M=D\n"
+                   "//THAT = *(FRAME-1)\n"
+                   "@FRAME\n"
+                   "D=M\n"
+                   "@1\n"
+                   "A=D-A\n"
+                   "D=M\n"
+                   "@THAT\n"
+                   "M=D\n"
+                   "//THIS = *(FRAME-2)\n"
+                   "@FRAME\n"
+                   "D=M\n"
+                   "@2\n"
+                   "A=D-A\n"
+                   "D=M\n"
+                   "@THIS\n"
+                   "M=D\n"
+                   "//ARG = *(FRAME-3)\n"
+                   "@FRAME\n"
+                   "D=M\n"
+                   "@3\n"
+                   "A=D-A\n"
+                   "D=M\n"
+                   "@ARG\n"
+                   "M=D\n"
+                   "//LCL = *(FRAME-4)\n"
+                   "@FRAME\n"
+                   "D=M\n"
+                   "@4\n"
+                   "A=D-A\n"
+                   "D=M\n"
+                   "@LCL\n"
+                   "M=D\n"
+                   "//goto RET\n"
+                   "@RET\n"
+                   "A=M\n"
+                   "0;JMP");
+}
+
 //Init file stream with informations such as setting SP to 256
 void initFile(FILE *outputFile){
 
@@ -216,10 +359,7 @@ void initFile(FILE *outputFile){
                        "M=D";
 
     //Write instruction to file
-    fprintf(outputFile, "%s", stackInit);
-
-    //Insert new line
-    fprintf(outputFile, "%c", '\n');
+    fprintf(outputFile, "%s\n", stackInit);
 }
 
 //Detect which type of instruction is entered and write to the final file translated instruction
@@ -272,6 +412,13 @@ void decodeInstruction(char instr[], FILE *outputFile) {
         sprintf(translated, "@%s\n0;JMP", instr);
     if(instrType == 13) //If-Goto
         sprintf(translated,"@SP\nAM=M-1\nD=M\n@%s\nD;JNE",instr);
+    if(instrType == 14) //Function
+        translateFunction(instr, translated);
+    if(instrType == 15) //Call
+        translateCall(instr, translated);
+    if(instrType == 16) //Return
+        translateReturn(translated);
+
 
     //Write instruction to file
     fprintf(outputFile, "%s", translated);

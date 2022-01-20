@@ -22,3 +22,4 @@ char *intToString(char *dest, int i);
 int stringToInt(char *str);
 int isNumber(char s[]);
 void trim(char *s);
+int indexInStringArray(const char instr[], char *arr[]);

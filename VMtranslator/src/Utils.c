@@ -78,6 +78,36 @@ void removeUntilIndexString(char s[], int n){
     }
 }
 
+//Receives instruction and string array and returns an index in that array if the instruction starts with any of the strings present
+int indexInStringArray(const char instr[], char *arr[]){
+
+    //Detect which operation is decoded
+    int codeIndex = -1, found = 0;
+
+    //Search through possible operations
+    for (int i = 0; i < 17; ++i) {
+        found = 0;
+
+        //Check that each char is equal with that operation
+        for (int j = 0; j < strlen(arr[i]); ++j) {
+            if(instr[j] == arr[i][j])
+                continue;
+            else
+            {
+                found = -1;
+                break;
+            }
+        }
+
+        //Operation found, return operation index
+        if(found != -1)
+        {
+            codeIndex = i;
+            break;
+        }
+    }
+}
+
 //Remove special characters such as '\t'
 void cleanInstruction(char s[]){
     char* d = s;
