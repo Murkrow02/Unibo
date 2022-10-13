@@ -40,12 +40,3 @@ b2 = L@y
 #Final step, x is found
 x2 = np.linalg.solve(U,y)
 
-
-"""
-Per ogni problema test:
-• Disegna il grafico del numero di condizione in funzione della dimensione del sistema
-• Disegna il grafico dell’errore in norma 2 in funzione della dimensione del sistema
-"""
-
-
-
