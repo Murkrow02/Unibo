@@ -49,7 +49,7 @@ C = scipy.linalg.cholesky(A, lower = True)
 #Revert to obtain upper triangular matrix
 U = np.matrix.transpose(C)
 
-#Proceed as normal LU decomposition
+#Proceed as normal like LU decomposition
 y = U@x
 b2 = C@y
 x2 = np.linalg.solve(A,b2)
@@ -88,7 +88,11 @@ for i in range(0, matrix_dims.size):
     # Find b with matrix multiplication
     b = A@x
     
-    # Solve with LU instead of cholesky as sometimes matrix is not positive
+    """
+    La matrice di Hilbert nonostante sia simmetrica non è sempre definita
+    positiva (n minore di 14) (non tutti gli autovalori sono strettamente > 0)
+    quindi non si puo sempre scomporre con Cholesky
+    """
     #C = scipy.linalg.cholesky(A, lower = True)
     #U = np.matrix.transpose(C)
     piv, C, U = LUdec.lu(A)
@@ -99,7 +103,7 @@ for i in range(0, matrix_dims.size):
     x2 = np.linalg.solve(A,b2)
     
     # Find error on x by subtracting the known x (we created the vector) with the one found by LU
-    normalized_error[i] = np.linalg.norm(x-x2)
+    normalized_error[i] = (np.linalg.norm(x2-x))/(np.linalg.norm(x))
     
     
 # Plot graph

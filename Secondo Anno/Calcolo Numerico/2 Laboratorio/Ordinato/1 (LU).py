@@ -40,3 +40,6 @@ b2 = L@y
 #Final step, x is found
 x2 = np.linalg.solve(U,y)
 
+"""
+NOTA: invertire la matrice triangolare è meno costoso quindi l'ultimo step ha senso
+"""
