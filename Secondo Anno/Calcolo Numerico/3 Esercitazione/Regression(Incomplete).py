@@ -40,14 +40,14 @@ alpha_normali = scipy.linalg.solve(L.T, alpha1)
 print("alpha_normali = \n", alpha_normali)
 
 xbase = np.arange(1, 3, 0.1)
-ybase = np.zeros((xbase.size,))
+ybase_lsq = np.zeros((xbase.size,))
 
 for i in range(0, alpha_normali.size):
-    ybase += alpha_normali[i]*np.power(xbase, i)
+    ybase_lsq += alpha_normali[i]*np.power(xbase, i)
 
-plt.scatter(x, y)
-plt.plot(xbase, ybase, color= "blue", label = "LSQ Regression")
-plt.legend()
+#plt.scatter(x, y)
+#plt.plot(xbase, ybase_lsq, color= "blue", label = "LSQ Regression")
+#plt.legend()
 
 '''Risoluzione tramite SVD'''
 
@@ -67,6 +67,14 @@ for i in range(n+1):
     vi = Vt[i,:]
     print(vi)
     alpha_svd = alpha_svd + (np.dot(ui,y)*vi) / s[i]
+    
+ybase_svd = np.zeros((xbase.size,))
+
+for i in range(0, alpha_svd.size):
+    ybase_svd += alpha_svd[i]*np.power(xbase, i)
+    
+#plt.plot(xbase, ybase_svd, color= "red", label = "SVD Regression")
+#plt.legend()
 
 
 
@@ -74,11 +82,38 @@ for i in range(n+1):
 
 # Funzione per valutare il polinomio p, in un punto x, dati i coefficienti alpha
 def p(alpha, x):
-  ...
-  return 
+    N=x.size
+    print(alpha.size)
+    A = np.zeros((N, alpha.size))
+    
+    for i in range(0, N):
+        row = []
+        for j in range(0, n + 1):
+            row.append(np.power(x[i], j))
+        A[i] = row
+        
+    return A@alpha
 
+'''CONFRONTO GRAFICO '''
+x_plot = np.linspace(1,3,100)
+y_normali = p(alpha_normali, x_plot)
+y_svd = p(alpha_svd, x_plot)
 
-'''CONFRONTO ERRORI SUI DATI '''
+plt.figure(figsize=(20, 10))
+
+plt.subplot(1, 2, 1)
+plt.plot(x,y,"o")
+plt.plot(x_plot,y_normali)
+plt.title('Approssimazione tramite Eq. Normali')
+
+plt.subplot(1, 2, 2)
+plt.plot(x,y,"o")
+plt.plot(x_plot,y_svd)
+plt.title('Approssimazione tramite SVD')
+
+plt.show()
+
+'''CONFRONTO ERRORI SUI DATI 
 y1 = p(...)
 y2 = p(...)
 
@@ -89,7 +124,7 @@ print ('Errore di approssimazione con SVD: ', err2)
 
 
 
-'''CONFRONTO GRAFICO '''
+
 
 x_plot = ...
 
@@ -108,3 +143,4 @@ plt.subplot(1, 2, 2)
 plt.title('Approssimazione tramite SVD')
 
 plt.show()
+'''
