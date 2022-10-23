@@ -1,12 +1,22 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.linalg
+import pandas as pd
 
-n = 7# Grado del polinomio approssimante
 
-# Punti da approssimare
-x = np.array([1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4, 2.6, 2.8, 3])
-y = np.array([1.18, 1.26, 1.23, 1.37, 1.37, 1.45, 1.42, 1.46, 1.53, 1.59, 1.5])
+#Lettura dataset da file csv
+dataset = pd.read_csv('HeightVsWeight.csv')  
+
+#Lettura delle colonne convertire in serie
+ages = dataset.iloc[:,0]
+weights = dataset.iloc[:,1]
+
+
+n = 8# Grado del polinomio approssimante
+
+# Punti da approssimare convertiti in array di numpy
+x = ages.to_numpy()
+y = weights.to_numpy()
 
 # Numero di dati
 m = x.size 
@@ -65,7 +75,7 @@ def p(alpha, x):
     return A@alpha
 
 # Domain
-x_plot = np.linspace(1,3,100)
+x_plot = np.linspace(1, max(x),100)
 
 # Codomains
 y_normali = p(alpha_normali, x_plot)
