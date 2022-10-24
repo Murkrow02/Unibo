@@ -103,7 +103,7 @@ plt.show()
 #Calculated function plot
 x1 = np.arange(-1, 1, 0.01)
 y1 = 1 / (1+ 25*x1)
-print("min:", min(y1))
+#Limit to the y axis because the function is an hyperbole
 plt.ylim(-(10**12), 10**12)
 plt.plot(x1, y1, color="red", label ="Function")
 
