@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy.linalg
 
-n = 7# Grado del polinomio approssimante
+n = 10# Grado del polinomio approssimante
 
 # Punti da approssimare
 x = np.array([1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4, 2.6, 2.8, 3])
