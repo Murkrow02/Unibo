@@ -1,34 +1,7 @@
 import numpy as np
 import math
 import matplotlib.pyplot as plt
-
-''' Metodo delle approssimazioni successive'''
-def succ_app(f, g, tolf, tolx, maxit, xTrue, x0=0):
-  
-  err=np.zeros(maxit+1, dtype=np.float64)
-  vecErrore=np.zeros(maxit+1, dtype=np.float64)
-  
-  i= 0
-  err[0]=tolx+1
-  if (xTrue != None):
-      vecErrore[0] = np.abs(x0-xTrue)
-  x = x0
-
-  while (True): 
-        
-        i = i + 1
-        oldx = x
-        x = g(x)
-
-        err[i] = abs(x-oldx)    
-        if (xTrue != None):
-            vecErrore[i] = np.abs(x-xTrue)
-        
-    
-        if ((abs(f(x)) <= tolf and abs(x-oldx) <= tolx) or i >= maxit):
-            break
-  return (x, i, err, vecErrore) 
-
+from FunctionRootMethods import succ_app
 
 '''creazione del problema'''
 f = lambda x : ((np.e)**x) - (x**2)
@@ -72,13 +45,13 @@ plt.show()
 
 '''Calcolo soluzione in g1, g2 e g3'''
 
-xG1, iG1, errG1, vecErrG1 = succ_app(f, g1, tolf, tolx, maxit, xTrue)
+xG1, iG1, errG1, vecErrG1, time = succ_app(f, g1, tolf, tolx, maxit, xTrue)
 print('Metodo approssimazioni successive g1 \n x =', xG1,'\n iter_new=', iG1)
 
-xG2, iG2, errG2, vecErrG2 = succ_app(f, g2, tolf, tolx, maxit, xTrue)
+xG2, iG2, errG2, vecErrG2, time = succ_app(f, g2, tolf, tolx, maxit, xTrue)
 print('Metodo approssimazioni successive g2 \n x =', xG2,'\n iter_new=', iG2)
 
-xG3, iG3, errG3, vecErrG3 = succ_app(f, g3, tolf, tolx, maxit, xTrue)
+xG3, iG3, errG3, vecErrG3, time = succ_app(f, g3, tolf, tolx, maxit, xTrue)
 print('Metodo approssimazioni successive g3 \n x =', xG3,'\n iter_new=', iG3)
 
 
@@ -101,6 +74,7 @@ plt.plot(vecErrG1, color="red", label = "g1", marker = 'o')
 plt.plot(vecErrG2, color="blue", label = "g2", marker = 'o')
 # g3
 plt.plot(vecErrG3, color="brown", label = "g3", marker = 'o')
-
+plt.xlabel('Iterazioni', fontweight ='bold', fontsize = 15)
+plt.ylabel('Errore', fontweight ='bold', fontsize = 15)
 plt.legend()
 plt.show()
