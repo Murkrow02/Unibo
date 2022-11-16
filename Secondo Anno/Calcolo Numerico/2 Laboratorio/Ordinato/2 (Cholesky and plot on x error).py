@@ -100,7 +100,7 @@ for i in range(0, matrix_dims.size):
     # Solve system
     y = U@x
     b2 = C@y
-    x2 = np.linalg.solve(A,b2)
+    x2 = np.linalg.solve(U,y)
     
     # Find error on x by subtracting the known x (we created the vector) with the one found by LU
     normalized_error[i] = (np.linalg.norm(x2-x))/(np.linalg.norm(x))
