@@ -170,7 +170,7 @@ def generate_tri(ndim):
 
 """
 Discutere la soluzione del sistema lineare Ax=b con i metodi iterativi di Jacobi e gauss Sidel al
-variare del punto iniziale
+variare del punto iniziale e della tolleranza per il criterio di arresto.
 """
 
 #Configurazione problema
@@ -189,6 +189,7 @@ x0Range = np.arange(0,maxValues)
 iterationsGauss = np.arange(0,maxValues)
 iterationsJacobi = np.arange(0,maxValues)
 
+
 for i in x0Range:
     
     #Crea vettore x0 diverso ogni volta
@@ -198,8 +199,15 @@ for i in x0Range:
     iterationsJacobi[i] = kJacobi
     iterationsGauss[i] = kGauss
     
+    #Create new line on plot showing distance at each iteration
+    plt.plot(np.arange(0,relErrJacobi.size),relErrJacobi)
     
-#Plotta numero di iterazioni al variare della soluzione iniziale
+#Plotta errore ad ogni iterazione al variare del punto iniziale x0
+plt.ylabel("Errore relativo")
+plt.xlabel("Iterazioni")
+plt.show()
+    
+#Plotta numero di iterazioni al variare del punto iniziale x0
 labels = x0Range
 x = np.arange(len(labels))
 width = 0.35
@@ -222,33 +230,32 @@ variare della dimensione della matrice
 """
 
 #Configurazione problema
-matrixSize = 10
 maxit = 1000000
 tol = 0.00000001
-A = generate_tri(matrixSize)
-xTrue = np.ones((matrixSize,1))
-b = A@xTrue
 
 #Possibili valori del punto iniziale x0
-maxValues = 10
-x0Range = np.arange(0,maxValues)
+maxDim = 12
+matrixNRange = np.arange(2,maxDim)
 
 #Risultati del test
-iterationsGauss = np.arange(0,maxValues)
-iterationsJacobi = np.arange(0,maxValues)
+iterationsGauss = np.arange(0,maxDim-2)
+iterationsJacobi = np.arange(0,maxDim-2)
 
-for i in x0Range:
+for i in matrixNRange:
     
-    #Crea vettore x0 diverso ogni volta
-    x0 = np.full((matrixSize,1), i)
+    #Create variable size matrix
+    A = generate_tri(i)
+    xTrue = np.ones((i,1))
+    b = A@xTrue
+    x0 = np.zeros((i,1))
+    
     xJacobi, kJacobi, relErrJacobi, errIterJacobi, specJacobi = Jacobi(A,b,x0,maxit,tol,xTrue) 
     xGauss, kGauss, relErrGauss, errIterGauss, specGauss = Gauss(A,b,x0,maxit,tol,xTrue) 
-    iterationsJacobi[i] = kJacobi
-    iterationsGauss[i] = kGauss
+    iterationsJacobi[i-2] = kJacobi
+    iterationsGauss[i-2] = kGauss
     
     
 #Plotta numero di iterazioni al variare della soluzione iniziale
-labels = x0Range
 x = np.arange(len(labels))
 width = 0.35
 fig, ax = plt.subplots()
@@ -256,7 +263,7 @@ rects1 = ax.bar(x - width/2, iterationsJacobi, width, label='Jacobi')
 rects2 = ax.bar(x + width/2, iterationsGauss, width, label='Gauss')
 ax.set_ylabel('Iterazioni')
 ax.set_xlabel('Dimensione matrice')
-ax.set_xticks(x, labels)
+ax.set_xticks(x, matrixNRange)
 ax.legend()
 ax.bar_label(rects1, padding=3)
 ax.bar_label(rects2, padding=3)
