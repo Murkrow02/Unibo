@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Oct 23 19:17:18 2022
-
-@author: valeriopiodenicola
-"""
-
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.linalg
@@ -32,6 +24,7 @@ def print_approx_error(E, fnumber):
 
 #Main func plot_with_apprx(xspace, yspace, [leftmargin, rightmargin])
 def plot_with_apprx(x, y, margins, fnumber):    
+    
     N = x.size # Numero dei dati
     A = []
     

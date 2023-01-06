@@ -122,7 +122,7 @@ def Gauss(A,b,x0,maxit,tol, xTrue):
   T = np.linalg.inv(D-E)
   
   # Trova il raggio spettrale della matrice di iterazione per capire in anticipo se converge o meno
-  spec = SpectralRadius(T)
+  spec = SpectralRadius(T) 
   if(spec >= 1):
       print(spec, T)
       raise Exception("Result does not converge")
@@ -155,30 +155,33 @@ def Gauss(A,b,x0,maxit,tol, xTrue):
   return [x, ite, relErr, errIter, spec]
 
 
-def LUSolve(A, x):
+def LUSolve(A, xTrue):
     
-    #LU factorization to solve linear sysyem
-    piv, L, U = LUdec.lu(A)
-
-    #First step of LU solving (find y)
-    y = U@x
-
-    #Second step of LU solving (find b)
-    b2 = L@y
-
-    #Final step, x is found
-    x2 = np.linalg.solve(U,y)
+    piv, L, R = scipy.linalg.lu(A)
+    y = np.linalg.solve(L,piv@b)
+    x2 = np.linalg.solve(R,y)
+    relErr = np.linalg.norm(x2-xTrue)/np.linalg.norm(xTrue)
+    
+    return relErr
 
 #metodi iterativi
 maxit = 1000000
-tol = 0.00000001
+tol = 0.1
 
 # Dimensioni su cui iterare
 matrix_dims = np.arange(2,80,1)
+
+#Tempo
 time_lu = np.zeros(matrix_dims.size)
 time_ch = np.zeros(matrix_dims.size)
 time_jacobi = np.zeros(matrix_dims.size)
 time_gauss = np.zeros(matrix_dims.size)
+
+# Errore
+err_lu = np.zeros(matrix_dims.size)
+err_ch = np.zeros(matrix_dims.size)
+err_jacobi = np.zeros(matrix_dims.size)
+err_gauss = np.zeros(matrix_dims.size)
 
 # Iterate matrix_dims times, create different matrixes each time
 for i in range(0, matrix_dims.size):
@@ -192,7 +195,7 @@ for i in range(0, matrix_dims.size):
     
     # LU
     start = time.time()
-    LUSolve(A, xTrue)
+    err_lu[i] = LUSolve(A, xTrue)
     end = time.time()
     time_lu[i] = end-start
     
@@ -204,26 +207,46 @@ for i in range(0, matrix_dims.size):
     b2 = C@y
     x2 = np.linalg.solve(A,b2)
     end = time.time()
+    err_ch[i] = np.linalg.norm(x2-xTrue)/np.linalg.norm(xTrue)
     time_ch[i] = end-start
     
     # Metodi iterativi
     start = time.time()
-    (xJacobi, kJacobi, relErrJacobi, errIterJacobi, specJacobi) = Jacobi(A,b,x0,maxit,tol,xTrue) 
+    xJacobi, kJacobi, relErrJacobi, errIterJacobi, specJacobi = Jacobi(A,b,x0,maxit,tol,xTrue) 
     end = time.time()
+    err_jacobi[i] = relErrJacobi[-1]
     time_jacobi[i] = end-start
     start = time.time()
-    (xGauss, kGauss, relErrGauss, errIterGauss, specGauss) = Gauss(A,b,x0,maxit,tol,xTrue) 
+    xGauss, kGauss, relErrGauss, errIterGauss, specGauss = Gauss(A,b,x0,maxit,tol,xTrue) 
     end = time.time()
+    err_gauss[i] = relErrGauss[-1]
     time_gauss[i] = end-start
     
-# Plot graph
+
+zoom = True    
+
+# Plot time
 plt.title("Tempo impiegato da ogni algoritmo")
+if zoom:
+    plt.ylim(0,(max(time_gauss)))
+plt.ylabel("Tempo (sec)")
+plt.xlabel("Dimensione matrice")
 plt.plot(matrix_dims,time_lu, color = "red", label = "LU") 
 plt.plot(matrix_dims,time_ch, color = "blue", label = "Cholesky")
 plt.plot(matrix_dims,time_jacobi, color = "green", label = "Jacobi")
 plt.plot(matrix_dims,time_gauss, color = "gray", label = "Gauss")
 plt.legend()
 plt.show()
-    
+
+# Plot relative error
+plt.title("Errore relativo finale")
+plt.ylabel("Errore")
+plt.xlabel("Dimensione matrice")
+plt.plot(matrix_dims,err_lu, color = "red", label = "LU") 
+plt.plot(matrix_dims,err_ch, color = "blue", label = "Cholesky")
+plt.plot(matrix_dims,err_jacobi, color = "green", label = "Jacobi")
+plt.plot(matrix_dims,err_gauss, color = "gray", label = "Gauss")
+plt.legend()
+plt.show()
 
 

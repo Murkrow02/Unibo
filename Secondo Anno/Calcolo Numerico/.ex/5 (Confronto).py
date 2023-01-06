@@ -1,19 +1,18 @@
-"""
-Risoluzione di sistemi lineari con metodo iterativo. Dato un problema test di dimensione
-variabile la cui soluzione esatta sia il vettore x di tutti elementi unitari e b il termine noto
-ottenuto moltiplicando la matrice A per la soluzione x discutere:
-    • la soluzione del sistema lineare Ax=b con i metodi iterativi di Jacobi e gauss Sidel al
-    variare del punto iniziale e della tolleranza per il criterio di arresto.
-    • Il numero di iterazioni effettuate al variare della dimensione n del sistema (grafico
-    del numero di iterazioni al variare di n).
-Testare sulla matrice tridiagonale simmetrica e definita positiva positiva avente sulla diagonale
-elementi uguali a 9 e quelli sopra e sottodiagonali uguali a -4 (variare n).
-"""
-
 import numpy as np
 import scipy.linalg
 import matplotlib.pyplot as plt
+import scipy.linalg.decomp_lu as LUdec 
+import time
 
+def generate_tri(ndim):
+    M = np.zeros((ndim,ndim))
+    for i in range(0,np.shape(M)[0]):
+        (M[i])[i] = 9
+    
+        if (i < (np.shape(M)[0])-1):
+            (M[i])[i+1] = -4
+            (M[i+1])[i] = -4
+    return M
 
 def SpectralRadius(A):
     eigenValues, eigenVectors = np.linalg.eig(A)
@@ -123,7 +122,7 @@ def Gauss(A,b,x0,maxit,tol, xTrue):
   T = np.linalg.inv(D-E)
   
   # Trova il raggio spettrale della matrice di iterazione per capire in anticipo se converge o meno
-  spec = SpectralRadius(T)
+  spec = SpectralRadius(T) 
   if(spec >= 1):
       print(spec, T)
       raise Exception("Result does not converge")
@@ -156,118 +155,98 @@ def Gauss(A,b,x0,maxit,tol, xTrue):
   return [x, ite, relErr, errIter, spec]
 
 
-
-def generate_tri(ndim):
-    M = np.zeros((ndim,ndim))
-    for i in range(0,np.shape(M)[0]):
-        (M[i])[i] = 9
+def LUSolve(A, xTrue):
     
-        if (i < (np.shape(M)[0])-1):
-            (M[i])[i+1] = -4
-            (M[i+1])[i] = -4
-    return M
+    piv, L, R = scipy.linalg.lu(A)
+    y = np.linalg.solve(L,piv@b)
+    x2 = np.linalg.solve(R,y)
+    relErr = np.linalg.norm(x2-xTrue)/np.linalg.norm(xTrue)
+    
+    return relErr
 
-
-"""
-Discutere la soluzione del sistema lineare Ax=b con i metodi iterativi di Jacobi e gauss Sidel al
-variare del punto iniziale e della tolleranza per il criterio di arresto.
-"""
-
-#Configurazione problema
-matrixSize = 10
+#metodi iterativi
 maxit = 1000000
-tol = 0.00000001
-A = generate_tri(matrixSize)
-xTrue = np.ones((matrixSize,1))
-b = A@xTrue
+tol = 0.1
 
-#Possibili valori del punto iniziale x0
-maxValues = 10
-x0Range = np.arange(0,maxValues)
+# Dimensioni su cui iterare
+matrix_dims = np.arange(100,200,1)
 
-#Risultati del test
-iterationsGauss = np.arange(0,maxValues)
-iterationsJacobi = np.arange(0,maxValues)
+#Tempo
+time_lu = np.zeros(matrix_dims.size)
+time_ch = np.zeros(matrix_dims.size)
+time_jacobi = np.zeros(matrix_dims.size)
+time_gauss = np.zeros(matrix_dims.size)
 
+# Errore
+err_lu = np.zeros(matrix_dims.size)
+err_ch = np.zeros(matrix_dims.size)
+err_jacobi = np.zeros(matrix_dims.size)
+err_gauss = np.zeros(matrix_dims.size)
 
-for i in x0Range:
-    
-    #Crea vettore x0 diverso ogni volta
-    x0 = np.full((matrixSize,1), i)
-    xJacobi, kJacobi, relErrJacobi, errIterJacobi, specJacobi = Jacobi(A,b,x0,maxit,tol,xTrue) 
-    xGauss, kGauss, relErrGauss, errIterGauss, specGauss = Gauss(A,b,x0,maxit,tol,xTrue) 
-    iterationsJacobi[i] = kJacobi
-    iterationsGauss[i] = kGauss
-    
-    #Create new line on plot showing distance at each iteration
-    plt.plot(np.arange(0,relErrJacobi.size),relErrJacobi)
-    
-#Plotta errore ad ogni iterazione al variare del punto iniziale x0
-plt.ylabel("Errore relativo")
-plt.xlabel("Iterazioni")
-plt.show()
-    
-#Plotta numero di iterazioni al variare del punto iniziale x0
-labels = x0Range
-x = np.arange(len(labels))
-width = 0.35
-fig, ax = plt.subplots()
-rects1 = ax.bar(x - width/2, iterationsJacobi, width, label='Jacobi')
-rects2 = ax.bar(x + width/2, iterationsGauss, width, label='Gauss')
-ax.set_ylabel('Iterazioni')
-ax.set_xlabel('Vettore iniziale')
-ax.set_xticks(x, labels)
-ax.legend()
-ax.bar_label(rects1, padding=3)
-ax.bar_label(rects2, padding=3)
-fig.tight_layout()
-plt.show()
+# Iterate matrix_dims times, create different matrixes each time
+for i in range(0, matrix_dims.size):
 
-
-"""
-Discutere la soluzione del sistema lineare Ax=b con i metodi iterativi di Jacobi e gauss Sidel al
-variare della dimensione della matrice
-"""
-
-#Configurazione problema
-maxit = 1000000
-tol = 0.00000001
-
-#Possibili valori del punto iniziale x0
-maxDim = 12
-matrixNRange = np.arange(2,maxDim)
-
-#Risultati del test
-iterationsGauss = np.arange(0,maxDim-2)
-iterationsJacobi = np.arange(0,maxDim-2)
-
-for i in matrixNRange:
-    
-    #Create variable size matrix
-    A = generate_tri(i)
-    xTrue = np.ones((i,1))
+    # Generate problem data
+    A = generate_tri(matrix_dims[i])    
+    xTrue = np.ones((matrix_dims[i],1))
     b = A@xTrue
-    x0 = np.zeros((i,1))
+    x0 = np.zeros((matrix_dims[i],1))
+    x0[0] = 1
     
+    # LU
+    start = time.time()
+    err_lu[i] = LUSolve(A, xTrue)
+    end = time.time()
+    time_lu[i] = end-start
+    
+    # Cholesky
+    start = time.time()
+    C = scipy.linalg.cholesky(A, lower = True)
+    U = np.matrix.transpose(C)
+    y = U@xTrue
+    b2 = C@y
+    x2 = np.linalg.solve(A,b2)
+    end = time.time()
+    err_ch[i] = np.linalg.norm(x2-xTrue)/np.linalg.norm(xTrue)
+    time_ch[i] = end-start
+    
+    # Metodi iterativi
+    start = time.time()
     xJacobi, kJacobi, relErrJacobi, errIterJacobi, specJacobi = Jacobi(A,b,x0,maxit,tol,xTrue) 
+    end = time.time()
+    err_jacobi[i] = relErrJacobi[-1]
+    time_jacobi[i] = end-start
+    start = time.time()
     xGauss, kGauss, relErrGauss, errIterGauss, specGauss = Gauss(A,b,x0,maxit,tol,xTrue) 
-    iterationsJacobi[i-2] = kJacobi
-    iterationsGauss[i-2] = kGauss
+    end = time.time()
+    err_gauss[i] = relErrGauss[-1]
+    time_gauss[i] = end-start
     
-    
-#Plotta numero di iterazioni al variare della soluzione iniziale
-x = np.arange(len(labels))
-width = 0.35
-fig, ax = plt.subplots()
-rects1 = ax.bar(x - width/2, iterationsJacobi, width, label='Jacobi')
-rects2 = ax.bar(x + width/2, iterationsGauss, width, label='Gauss')
-ax.set_ylabel('Iterazioni')
-ax.set_xlabel('Dimensione matrice')
-ax.set_xticks(x, matrixNRange)
-ax.legend()
-ax.bar_label(rects1, padding=3)
-ax.bar_label(rects2, padding=3)
-fig.tight_layout()
+
+zoom = True    
+
+# Plot time
+plt.title("Tempo impiegato da ogni algoritmo")
+if zoom:
+    plt.ylim(0,(max(time_gauss)))
+plt.ylabel("Tempo (sec)")
+plt.xlabel("Dimensione matrice")
+plt.plot(matrix_dims,time_lu, color = "red", label = "LU") 
+plt.plot(matrix_dims,time_ch, color = "blue", label = "Cholesky")
+plt.plot(matrix_dims,time_jacobi, color = "green", label = "Jacobi")
+plt.plot(matrix_dims,time_gauss, color = "gray", label = "Gauss")
+plt.legend()
+plt.show()
+
+# Plot relative error
+plt.title("Errore relativo finale")
+plt.ylabel("Errore")
+plt.xlabel("Dimensione matrice")
+plt.plot(matrix_dims,err_lu, color = "red", label = "LU") 
+plt.plot(matrix_dims,err_ch, color = "blue", label = "Cholesky")
+plt.plot(matrix_dims,err_jacobi, color = "green", label = "Jacobi")
+plt.plot(matrix_dims,err_gauss, color = "gray", label = "Gauss")
+plt.legend()
 plt.show()
 
 
