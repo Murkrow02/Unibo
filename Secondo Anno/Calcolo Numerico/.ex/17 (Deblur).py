@@ -165,7 +165,22 @@ def deblur(original, corrotta, blurFilter, maxit, lambda_=0):
     return (deblurred_img, iter_PSNR, iter_MSE, k)
 
 
-deviazione_standard = 0.02
+def plotImgData(iteraz, PSNR, MSE, title):
+    
+    
+    iterazioni = np.linspace(1, iteraz+1, iteraz+1)
+    
+    plt.figure()
+    plt.suptitle(title)
+    ax1 = plt.subplot(1, 2, 1)
+    ax1.plot(iterazioni, PSNR, color='blue', label='PSNR')
+    ax2 = plt.subplot(1, 2, 2)
+    ax2.plot(iterazioni, MSE, color='red', label='MSE')
+    plt.legend()
+    plt.show()
+
+# Rumore
+deviazione_standard = 0.05
 
 #Get image from library
 img = convert_255_to_1(data.camera())
@@ -193,30 +208,66 @@ mse = metrics.mean_squared_error(img, noisedBlurred)
 
 
 #Naive revert
-# x0 = blurred
-# max_it = 10
-# deblur_img, PSNR, MSE, k = deblur(img, noisedBlurred, psf, max_it, 0)
-# plt.title("Naive")
-# plt.imshow(deblur_img, cmap='gray')
-# plt.show()
-
-# #Grafico PSNR e MSE
-# iterazioni = np.linspace(1, k+1)
-# plt.figure()
-# ax1 = plt.subplot(1, 2, 1)
-# ax1.plot(iterazioni, PSNR, color='blue', label='PSNR')
-# ax2 = plt.subplot(1, 2, 2)
-# ax2.plot(iterazioni, MSE, color='red', label='MSE')
-# plt.legend()
-# plt.show()
-
-#Different lambdas
-lambdas = {0.02, 0.05, 0.1}
 x0 = blurred
 max_it = 100
-deblur_img, PSNR, MSE, k = deblur(img, noisedBlurred, psf, max_it,0.02)    
-plt.title("Tikhonov")
+deblur_img, PSNR, MSE, k = deblur(img, noisedBlurred, psf, max_it, 0)
+plt.title("Naive")
 plt.imshow(deblur_img, cmap='gray')
 plt.show()
+
+#Grafico PSNR e MSE
+plotImgData(k, PSNR, MSE, "Naive")
+
+#Different lambdas
+lambdas = [0.02, 0.05, 0.1]
+x0 = blurred
+max_it = 100
+images = []
+images.append(img)
+for i in lambdas:
+    
+    deblur_img, PSNR, MSE, k = deblur(img, noisedBlurred, psf, max_it, i)    
+    images.append(deblur_img)
+    
+    #Grafico PSNR e MSE
+    title = "Tikhonov, lambda: {}".format(i)
+    plotImgData(k, PSNR, MSE, title)
+    
+    #Show whole image    
+    plt.title(title)
+    plt.imshow(deblur_img, cmap='gray')
+    plt.show()
+
+    
+# Confronto tutte 
+fig = plt.figure()
+plt.axis("off")
+
+plt.subplot(2, 2, 1)
+fig = plt.imshow(images[0], cmap='gray')
+fig.axes.get_xaxis().set_visible(False)
+fig.axes.get_yaxis().set_visible(False)
+plt.title("Original")
+
+plt.subplot(2, 2, 2)
+fig = plt.imshow(images[1], cmap='gray')
+fig.axes.get_xaxis().set_visible(False)
+fig.axes.get_yaxis().set_visible(False)
+plt.title("Lambda: {}".format(lambdas[0]))
+
+plt.subplot(2, 2, 3)
+fig = plt.imshow(images[2], cmap='gray')
+fig.axes.get_xaxis().set_visible(False)
+fig.axes.get_yaxis().set_visible(False)
+plt.title("Lambda: {}".format(lambdas[1]))
+
+plt.subplot(2, 2, 4)
+fig = plt.imshow(images[3], cmap='gray')
+fig.axes.get_xaxis().set_visible(False)
+fig.axes.get_yaxis().set_visible(False)
+plt.title("Lambda: {}".format(lambdas[2]))
+
+plt.show()
+    
 
 
