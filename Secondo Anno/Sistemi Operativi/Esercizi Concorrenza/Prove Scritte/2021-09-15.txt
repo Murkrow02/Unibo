@@ -1,0 +1,48 @@
+/*
+Esercizio c.1: Scrivere il monitor alrv (at least rendez-vous) che fornisce una sola procedure entry:
+     procedure entry void at_least(int n)
+
+Quando un processo chiama la funzione at_least vuol dire che vuole sincronizzarsi con un insieme di almeno n processi (incluso il chiamante).
+*/
+
+monitor alrv{
+
+    condition ok2unlock[MAX+1];
+    int w[MAX+1]; //processi che aspettano di essere almeno k
+    int s[MAX+1]; //praticamente quanti processi potrei sbloccare se mi sblocco a indice k
+
+
+    procedure entry void at_least(int n){
+
+        //New process in
+        w[n]++;
+        updateSum();
+
+        //Potrei sbloccare meno processi dei richiesti
+        if(s[n] < n){
+
+            //Aspetta che arrivino altri processi
+            ok2unlock[n].wait();
+        }
+
+        //Aggiorna di nuovo la somma
+        updateSum();
+    }
+
+    private void updateSum(){
+
+        for(int i = 1; i <= MAX; i++){
+            s[i] = s[i-1] + w[i];
+
+            if(s[i] >= i){
+
+                //Sblocca tutti i processi
+                for(int j = 1; j<=i; j++){
+                    w[i]--; //Aggiorna che quel processo é andato
+                    ok2unlock.signal();
+                }
+            }
+        }
+
+    }
+}

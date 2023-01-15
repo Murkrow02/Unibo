@@ -1,0 +1,306 @@
+---------------------------------------------------------------------------------------
+ricevimento 13 gennaio
+
+Esercizio c2 (06.09.2022)
+
+Usando i semafori implementare un servizio che preveda due funzioni:
+void sumstop(int v)
+int sumgo(void)
+La funzione sumstop deve mettere il processo chiamante in attesa.
+La funzione sumgo deve sbloccare tutti i processi messi in attesa con la sumstop e restituire la somma algebrica dei
+valori passati come parametro alla sumstop dai processi che sono stati sbloccati (zero se la sumgo viene richiamate
+quando non c'è nessun processo bloccato).
+
+
+int sum = 0;
+int blocked = 0;
+sem sb(0);
+sem mutex(1);
+
+void sumstop(int v){
+  mutex.P()
+  blocked++
+  sum += v
+  mutex.V()
+  sb.P();
+  blocked--;
+  if (blocked > 0)
+       sb.V()
+  else
+      mutex.V()
+  
+}
+
+int sumgo(void){
+  mutex.P()
+  int final = sum;
+  sum = 0
+   if(blocked > 0)
+     sb.V();
+   else
+      mutex.V()
+   return final;
+}
+
+---------------------------------------------------------------------------------------
+
+es2. 15.09.21
+
+Dato un servizio di message passing sincrono scrivere, senza fare uso di processi server, un servizio di message passing sincrono concatenato che abbia le seguenti primitive:
+    void chained_send (T msg, list_of_pids dests)
+    T chained_recv(void)
+La funzione chained_send deve fare in modo che tutti i processi indicati nella lista dests ricevano il messaggio. Il processo che chiama la chained_send si blocca solo fino a quando il primo processo della lista dests non chiama una chained_recv, il primo si sblocca quando il secondo chiama la chained_recv e così via. ( la funzione chained_recv riceve messaggi provenienti da qualsiasi mittente)
+
+void chained_send (T msg, list_of_pids dests){
+  ssend(<msg, dests.tail()>, dests.first());
+  //first() restiuisce il primo della lista
+  //tail() restituisce la lista tranne il primo elemento
+  //(se la lista ha un solo elemento tail è vuoto)
+}
+
+T chained_recv(void){
+  <msg, dests> = sreceive(ANY);
+  if !dests.empty()
+    ssend(<msg, dests.tail()>, dests.first())
+ return msg
+}
+
+-----
+esercizio sbagliato testo esame 2018.02.12
+-----
+(esercizio 20??.??.??)
+dato un message passing asincrono non FIFO
+void nfasend(msg_t msg, pid_t dest)
+msg_t nfarecv(pid_t sender)
+
+implementare un message passing asincrono FIFO
+
+void asend(msg_t msg, pid_t dest)
+msg_t arecv(pid_t sender)
+
+Nota: sia il servizio dato (non fifo) sia quello da implementare (fifo) consentono la ricezione solo da mittente specificato (non supportano ANY)
+
+*** questa ipotesi di soluzione usa memoria condivisa, ==>`é errato ****
+queue of msg_t q[MAX_PROC]  //array di code
+
+void asend(msg_t msg, pid_t dest){
+    q[getpid()].enqueue(msg)
+    nfasend(msg, dest)
+}
+
+msg_t arecv(pid_t sender){ //non c'è la possibiltà che sia ANY il sender
+    msg_t empty = nfarecv(sender)
+    return q[sender].dequeue()
+}
+
+//memoria condivisa non si può!!!!
+
+//enumerare i messaggi per ogni destinatario
+
+//il destinatario tiene un contatore per ogni mittente
+//e tiene conto l'ultimo 
+//lo mette in coda se non è quello che si aspetta
+
+---------------------------------------------------------------------------------------
+
+c1. 2019.05.18
+
+Una fabbrica usa 16 tipi di componenti (es. ruota telaio scocca sellino catena ....). Ogni volta che occorre costruire un prodotto occorre prendere dal magazzino le parti necessarie, e.g. per fare un go-kart occorre una scocca e 4 ruote, per fare una bicicletta un telaio, un sellino, 2 ruote e una catena. Scopo dell'esercizio è di scrivere un monitor storage per la gestione del magazzino (un vettore di 16 interi). Ogni volta che un magazziere riceve un carico di componenti dal formitori chiama la funzione: storage.add(components) dove components è un vettore di 16 elementi, indica quanti componenti di ogni tipo vengono aggiunti al magazzino. Quando un operaio deve costruire un prodotto chiama: storage.get(components) dove components è un vettore di 16 elementi: indica quanti componenti di ogni tipo sono necessari per costruire il prodotto richiesto. Ovviamente se manca qualche componente occorre aspettare che i magazzinieri ricevano e mettano nel magazzino le parti mancanti. Le richieste degli operali devono essere soddisfatte in ordine FIFO. Ci possono essere casi di Deadlock? e di Starvation? perché?
+
+monitor storage{
+  int storage[16]
+  queue of int<16> q;
+  
+  void add(int[16] components){
+    storage += components //vector sum
+    if (!q.empty() && storage >= q.head()) //vector <=
+       c.signal()
+  }
+  
+  void get(int[16] components){
+            //per la fifo mi devo bloccare se la coda non è vuota
+            //o non ho abbastanza componenti
+      if (!q.empty() || !storage >= components) //vector <=
+        q.enqueue(components)
+        c.wait()
+        q.dequeue()
+      storage -= components
+      if (!q.empty() && storage >= q.head()) //vector <=
+        c.signal()
+  }
+  
+}
+
+--------------------------------------------------------
+
+2021-07-21 Esercizio c.2:
+
+Quella che segue ...
+
+class: wrongsem
+int value = 0, count = 0
+semaphore mutex init 1;
+semaphore s init 0;
+void wV():
+   mutex.P()
+   if value == 0 && count > 0:
+      s.V()
+   else:
+      value++
+   mutex.V()
+ 
+void wP()
+   mutex.P()
+   if value == 0:
+      count++
+      mutex.V()
+      s.P()
+      mutex.P()
+      count--
+   else:
+      value--
+   mutex.V()
+
+... vorrebbe essere l'implementazione di un semaforo unfair inizializzato a zero ma è errata. Mostrare un caso nel quale il valore del semaforo (value) non venga correttamente mantenuto. Correggere il codice usando il passaggio del testimone (passing le batôn).
+
+caso nel quale value non viene correttamente mantenuto:
+    caso in cui c'è una V poi un altra V prima che prosegua la P decrementi counter, questa dovrebbe incrementare value e non lo fa
+
+correzione del codice:
+
+class: wrongsem
+int value = 0, count = 0
+semaphore mutex init 1;
+semaphore s init 0;
+void wV():
+   mutex.P()
+   if value == 0 && count > 0:
+      s.V()
+   else:
+      value++
+      mutex.V()   //tabulato (prima era fuori dal else ora è all'interno del ramo else)
+ 
+void wP()
+   mutex.P()
+   if value == 0:
+      count++
+      mutex.V()
+      s.P()
+                   //qui è stata rimossa la mutex.P()
+      count--
+   else:
+      value--
+   mutex.V()
+
+---------------------------------------------------------------------------------------
+|||                 DOMANDE PARTE GENERALE (secondo semestre)                       |||
+---------------------------------------------------------------------------------------
+TEORIA (discussa a voce)
+
+2022/06/21 del g2 A:
+Domanda: Come si calcola la lunghezza massima di un file in un FileSystem tipo UNIX (bffs, ext2, minix ecc)?
+Risposta (appunti): numero massimo di blocchi che può avere il file * numero di blocchi
+bs -> blocksize , ampiezza del blocco
+m -> # puntatori diretti
+N -> # puntatori in un blocco
+(m + N + N^due + N^3) bs
+N indiretto
+N^due pk doppiamente indiretto
+N^3 pk triplamente indiretto.
+
+k -> numero di indirezioni
+UNIX arriva al 3
+
+---------------------------
+
+2022/07/20 del g2 C:
+Domanda: Nello scheduler di tipo Shortest Remaining Time First (versione preemptive di STF: Shortest Time First), il tempo residuo può diventare negativo, perchè?
+Risposta (appunti): SJF shorted Job first
+più breve rispetto al cpuburst
+computation IO computation IO ...
+qual'è quello che avrà bisogno della CPU per meno tempo
+stima fin ora tempo breve cpu è possibile che abbia tempo breve di CPU
+T_n+1 = alfa T_n + (1 - alfa) t_n
+
+io dico quello dovrebbe metterci due
+e invece quello per motivi suoi va a 10
+se in mezzo arriva interrupt
+è già arrivato 3 il tempo rimanente è arrivato a -3
+l'algoritmo si basa su una previsione di CPU burnst (di calcolo)
+e questa previsione potrebbe essere sbagliata
+il processo potrebbe aver lavorato per più del tempo previsto .
+SRTF
+se cè uno talmente short da essere negativo vincerà la competizione
+
+---------------------------
+
+2022/06/21 del g2 D:
+Domanda: Per implementare un servizio di autorizzazione di tipo capability è meglio usare crittografia simmetrica o crittografia 
+a chiave pubblica? perché?
+Risposta (appunti): capability gestita dal gestore
+l'utente è un depositario
+non sa nemmeno cosa c'è scritto
+è un pass
+chi crea e chi controlla è lo stesso gestore
+quindi basta una crittografia simmetrica
+
+---------------------------
+
+TEORIA algoritmo del banchiere a N valute:
+Domanda: l'algoritmo del banchiere a N valute a cosa serve?
+Risposta (appunti): serve per 'prevenire' deadlock.
+Il banchiere viene visto come il gestore di risorse e i clienti come processi che le richiedono.
+quindi quando tu chiedi al banchiere delle monete
+il banchiere si chiede: ma se io te le dessi lo stato sarebbe safe?
+se è safe posso dartele, se invece è unsafe il banchiere può bloccarti e dire aspetta e ricordarsi che tu aspetti.
+quando qualcun'altro le restituisce il banchiere che ora ovviamente ha più monete
+e si ricorda che tu gliele avevi chieste e che essendo unsafe ti ha fermato
+ora si richiede la stessa domanda: 'ma se io te le dessi lo stato sarebbe safe?' e così via.
+
+Domanda: cosa significa che lo stato del banchiere sia safe o unsafe?
+Risposta (appunti): lo stato è unsafe quando 'rischiamo' deadlock, esempio
+Il banchiere ha 4 monete in tutto
+P dichiara di poter chiedere al massimo 4 e ha chiesto due monete,
+Q dichiara di poter chiedere al massimo 4 e ha chiesto due monete.
+Questo stato è 'unsafe' perchè potrebbe succedere che sia P sia Q richiedano le due monete mancanti prima di restituirle, quindi deadlock.
+ma 'rischiamo' deadlock perchè nel caso P dica a me ora servono solo due monete NON c'è deadlock.
+safe di conseguenza è quando esiste una lista di terminazione che permetta di non esserci deadlock.
+
+
+BANCHIERE A 3 VALUTE
+Scrivere uno stato per un algoritmo per l'algoritmo del banchiere a tre valute in modo tale che lo stato non sia safe ma
+se si considerassero solamente due valute alla volta lo stato sarebbe safe.
+
+/*
+indichiamo Initial Credit con IC (credito iniziale posseduto dal banchiere)
+c_i credit ==> ciò che al massimo può chiedere i
+p_i prestito (in inclese 'loan') ==> ciò che è stato già dato a i
+n_i need ==> ciò che può ancora chiedere i prima di terminare e restituire tutto
+*/
+
+IC (2, 2, 2)
+forall i c_i (1, 1, 1)
+
+p_1 (0,1,1)
+p_2 (1,0,1)
+p_3 (1,1,0)
+
+n_1 (1, 0, 0)
+n_2 (0, 1, 0)
+n_3 (0, 0, 1)
+
+COH = (0,0,0)
+
+es. per altri stati
+
+IC (2, 2)
+forall i c_i (1, 1)
+p_1 (0, 1)
+p_2 (1, 0)
+p_3 (1, 1)
+
+n_1 (1, 0)
+n_2 (0, 1)
+n_3 (0, 0) prima o poi n_3 si liberea'
+
+COH = (0,0)    

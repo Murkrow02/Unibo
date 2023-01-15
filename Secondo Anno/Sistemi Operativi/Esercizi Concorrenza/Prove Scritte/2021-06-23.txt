@@ -1,0 +1,59 @@
+
+
+monitor delayValue{
+
+    int NDELAY;
+    int valToRet;
+    queue<condition> ok2unlock = new queue<condition>();
+
+    int delay(int value){
+
+
+        //Sblocca il primo dalla coda se ci sono almeno NDELAY processi in attesa
+        if(ok2unlock.size() >= NDELAY){
+            valToRet = value;
+            ok2unlock.dequeue.signal();
+        }
+
+        //Aggiungi alla coda il nuovo processo
+        condition newCond = new condition();
+        ok2unlock.enqueue(newCond);
+
+        //Aspetta qui che il processo venga tolto dalla coda
+        newCond.wait();
+
+        //Siamo stati presi dalla coda, ritorniamo il valore del processo che ci ha riattivato
+        return valToRet;
+    }
+}
+
+//Esercizio c.2: Implementare usando semafori ordinari (fair, fifo) un servizio di semafori a priorità lifo che fornisca le seguenti primitive:
+//void PLP(int prio); void PLV();
+
+class pSem{
+
+    semaphore mutex(1);
+    int val = 0;
+    stack<(semaphore,priority)> waiting[MAX];
+
+    void PLP(int prio){
+
+        //Aspetta la mutua esclusione per lavorare
+        mutex.P();
+
+        //Puo andare avanti
+        if(val > 0){
+            val--;
+            mutex.V();
+            return;
+        }
+
+        //Non puo andare avanti, metti in attesa con prioritá
+        waiting.
+
+    }
+
+    void PLV(){
+
+    }
+}

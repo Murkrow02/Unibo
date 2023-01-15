@@ -1,0 +1,32 @@
+int buf;
+
+
+semaphore full(0);
+semaphore empty(1);
+
+void produce(int val){
+
+    //Aspetta che venga consumato il valore precedente
+    empty.P()
+
+    //Valore precedente consumato
+
+    //Produci un nuovo valore
+    buf = p;
+
+    //Sblocca chi stava aspettando un prodotto
+    full.V();
+
+}
+
+int consume(){
+
+    //Aspetta che venga prodotto un valore
+    full.P()
+
+    //Valore prodotto e mutua esclusione rilasciata
+    val = buf;
+    empty.V();
+    return val;
+
+}

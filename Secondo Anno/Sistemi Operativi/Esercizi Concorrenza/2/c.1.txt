@@ -1,0 +1,96 @@
+monitor porto {
+
+    cond ok2salpare
+    cond ok2attraccare
+    cond ok2scaricare
+    cond ok2finish
+    int amountLeft
+    
+    bool camionStaScaricando = false
+    bool oldCamionStillThere = false
+
+    procedure entry attracca(capacity){
+        
+        //Un altra nave é nel porto
+        if(amountLeft > 0)
+            ok2attraccare.wait() //aspetta l ok
+
+        //La nave ha attraccato
+        amountLeft = capacity
+
+        //Dai prioritá al camion che ancora deve scaricare 
+        if(oldCamionStillThere)
+            ok2finish.signal()
+
+        //Puo arrivare un nuovo camion
+        else
+            ok2scaricare.signal()
+    }
+
+    procedure entry salpa(){
+
+        //Non puoi salpare se hai ancora dello spazio
+        if(amountLeft > 0)
+            ok2salpare.wait()
+
+        //La nave ha salpato, puo arrivare un altra
+        ok2attraccare.signal()
+    }
+
+    procedure entry scarica(int amount){
+
+        //Ancora non c'é una nave disponibile o un altro camion sta scaricando
+        if(amountLeft == 0 || camionStaScaricando)
+            ok2scaricare.wait()
+
+        //Siamo entrati nel porto
+        camionStaScaricando = true
+
+        //La nave ha ancora spazio e rimane nel porto
+        if(amountLeft > amount)
+            amountLeft = amountLeft-amount
+
+        //Abbiamo esaurito lo spazio nella nave
+        else{
+
+            //Quanto rimane ancora nel camion
+            camionLeft = amount - amountLeft
+
+            //Rimani nel ciclo finché il camion non si svuota
+            while(camionLeft != 0){
+
+                //Fai partire la barca riempita
+                ok2salpare.signal();
+
+                //Il camion deve aspettare una nuova barca
+                oldCamionStillThere = true
+                ok2finish.wait()
+                oldCamionStillThere = false
+
+                //Nuova barca arrivata
+                if(camionLeft > amountLeft){
+
+                    //Svuotato del tutto
+                    amountLeft = amountLeft-camionLeft
+                    camionLeft = 0
+                }else{
+                    camionLeft = camionLeft - amountLeft
+
+                    //Riempito una nuova barca
+                    if(amountLeft == 0)
+                        ok2salpare.signal(); //Ne parte un altra
+                }
+                    
+            }
+
+            //Il camion ha finito ed é vuoto
+            camionStaScaricando = false
+            ok2scaricare.signal() //nuovo camion puo arrivare
+
+        }
+
+
+    }
+
+
+}

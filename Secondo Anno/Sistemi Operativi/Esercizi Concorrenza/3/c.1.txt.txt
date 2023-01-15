@@ -1,0 +1,78 @@
+/*
+Scrivere il monitor collocamento:
+    void cercolavoro(char *nome, char *skill)
+    void char *assumo(char * skill)
+
+Quando un processo chiama la cercolavoro si mette in attesa di una richiesta di lavoro e rimane bloccato nel monitor
+fino a che non è stato assunto. Nella cercolavoro viene indicato il nome dell'aspirante lavoratore la sua capacità (skill).
+
+Un datore di lavoro con necessità di personale chiama la assumo specificando la capacità richiesta. Se c'è in attesa
+almeno un aspirante lavoratore con quella specifica capacità (uguale valore di skill), il datore di lavoro riceve il nome del
+nuovo dipendente ed entrambi i processi escono dal monitor. Nel caso non ci siano richieste compatibili il datore di
+lavoro si blocca nel monitor attendendo un lavoratore con la capacità cercata. Quando arriva il lavoratore che soddisfa
+le richieste si sbloccano entrambi i processi lavoratore e datore di lavoro. La assumo restituisce in ogni caso il nome del
+dipendente da assumere.
+
+*/
+
+monitor collocamento{
+
+
+    condition newCerco;
+    condition newAssumo;
+    condition foundCercatore;
+    char? lastCercoNome = null;
+    char? lastAssumoSkill = null;
+    char? lastCercoSkill = null;
+
+    procedure entry cercolavoro(char nome, char skill){
+
+        if(lastAssumo = null)
+            newAssumo.wait();
+
+        //C é almeno un assuntore
+        newCerco.signal(); //Informa che c'é un cercatore
+        lastCercoNome = nome; //Questo é il suo nome
+
+        //Risvegliato, quindi qualcuno assume
+        while(true){
+            if(skill == lastAssumo){
+
+                foundCercatore.signal();
+                break;
+            }
+
+            //Non cercavano noi :(
+            newAssumo.signal(); //Sveglia il prossimo cercatore
+            newAssumo.wait();   //Fermiamoci finche non arriva un nuovo ad assumere
+            
+        }
+
+
+    }
+
+    char assumo(char skill){
+
+        if(lastCerco == null)
+            newCerco.wait();
+
+        lastAssumo = skill;
+
+        //Un nuovo cercatore é arrivato
+        //Risvegliato, quindi qualcuno assume
+        while(true){
+            if(skill == lastAssumo){
+
+                foundCercatore.signal();
+                break;
+            }
+
+            //Non cercavano noi :(
+            newAssumo.signal(); //Sveglia il prossimo cercatore
+            newAssumo.wait();   //Fermiamoci finche non arriva un nuovo ad assumere
+            
+        }
+
+    }
+
+}

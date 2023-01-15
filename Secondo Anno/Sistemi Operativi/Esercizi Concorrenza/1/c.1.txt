@@ -1,0 +1,88 @@
+/*
+I bit di un numero intero rappresentano condizioni di un sistema. 
+    Se lo stato attuale è 6 (0110) vuole dire che attualmente sono vere le condizioni 2 (0010) e 4 (0100).
+
+Scrivere un monitor bitcond che fornisca le seguenti procedure entry:
+    void set(int bit2set); accende nello stato attuale i bit di bit2set
+    void unset(int bit2unset) spegne nello stato attuale i bit di bit2unset
+    void statuswait(int bit2wait) attende che lo stato attuale soddisfi tutti le condizioni indicate in bit2wait (cioè
+    che tutti i bit in bit2wait siano accesi nello stato attuale).
+
+Le richieste statuswait devono essere servite in ordine FIFO (cioè un processo anche se sono presenti tutte le
+condizioni necessarie deve attendere se un processo che ha chiamato statuswait prima è in attesa).
+Lo stato iniziale è zero (nessuna risorsa disponibile)
+*/
+
+monitor bitcond{
+
+    int nWaiting = 0; 
+    condition ok2check;
+    int conditionToSatisfy;
+    condition conditionSatisfied;
+    int activeNumber;
+
+    bitcond(){
+        activeNumber = 0;
+    }
+
+    procedure entry set(int bit2set){
+        
+        //or bit a bit
+        acrtiveNumber |= bit2unset;
+
+
+        if(checkConditionsSatisfied(conditionToSatisfy))
+            conditionSatisfied.signal();
+    }
+
+    procedure entry unset(int bit2unset) {
+
+        //Xor bit a bit
+        acrtiveNumber ^= bit2unset;
+    }
+
+    procedure entry statuswait(int bit2wait) {
+
+        //Se un altro processo sta giá aspettando la bitmask aspetta
+        if(nWaiting > 0)
+            nWaiting++;
+            ok2check.wait();
+
+        //Controlla se la condizione é giá soddisfatta
+        bool conditionOk = checkConditionsSatisfied(bit2wait);
+
+        if(!conditionOk){
+
+            //Non é soddisfatta
+            conditionToSatisfy = bit2wait;
+
+            //Aspetta che la condizione sia soddisfatta
+            nWaiting++;
+            conditionSatisfied.wait();
+            nWaiting--;
+        }
+
+        //Sblocca il prossimo processo a controllare la bitmask     
+        ok2check.signal();
+    }
+
+    private bool checkConditionsSatisfied(bit2wait){
+
+        int toWait[4] = binary(bit2wait);
+        int activeNumber[4] = binary(activeNumber);
+
+        for(i = 0; i < 3; i++){
+            if(toWait[i] == 1 && activeNumber[i] === 0){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+
+
+    }
+
+}

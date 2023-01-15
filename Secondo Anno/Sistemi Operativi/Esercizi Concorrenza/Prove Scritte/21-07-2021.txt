@@ -1,0 +1,60 @@
+/*
+
+*/
+
+monitor torneo{
+
+    condition secondTeamEntered;
+    bool isFirstTeamIn;
+    int formaSecondaSquadra;
+    bool vintoPrimaSquadra;
+    bool primaSquadraFinito;
+    torneo(){
+        isSecondTeamIn = false;
+    }
+
+    bool gioca(i, turno, forma){
+
+        //Aspetta la seconda squadra
+        if(!isFirstTeamIn){
+            isFirstTeamIn = true;
+            secondTeamEntered.wait();
+        }     
+        else
+        {
+            //Ci sono 2 squadre, sblocca la prima che era in attesa
+            formaSecondaSquadra = forma;
+            secondTeamEntered.signal();
+        }
+       
+        //Codice eseguito solo dalla seconda
+        if(primaSquadraFinito){
+
+            //Reset
+            isFirstTeamIn = false;
+            primaSquadraFinito = false;
+            return !vintoPrimaSquadra;
+        }
+
+        //Codice eseguito solo dalla prima
+        bool vittoria;
+        if(forma > formaSecondaSquadra){
+            vittoria = true;
+        }else if(forma < formaSecondaSquadra){
+            vittoria = false;
+        }
+        else{
+            vittoria = rand(0,1);
+        }
+
+        vintoPrimaSquadra = vittoria;
+        primaSquadraFinito = true;
+
+        return vittoria;
+
+    }
+
+
+
+
+}

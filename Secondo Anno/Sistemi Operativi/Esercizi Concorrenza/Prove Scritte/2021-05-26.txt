@@ -1,0 +1,69 @@
+monitor bss{
+
+    condition ok2get;
+    condition ok2put;
+
+    bool atLeastOneGet = false;
+    int wg, wp;
+
+    List<T> cose();
+
+    procedure void put(T value){
+
+        //Metti la cosa nelle cose
+        cose.put(value);
+
+        //Controlla se devi fermarti ad aspettare un getter
+        if(atLeastOneGet){
+
+            //Ci sono dei getter in attesa
+            lwg = wg;
+            for(i from 0 to lwg-1){
+                ok2get.signal(); //sblocca i putter
+            }
+
+        }else{
+
+            //Dobbiamo fermarci che un getter venga
+            wp++;
+            ok2put.wait();
+            wp--;
+        }
+
+        //Finito, puliamo la lista in quanto tutti i get l'hanno gia presa in questo momento
+        cose.clear();
+        atLeastOneGet = false;
+    }
+
+
+    procedure List<T> get(){
+
+        atLeastOneGet = true;
+
+        //La lista é vuota
+        if(cose.empty()){
+
+            //Aspetta che qualcuno infili la roba
+            wg++;
+            ok2get.wait();
+            wg--;
+        }
+        else{
+
+            //La lista é piena, puoi prendere e sbloccare i putter
+            lwp = wp;
+            lList = cose;
+            for(i from 0 to lwp-1){
+                ok2put.signal(); //sblocca i putter
+            }
+            
+            return lList;
+        }
+
+        return cose;
+    }
+
+
+}
+
+//es.2

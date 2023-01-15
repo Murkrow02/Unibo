@@ -1,0 +1,7 @@
+void tsend(msg_t msg, pid_t dest){
+    asend(mypid(), dest, msg);
+}
+
+msg_t trecv(){
+
+}

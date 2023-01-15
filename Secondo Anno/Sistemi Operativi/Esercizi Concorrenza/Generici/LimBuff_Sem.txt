@@ -1,0 +1,43 @@
+queue buffer[MAXSIZE];
+
+
+semaphore free(MAXSIZE);
+semaphore full(0);
+semaphore mutex(1);
+
+//Non toccare i semafori dopo aver rilasciato la mutua esclusione
+
+void producer(int val){
+
+    //Aspetta che ci sia un posto libero nel buffer
+    free.P();
+
+    //Aspetta che un altro processo rilasci la mutua esclusione
+    mutex.P()
+
+    //Abbiamo uno slot libero, produciamo
+    buffer.enqueue(val);
+
+    //Avvisiamo al consumer che puo consumare
+    full.V();
+    mutex.V()
+
+}
+
+int consumer(){
+
+    //Aspetta che ci sia qualcosa nel buffer
+    full.P()
+
+    //Aspetta il rilascio della mutua esclusione
+    mutex.P()
+
+    //Consuma un valore
+    val = buffer.dequeue();
+
+    //Informa che hai liberato uno slot
+    free.V();
+    mutex.V();
+    return val;
+
+}

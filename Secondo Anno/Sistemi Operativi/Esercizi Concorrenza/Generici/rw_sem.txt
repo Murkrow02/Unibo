@@ -1,0 +1,74 @@
+//Non é CORRETTO
+
+sem mutex(1);
+sem ok2read(1);
+sem ok2write(1);
+nr,nw = 0;
+
+void startRead(){
+
+    //Aspetta la mutua esclusione
+    mutex.P();
+
+    //Controlla che nessuno stia leggendo
+    if(nw > 0){
+        mutex.V();
+        ok2read.P();
+
+        //Puo iniziare a leggere
+        mutex.P();
+        nr++;
+    }
+
+    //Rilascia la mutua esclusione
+    mutex.V();
+
+    //Leggi
+    READ();
+}
+
+void endRead(){
+
+    //Aspetta la mutua esclusione
+    mutex.P();
+
+    nr--;
+
+    //Rilascia uno scrittore se non ci sono piu lettori
+    if(nr == 0 && nw = 0)
+        ok2write.V();
+
+    mutex.V();
+}
+
+void startWrite(){
+
+    //Aspetta la mutua esclusione
+    mutex.P();
+
+    if(nr > 0 || nw > 0){
+        mutex.V();
+        ok2write.P();
+    }
+
+    //Possiamo scrivere
+    mutex.P();
+    nw++;
+
+    //Scrivi
+    mutex.V();
+    WRITE();
+
+}
+
+void endWrite(){
+
+    //Aspetta la mutua esclusione
+    mutex.P();
+
+    ok2read.V();
+    ok2write.V();
+
+    mutex.P();
+}
+
