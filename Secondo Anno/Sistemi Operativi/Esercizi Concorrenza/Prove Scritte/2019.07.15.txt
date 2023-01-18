@@ -1,0 +1,59 @@
+monitor pairbuf{
+
+    queue<T val> values;
+    int nr, nw;
+    condition ok2exit;
+
+    void put(T x){
+
+        //Inserisci il valore
+        values.enqueue(x);
+        ok2read.signal();
+        nw++;
+
+        //Aspetta che il numero lettori e scrittori sia uguale
+        if(nr != nw){
+            ok2exit.wait();
+        }
+
+        //Siamo stati sbloccati
+        nw--;
+
+        if(nr != 0 || nw != 0)
+            unlockEveryone();
+
+    }
+
+    T get(){
+
+        nr++;
+
+        //Prendi il valore
+        if(values == empty){
+            ok2read.wait();
+        }
+
+        //Almeno un valore in coda
+        T val = values.dequeue();
+
+        //Aspetta che sia di numero uguale
+        if(nr != nw){
+            ok2exit.wait();
+        }
+
+        //Siamo stati sbloccati
+        nw--;
+
+        if(nr != 0 || nw != 0)
+            unlockEveryone();
+
+        return val;
+    }
+
+    private void unlockEveryone(){
+         while(nr != 0 || nw != 0){
+            ok2exit.signal();
+         }
+    }
+    
+}

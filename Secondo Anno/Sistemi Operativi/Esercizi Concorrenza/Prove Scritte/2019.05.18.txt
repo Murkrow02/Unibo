@@ -1,0 +1,34 @@
+semaphore mutex(1);
+queue<semaphore> waiting;
+
+nProcExecuting = 0;
+
+void SAU_enter(){
+
+    mutex.P();
+    nProcExecuting++;
+    mutex.V();
+
+}
+
+
+void SAU_exit(){
+
+    mutex.P();
+    nProcExecuting--;
+
+    while(nProcExecuting != 0){
+        semaphore s = new semaphore(0);
+        waiting.add(s);
+        mutex.V();
+        s.P();
+        mutex.P();
+    }
+
+    firstWaiting = waiting.dequeue();
+    if(firstWaiting != null)
+        firstWaiting.V();
+
+    
+    mutex.V();
+}

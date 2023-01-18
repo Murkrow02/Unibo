@@ -1,0 +1,74 @@
+monitor monobinarysem{
+
+    int value;
+    bool someoneWaiting;
+    condition ok2go;
+    monobinarysem(int start){
+
+        //ERROR if start != 0,1
+        value = start;
+    }
+
+    procedure entry monoV(){
+
+        //Non ci sono risorse disponibili
+        if(value == 0){
+
+            if(someoneWaiting)
+                ok2go.signal();
+            else
+                value = 1;
+        }
+
+    }
+
+
+    procedure entry monoP(){
+
+        //Rimani bloccato finché qualcuno non esce
+        while(value==0)
+        {
+            //Sblocca il prossimo
+            someoneWaiting = true;
+            ok2go.signal();
+            ok2go.wait();
+        }
+
+        //Siamo stati sbloccati
+        value = 0; //Non ci saranno risorse finché qualcuno non chiama P
+        someoneWaiting = false;
+
+
+    }
+
+
+}
+
+
+void pssend(t_msg msg, t_pid dest){
+
+    asend(<getpid(), msg>, dest);
+    ack = areceive(dest); //Aspetta di ricevere l'ack prima di sbloccarti
+}
+
+
+private int autoMessageId; //Privata per pssreceive
+t_msg pssreceive(t_pid dest){
+
+    //Automessaggio per sbloccarti
+    autoMessageId++;
+    asend(<getpid(), msg>, getpid());
+
+    //Prendi ultimo messaggio dalla coda
+    msg, pid = areceive(ANY);
+
+    //Controlla se é l'automessaggio
+    if(pid == getpid() && msg == autoMessageId){
+        return None; //Automessaggio = nessun messaggio
+    }
+    else if(dest == pid)(
+        //manda ack
+        return msg; 
+    )
+    //Altrimenti dovresti rimettere il messaggio in coda ma mi scoccio
+}

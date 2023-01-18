@@ -1,0 +1,64 @@
+monitor rw{
+
+    condition ok2read;
+    condition ok2write;
+
+    int nw,wr;
+
+    T buffer;
+
+    put(T dato){
+
+        //Aspetta che esca uno scrittore
+        while(nw > 0){
+            ok2write.wait();
+        }
+
+        //Entrato uno scrittore
+        nw++;
+        buffer = dato;
+
+        if(wr > 0)
+            //Sblocca il primo lettore in attesa
+            ok2read.signal();
+        else{
+
+            //Aspetta almeno un lettore
+            ok2write.wait();
+        }
+
+        nw--;
+    }
+
+    T get(){
+
+        T localBuffer;
+
+        //Aspetta uno scrittore
+        if(nw == 0){
+            wr++;
+            ok2read.wait();
+            localBuffer = buffer;
+            wr--;
+
+            //Sblocca a catena tutti gli altri lettori
+            while(wr > 0){
+                ok2read.signal();
+            }
+        }else(
+
+            //Almeno uno scrittore é entrato
+            localBuffer = buffer;
+            ok2write.signal();
+        )
+
+        if(wr == 0){
+            ok2write.signal();
+        }
+        
+        //Arrivato uno scrittore
+        return localBuffer;
+    }
+
+
+}

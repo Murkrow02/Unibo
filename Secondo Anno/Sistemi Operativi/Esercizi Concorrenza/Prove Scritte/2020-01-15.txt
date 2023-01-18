@@ -1,0 +1,90 @@
+monitor semtimeout{
+
+    int nRes;
+    queue<int time_remaining, condition cond> waiting_proc;
+    bool wokeFromTimeout = false;
+
+    semtimeout(int nRes_){
+        nRes = nRes_;
+    }
+
+    void V(){
+
+        
+        if(nRes == 0){
+            //Bisogna svegliare il primo processo dalla coda
+            waiting_proc.dequeue().signal();
+        }
+        else{
+            //Nessuno sta aspettando, incrementa solamente le risorse disponibili
+            nRes++;
+        }
+        
+    }
+
+    boolean P(int timeout){
+        
+        
+        //Risorse finite, metti in pausa il processo
+        if(nRes == 0){
+            condition cond = new condition();
+            waiting_proc.enqueue(timeout, cond);
+            cond.wait();
+        }
+        else{
+            //Ci sono abbastanza risorse, continua l'esecuzione normalmente
+            nRes--;
+            return false;
+        }
+
+        //Siamo stati sbloccati
+        if(wokeFromTimeout){
+            wokeFromTimeout = false;
+            return true;
+        }
+
+        return false;
+    }
+
+    void tick(void) {
+
+        //Scorri tutti i processi
+        foreach(var proc in waiting_proc){
+
+            //Decrementa il tempo di vita
+            proc.time_remaining--;
+
+            //Timeout, sveglia processo
+            if(proc.time_remaining == 0)
+                waiting_proc.remove(proc);
+                wokeFromTimeout = true;
+                proc.cond.signal();
+        }
+
+    }
+}
+
+//Es.2
+mulsend(pid_t destination, T msg, int times){
+
+    for(int i = 0; i < times; i++){
+
+        //Send message
+        asend(getPid(), msg, destination);
+
+        //Wait for acknowledgement
+        ack = arecv(destination);
+    }
+}
+
+
+T mulrecv(pid_t sender){
+
+    //Wait for message from sender
+    msg = arecv(sender);
+
+    //Send ack message
+    asend(getPid(), ack, sender);
+
+
+}
