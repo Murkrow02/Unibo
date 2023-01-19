@@ -1,0 +1,39 @@
+class lifobuff{
+
+    stack<int> values;
+    semaphore mutex(1);
+    semaphore notempty(0);
+
+    void push(int val){
+
+        //Aspetta mutua esclusione
+        mutex.P(); 
+        values.push(val); //Metti il valore nel buff
+
+        //Rilascia mutex
+        mutex.V();
+
+        //Informa che una nuova risorsa é disponibile
+        notempty.V();
+    }
+
+
+    int pop(){
+
+        //Aspetta mutex
+        mutex.P();
+
+        //Aspetta che il buffer non sia vuoto
+        notempty.P();
+
+        //Il buffer non é vuoto
+        val = values.pop();
+
+        //Rilascia mutex
+        mutex.V();
+
+
+        return val;
+    }
+
+}

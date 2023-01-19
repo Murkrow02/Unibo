@@ -1,0 +1,39 @@
+void lifossend(msg_t msg, pid_t dest){
+
+    //Manda il messaggio (non bloccante)
+    asend(<getpid(), msg>, dest);
+
+    //Aspetta ack (bloccante)
+    msg_t ack;
+    do{
+        ack = arecv(dest); 
+    }while(ack != definisciAck())
+}
+
+msg_t liforecv(pid_t mittente){
+
+    //Prendi il primo messaggio
+    firstMsg, firstMit = arecv(mittente);
+
+    //Rimanda indietro i messaggi finche non ti arriva lo stesso
+    msg_t lastMsg = firstMsg;
+    pid_t lastSender = firstMit;
+    msg_t preLastMsg; //Questo é il messaggio che vogliamo
+    do{
+
+        //Ultimo messaggio diventa penultimo
+        preLastMsg = lastMsg;
+
+        //Manda indietro il penultimo messaggio
+        asend(<lastSender,lastMsg>, getpid());
+
+        //Prendi ultimo messaggio
+        lastMsg, lastSender = arecv(mittente);
+
+    }while(lastMsg != firstMsg);
+
+    //Se siamo arrivati qui allora l'ultimo messaggio corrispondeva al primo, ci interessa il penultimo
+    asend(<ack>, mittente); //ack a mittente
+
+    return preLastMsg;
+}

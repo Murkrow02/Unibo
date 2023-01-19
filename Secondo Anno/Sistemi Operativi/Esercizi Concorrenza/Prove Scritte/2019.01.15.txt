@@ -1,0 +1,28 @@
+//sbagliato
+monitor wsem{
+
+    int value;
+    condition ok2go;
+    wsem(int start){
+        value = start;
+    }
+
+    procedure entry P(int w){
+
+        if(value-w <= 0){
+            ok2go.wait();
+        
+            //Sbloccati
+            value -= w;
+        }
+    }
+
+    procedure entry V(int w){
+
+        value+=w;
+        ok2go.signal();
+    }
+    
+}
+
+
