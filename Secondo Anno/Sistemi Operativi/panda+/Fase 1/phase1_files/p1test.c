@@ -21,8 +21,6 @@
 #include "ash.h"
 #include "ns.h"
 
-#include "pcb_utils.h"
-#include "ash_utils.h"
 
 #define MAXPROC 20
 #define MAXSEM  MAXPROC
@@ -125,14 +123,8 @@ void adderrbuf(char *strp) {
 
     PANIC();
 }
-/* void freePcb(pcb_t * p)
- * Inizializza la lista pcbFree in modo da contenere tutti gli elementi della
- * pcbFree_table. Questo metodo deve essere chiamato una volta sola in fase di
- * inizializzazione della struttura dati. */
 
-/*  pcb_t *allocPcb()
- *  Restituisce NULL se la pcbFree_h è vuota. Altrimenti rimuove un elemento dalla
- *  pcbFree, inizializza tutti i campi (NULL/0) e restituisce l’elemento rimosso. */
+
 
 int main(void) {
     int i;
@@ -346,13 +338,13 @@ int main(void) {
     addokbuf("addNamespace test #1 started\n");
     pid_ns = allocNamespace(NS_PID);
     if (pid_ns == NULL)
-            adderrbuf("Unexpected null on allocNS");
+        adderrbuf("Unexpected null on allocNS");
     if (addNamespace(procp[3], pid_ns) != TRUE)
-            adderrbuf("addNamespace: Unexpected FALSE");
+        adderrbuf("addNamespace: Unexpected FALSE");
     if (getNamespace(procp[3], NS_PID) == getNamespace(procp[0], NS_PID))
-            adderrbuf("getNamespace: Unexpected root namespace for process 3");
+        adderrbuf("getNamespace: Unexpected root namespace for process 3");
     if (getNamespace(procp[3], NS_PID) != pid_ns)
-            adderrbuf("getNamespace: Unexpected namespace for process 3");
+        adderrbuf("getNamespace: Unexpected namespace for process 3");
     addokbuf("addNamespace: test ok\n");
 
     addokbuf("addNamespace(2): test started\n");
@@ -361,9 +353,9 @@ int main(void) {
     addNamespace(procp[1], pid_ns);
 
     if (getNamespace(procp[2], NS_PID) == NULL)
-	    adderrbuf("Child namespace is the root one");
+        adderrbuf("Child namespace is the root one");
     if (getNamespace(procp[2], NS_PID) != pid_ns)
-            adderrbuf("Child namespace is not the one of the parent!");
+        adderrbuf("Child namespace is not the one of the parent!");
     addokbuf("addNamespace(2): test ok\n");
 
     pid_ns2 = allocNamespace(NS_PID);
@@ -371,13 +363,13 @@ int main(void) {
     addNamespace(procp[1], pid_ns2);
 
     if (getNamespace(procp[0], NS_PID) != NULL)
-            adderrbuf("Root namespace changed!");
+        adderrbuf("Root namespace changed!");
     if (getNamespace(procp[1], NS_PID) != pid_ns2)
-            adderrbuf("Parent namespace did not changed!");
+        adderrbuf("Parent namespace did not changed!");
     if (getNamespace(procp[2], NS_PID) != pid_ns2)
-            adderrbuf("Child namespace did not changed!");
+        adderrbuf("Child namespace did not changed!");
     if (getNamespace(procp[3], NS_PID) != pid_ns)
-            adderrbuf("Other process namespace changed!");
+        adderrbuf("Other process namespace changed!");
 
     addokbuf("Namespace module ok\n");
     addokbuf("So Long and Thanks for All the Fish\n");

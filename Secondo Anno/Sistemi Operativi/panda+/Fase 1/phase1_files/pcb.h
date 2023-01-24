@@ -7,14 +7,15 @@
  NOTE: quando possibile usare metodi static
 ****************/
 
-#ifndef PHASE1_FILES_PCB_UTILS_H
-#define PHASE1_FILES_PCB_UTILS_H
+#ifndef PHASE1_FILES_PCB_H
+#define PHASE1_FILES_PCB_H
 
 #include "pandos_types.h"
 
 //Allocazione dei PCB
 
-// 1. Inserisce il PCB puntato da p nella lista dei PCB liberi (pcbFree_h)
+// 1. Inizializza la lista pcbFree in modo da contenere tutti gli elementi della pcbFree_table.
+// Questo metodo deve essere chiamato una volta sola in fase di inizializzazione della struttura dati.
 void initPcbs();
 
 // 2. Inserisce il PCB puntato da p nella lista dei PCB liberi (pcbFree_h)
@@ -57,4 +58,4 @@ pcb_t* removeChild(pcb_t *p);
 // A differenza della removeChild, p può trovarsi in una posizione arbitraria (ossia non è necessariamente il primo figlio del padre).
 pcb_t* outChild(pcb_t* p);
 
-#endif //PHASE1_FILES_PCB_UTILS_H
+#endif //PHASE1_FILES_PCB_H

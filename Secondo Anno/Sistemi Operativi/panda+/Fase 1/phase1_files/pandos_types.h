@@ -31,6 +31,7 @@ typedef struct nsd_t {
 
 /* process table entry type */
 typedef struct pcb_t {
+
     /* process queue  */
     struct list_head p_list;
 

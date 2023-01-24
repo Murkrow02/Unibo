@@ -2,8 +2,8 @@
 // Created by Marco Coppola on 19/01/23.
 //
 
-#ifndef PHASE1_FILES_ASH_UTILS_H
-#define PHASE1_FILES_ASH_UTILS_H
+#ifndef PHASE1_FILES_ASH_H
+#define PHASE1_FILES_ASH_H
 
 #include "pandos_types.h"
 
@@ -32,4 +32,4 @@ pcb_t* headBlocked(int *semAdd);
 // Questo metodo viene invocato una volta sola durante l’inizializzazione della struttura dati.
 void initASH();
 
-#endif //PHASE1_FILES_ASH_UTILS_H
+#endif //PHASE1_FILES_ASH_H

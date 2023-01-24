@@ -19,4 +19,4 @@ nsd_t *allocNamespace(int type);
 // 23. Libera il namespace ns ri-inserendolo nella lista di namespace corretta.
 void freeNamespace(nsd_t *ns);
 
-#include "ns_utils.h"
+#include "namespace.h"
