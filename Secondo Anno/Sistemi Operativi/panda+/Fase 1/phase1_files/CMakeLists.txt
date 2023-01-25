@@ -15,4 +15,4 @@ add_executable(phase1_files
         p1test.c
         pandos_const.h
         pandos_types.h
-        types.h pcb.c ash.h ash.c namespace.h namespace.c)
+        types.h Implementation/pcb.c Implementation/ash.h Implementation/ash.c Implementation/namespace.h Implementation/namespace.c)

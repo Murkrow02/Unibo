@@ -17,9 +17,9 @@
 #include <pandos_types.h>
 
 #include <umps3/umps/libumps.h>
-#include "pcb.h"
-#include "ash.h"
-#include "ns.h"
+#include "Implementation/pcb.h"
+#include "Implementation/ash.h"
+#include "Implementation/namespace.h"
 
 
 #define MAXPROC 20
