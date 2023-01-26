@@ -1,0 +1,4 @@
+Cannot generate into /Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+
+It is already used for project /home/murkrow/Desktop/Panda+
+
+Please either delete it manually or select another generation directory
