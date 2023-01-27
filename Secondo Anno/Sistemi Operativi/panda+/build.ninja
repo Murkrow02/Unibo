@@ -1,0 +1,223 @@
+## This file contains all the build statements describing the
+# compilation DAG.
+
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# 
+# Which is the root file.
+# =============================================================================
+
+# =============================================================================
+# Project: Pandos+
+# Configurations: 
+# =============================================================================
+
+#############################################
+# Minimal version of Ninja required by this file
+
+ninja_required_version = 1.5
+
+# =============================================================================
+# Include auxiliary files.
+
+
+#############################################
+# Include rules file.
+
+include CMakeFiles/rules.ninja
+
+# =============================================================================
+
+#############################################
+# Logical path to working directory; prefix for absolute paths.
+
+cmake_ninja_workdir = /Users/murkrow/Desktop/Repos/Unibo/Secondo$ Anno/Sistemi$ Operativi/panda+/
+
+#############################################
+# Utility command for test
+
+build CMakeFiles/test.util: CUSTOM_COMMAND
+  COMMAND = cd "/Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+" && "/Users/murkrow/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/bin/ctest" --force-new-ctest-process
+  DESC = Running tests...
+  pool = console
+  restat = 1
+
+build test: phony CMakeFiles/test.util
+
+
+#############################################
+# Utility command for edit_cache
+
+build CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd "/Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+" && "/Users/murkrow/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/bin/cmake" -E echo No\ interactive\ CMake\ dialog\ available.
+  DESC = No interactive CMake dialog available...
+  restat = 1
+
+build edit_cache: phony CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd "/Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+" && "/Users/murkrow/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/bin/cmake" --regenerate-during-build -S"/Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+" -B"/Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+"
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build rebuild_cache: phony CMakeFiles/rebuild_cache.util
+
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# /Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+/CMakeLists.txt
+# =============================================================================
+
+# =============================================================================
+# Object build statements for STATIC_LIBRARY target os
+
+
+#############################################
+# Order-only phony target for os
+
+build cmake_object_order_depends_target_os: phony || os/CMakeFiles/os.dir
+
+build os/CMakeFiles/os.dir/src/pcb.c.o: C_COMPILER__os_ /Users/murkrow/Desktop/Repos/Unibo/Secondo$ Anno/Sistemi$ Operativi/panda+/os/src/pcb.c || cmake_object_order_depends_target_os
+  DEFINES = -DPANDOS_TESTING=1
+  DEP_FILE = os/CMakeFiles/os.dir/src/pcb.c.o.d
+  FLAGS = -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -fcolor-diagnostics
+  INCLUDES = -I"/Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/include" -I/usr/include/umps3
+  OBJECT_DIR = os/CMakeFiles/os.dir
+  OBJECT_FILE_DIR = os/CMakeFiles/os.dir/src
+
+build os/CMakeFiles/os.dir/src/ash.c.o: C_COMPILER__os_ /Users/murkrow/Desktop/Repos/Unibo/Secondo$ Anno/Sistemi$ Operativi/panda+/os/src/ash.c || cmake_object_order_depends_target_os
+  DEFINES = -DPANDOS_TESTING=1
+  DEP_FILE = os/CMakeFiles/os.dir/src/ash.c.o.d
+  FLAGS = -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -fcolor-diagnostics
+  INCLUDES = -I"/Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/include" -I/usr/include/umps3
+  OBJECT_DIR = os/CMakeFiles/os.dir
+  OBJECT_FILE_DIR = os/CMakeFiles/os.dir/src
+
+build os/CMakeFiles/os.dir/src/namespace.c.o: C_COMPILER__os_ /Users/murkrow/Desktop/Repos/Unibo/Secondo$ Anno/Sistemi$ Operativi/panda+/os/src/namespace.c || cmake_object_order_depends_target_os
+  DEFINES = -DPANDOS_TESTING=1
+  DEP_FILE = os/CMakeFiles/os.dir/src/namespace.c.o.d
+  FLAGS = -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -fcolor-diagnostics
+  INCLUDES = -I"/Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/include" -I/usr/include/umps3
+  OBJECT_DIR = os/CMakeFiles/os.dir
+  OBJECT_FILE_DIR = os/CMakeFiles/os.dir/src
+
+build os/CMakeFiles/os.dir/src/utils.c.o: C_COMPILER__os_ /Users/murkrow/Desktop/Repos/Unibo/Secondo$ Anno/Sistemi$ Operativi/panda+/os/src/utils.c || cmake_object_order_depends_target_os
+  DEFINES = -DPANDOS_TESTING=1
+  DEP_FILE = os/CMakeFiles/os.dir/src/utils.c.o.d
+  FLAGS = -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -fcolor-diagnostics
+  INCLUDES = -I"/Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/include" -I/usr/include/umps3
+  OBJECT_DIR = os/CMakeFiles/os.dir
+  OBJECT_FILE_DIR = os/CMakeFiles/os.dir/src
+
+
+# =============================================================================
+# Link build statements for STATIC_LIBRARY target os
+
+
+#############################################
+# Link the static library os/libos.a
+
+build os/libos.a: C_STATIC_LIBRARY_LINKER__os_ os/CMakeFiles/os.dir/src/pcb.c.o os/CMakeFiles/os.dir/src/ash.c.o os/CMakeFiles/os.dir/src/namespace.c.o os/CMakeFiles/os.dir/src/utils.c.o
+  ARCH_FLAGS = -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk
+  OBJECT_DIR = os/CMakeFiles/os.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = os/libos.a
+  TARGET_PDB = os.a.dbg
+
+
+#############################################
+# Utility command for test
+
+build os/CMakeFiles/test.util: CUSTOM_COMMAND
+  COMMAND = cd "/Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+/os" && "/Users/murkrow/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/bin/ctest" --force-new-ctest-process
+  DESC = Running tests...
+  pool = console
+  restat = 1
+
+build os/test: phony os/CMakeFiles/test.util
+
+
+#############################################
+# Utility command for edit_cache
+
+build os/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd "/Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+/os" && "/Users/murkrow/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/bin/cmake" -E echo No\ interactive\ CMake\ dialog\ available.
+  DESC = No interactive CMake dialog available...
+  restat = 1
+
+build os/edit_cache: phony os/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build os/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd "/Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+/os" && "/Users/murkrow/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/bin/cmake" --regenerate-during-build -S"/Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+" -B"/Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+"
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build os/rebuild_cache: phony os/CMakeFiles/rebuild_cache.util
+
+# =============================================================================
+# Target aliases.
+
+build libos.a: phony os/libos.a
+
+build os: phony os/libos.a
+
+# =============================================================================
+# Folder targets.
+
+# =============================================================================
+
+#############################################
+# Folder: /Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+
+
+build all: phony os/all
+
+# =============================================================================
+
+#############################################
+# Folder: /Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+/os
+
+build os/all: phony os/libos.a
+
+# =============================================================================
+# Built-in targets
+
+
+#############################################
+# Re-run CMake if any of its inputs changed.
+
+build build.ninja: RERUN_CMAKE | /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/CMakeASMInformation.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/CMakeCInformation.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/CMakeCXXInformation.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/CMakeCommonLanguageInclude.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/CMakeGenericSystem.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/CMakeInitializeConfigs.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/CMakeLanguageInformation.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/CMakeSystemSpecificInformation.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/CMakeSystemSpecificInitialize.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/Compiler/AppleClang-C.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/Compiler/AppleClang-CXX.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/Compiler/CMakeCommonCompilerMacros.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/Compiler/Clang-ASM.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/Compiler/Clang.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/Compiler/GNU.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/Platform/Apple-AppleClang-C.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/Platform/Apple-AppleClang-CXX.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/Platform/Apple-Clang-ASM.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/Platform/Apple-Clang-C.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/Platform/Apple-Clang-CXX.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/Platform/Apple-Clang.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/Platform/Darwin-Initialize.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/Platform/Darwin.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.24.2/CMakeASMCompiler.cmake CMakeFiles/3.24.2/CMakeCCompiler.cmake CMakeFiles/3.24.2/CMakeCXXCompiler.cmake CMakeFiles/3.24.2/CMakeSystem.cmake CMakeLists.txt os/CMakeLists.txt
+  pool = console
+
+
+#############################################
+# A missing CMake input file is not an error.
+
+build /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/CMakeASMInformation.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/CMakeCInformation.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/CMakeCXXInformation.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/CMakeCommonLanguageInclude.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/CMakeGenericSystem.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/CMakeInitializeConfigs.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/CMakeLanguageInformation.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/CMakeSystemSpecificInformation.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/CMakeSystemSpecificInitialize.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/Compiler/AppleClang-C.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/Compiler/AppleClang-CXX.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/Compiler/CMakeCommonCompilerMacros.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/Compiler/Clang-ASM.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/Compiler/Clang.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/Compiler/GNU.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/Platform/Apple-AppleClang-C.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/Platform/Apple-AppleClang-CXX.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/Platform/Apple-Clang-ASM.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/Platform/Apple-Clang-C.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/Platform/Apple-Clang-CXX.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/Platform/Apple-Clang.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/Platform/Darwin-Initialize.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/Platform/Darwin.cmake /Users/murkrow/Library/Application$ Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/share/cmake-3.24/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.24.2/CMakeASMCompiler.cmake CMakeFiles/3.24.2/CMakeCCompiler.cmake CMakeFiles/3.24.2/CMakeCXXCompiler.cmake CMakeFiles/3.24.2/CMakeSystem.cmake CMakeLists.txt os/CMakeLists.txt: phony
+
+
+#############################################
+# Clean all the built files.
+
+build clean: CLEAN
+
+
+#############################################
+# Print all primary targets available.
+
+build help: HELP
+
+
+#############################################
+# Make the all target the default.
+
+default all

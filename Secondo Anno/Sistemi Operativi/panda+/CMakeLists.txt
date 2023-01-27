@@ -5,12 +5,14 @@ enable_testing()
 
 # Cross-compile for the target environment by default
 # Can be disabled to compile with the system's `cc` and run unit tests locally
-option(CROSS_COMPILE "Cross compile for the MIPS architecture" ON)
+option(CROSS_COMPILE "Cross compile for the MIPS architecture" OFF)
 option(DEBUG "Enable GDB debug flags" OFF)
 set(XT_PRG_PREFIX "mipsel-linux-gnu-" CACHE STRING "GCC cross compiler prefix")
 
-find_program(MIPSEL_CC ${XT_PRG_PREFIX}gcc REQUIRED)
-find_program(MIPSEL_LD ${XT_PRG_PREFIX}ld REQUIRED)
+if(CROSS_COMPILE)
+    find_program(MIPSEL_CC ${XT_PRG_PREFIX}gcc REQUIRED)
+    find_program(MIPSEL_LD ${XT_PRG_PREFIX}ld REQUIRED)
+endif()
 
 # Locate the UMPS3 header/obj files
 if(NOT DEFINED UMPS3_DIR_PREFIX)
@@ -40,7 +42,6 @@ endif()
 if(NOT CROSS_COMPILE)
     message(STATUS "Cross compilation disabled: testing enabled")
     add_compile_definitions(PANDOS_TESTING=1)
-    add_subdirectory(test)
 endif()
 
 # The library code for all project phases, as a subproject

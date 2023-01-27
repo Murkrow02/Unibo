@@ -1,14 +1,7 @@
-/home/murkrow/Desktop/Panda+/CMakeFiles/test.dir
-/home/murkrow/Desktop/Panda+/CMakeFiles/edit_cache.dir
-/home/murkrow/Desktop/Panda+/CMakeFiles/rebuild_cache.dir
-/home/murkrow/Desktop/Panda+/os/CMakeFiles/os.dir
-/home/murkrow/Desktop/Panda+/os/CMakeFiles/crtso.dir
-/home/murkrow/Desktop/Panda+/os/CMakeFiles/crti.dir
-/home/murkrow/Desktop/Panda+/os/CMakeFiles/libumps.dir
-/home/murkrow/Desktop/Panda+/os/CMakeFiles/test.dir
-/home/murkrow/Desktop/Panda+/os/CMakeFiles/edit_cache.dir
-/home/murkrow/Desktop/Panda+/os/CMakeFiles/rebuild_cache.dir
-/home/murkrow/Desktop/Panda+/phase1/CMakeFiles/phase1.dir
-/home/murkrow/Desktop/Panda+/phase1/CMakeFiles/test.dir
-/home/murkrow/Desktop/Panda+/phase1/CMakeFiles/edit_cache.dir
-/home/murkrow/Desktop/Panda+/phase1/CMakeFiles/rebuild_cache.dir
+/Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+/CMakeFiles/test.dir
+/Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+/CMakeFiles/edit_cache.dir
+/Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+/CMakeFiles/rebuild_cache.dir
+/Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/CMakeFiles/os.dir
+/Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/CMakeFiles/test.dir
+/Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/CMakeFiles/edit_cache.dir
+/Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/CMakeFiles/rebuild_cache.dir

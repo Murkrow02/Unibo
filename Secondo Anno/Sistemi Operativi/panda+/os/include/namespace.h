@@ -5,6 +5,7 @@
 #ifndef PHASE1_FILES_NAMESPACE_H
 #define PHASE1_FILES_NAMESPACE_H
 
+
 #include "pandos_types.h"
 
 // 19. Inizializza tutte le liste dei namespace liberi. Questo metodo viene invocato una volta sola durante l’inizializzazione della struttura dati.

@@ -1,9 +1,10 @@
-/ /
+//
 // Created by Marco Coppola on 19/01/23.
 //
 
 #include "pcb.h"
-
+#include "types.h"
+#include "utils.c"
 
 struct list_head *pcb_free;
 
@@ -27,15 +28,16 @@ void freePcb(pcb_t *p) {
 
 pcb_t *allocPcb() {
 
-    //Returns null if list is empty, otherwhise gets first element from list
-    pcb_t *required = NULL; //OOOO
+    //Returns null if list is empty, otherwise gets first element from list
+    pcb_t *required =;
 
     //Remove from list if element is found
     if (required != NULL) {
         list_del(&required->p_list);
     }
 
-    return required; //TODO: check if needs cleaining before return
+    //Clean pcb before return
+    return initializePcb(required);
 }
 
 void mkEmptyProcQ(struct list_head *head) {
@@ -59,3 +61,7 @@ void insertProcQ(struct list_head *head, pcb_t *p) {
         list_add(&p->p_list, head);
     }
 }
+
+//TODO: attenzione quando si inserisce un processo figlio fare attenzione ad aggiornare i suoi namespace come quelli del padre
+
+

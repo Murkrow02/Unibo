@@ -1,4 +1,5 @@
-Cannot generate into /Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+
-It is already used for project /home/murkrow/Desktop/Panda+
-
-Please either delete it manually or select another generation directory
+"/Users/murkrow/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/bin/cmake" "-DCMAKE_MAKE_PROGRAM=/Users/murkrow/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/ninja/mac/ninja" -G Ninja -S "/Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+" -B "/Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+"
+-- Cross compilation disabled: testing enabled
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+

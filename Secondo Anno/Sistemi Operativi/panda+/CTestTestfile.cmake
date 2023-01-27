@@ -1,8 +1,7 @@
 # CMake generated Testfile for 
-# Source directory: /home/murkrow/Desktop/Panda+
-# Build directory: /home/murkrow/Desktop/Panda+
+# Source directory: /Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+
+# Build directory: /Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+
 # 
 # This file includes the relevant testing commands required for 
 # testing this directory and lists subdirectories to be tested as well.
 subdirs("os")
-subdirs("phase1")

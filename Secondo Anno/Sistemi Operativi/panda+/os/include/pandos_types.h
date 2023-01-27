@@ -22,11 +22,13 @@ typedef unsigned int memaddr;
 
 
 typedef struct nsd_t {
+
     /* Namespace type */
     int n_type;
 
     /* Namespace list */
     struct list_head n_link;
+
 } nsd_t, *nsd_PTR;
 
 /* process table entry type */
@@ -52,7 +54,7 @@ typedef struct pcb_t {
 } pcb_t, *pcb_PTR;
 
 
-/* semaphore descriptor (SEMD) data structure 
+// semaphore descriptor (SEMD) data structure
 typedef struct semd_t {
 
     int *s_key;
@@ -63,18 +65,17 @@ typedef struct semd_t {
     struct hlist_node s_link;
 
     struct list_head s_freelink;
-} semd_t, *semd_PTR; */
+} semd_t, *semd_PTR;
 
-/* semaphore descriptor (SEMD) data structure */
+/* semaphore descriptor (SEMD) data structure
 typedef struct semd_t {
-    /* Semaphore key */
+
     int *s_key;
-    /* Queue of PCBs blocked on the semaphore */
     list_head s_procq;
 
-    /* Semaphore list */
+
     list_head s_link;
-} semd_t;
+} semd_t; */
 
 
 #endif
