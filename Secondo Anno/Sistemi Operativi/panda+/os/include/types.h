@@ -13,9 +13,9 @@ typedef int bool;
 #define false 0
 #endif
 
-struct list_head {
-	struct list_head *next, *prev;
-};
+//struct list_head {
+//	struct list_head *next, *prev;
+//};
 
 #ifndef u32
 typedef unsigned int u32;

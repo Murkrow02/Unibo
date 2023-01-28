@@ -1,3 +1,0 @@
-/home/murkrow/Desktop/Panda+/phase1/CMakeFiles/phase1.dir
-/home/murkrow/Desktop/Panda+/phase1/CMakeFiles/edit_cache.dir
-/home/murkrow/Desktop/Panda+/phase1/CMakeFiles/rebuild_cache.dir

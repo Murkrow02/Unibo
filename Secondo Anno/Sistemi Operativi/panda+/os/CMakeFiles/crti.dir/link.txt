@@ -1,2 +1,0 @@
-/usr/bin/ar cr libcrti.a CMakeFiles/crti.dir/usr/share/umps3/crti.S.o 
-/usr/bin/ranlib libcrti.a

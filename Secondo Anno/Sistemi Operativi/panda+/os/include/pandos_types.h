@@ -62,7 +62,7 @@ typedef struct semd_t {
     struct list_head s_procq;
 
 
-    struct hlist_node s_link;
+    //struct hlist_node s_link;
 
     struct list_head s_freelink;
 } semd_t, *semd_PTR;
