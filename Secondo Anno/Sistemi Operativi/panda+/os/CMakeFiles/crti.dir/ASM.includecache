@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/usr/include/umps3/umps/aout.h
+
+/usr/include/umps3/umps/regdef.h
+
+/usr/share/umps3/crti.S
+umps/regdef.h
+-
+umps/aout.h
+-
+

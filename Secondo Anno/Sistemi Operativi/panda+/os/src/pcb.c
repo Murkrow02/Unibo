@@ -4,20 +4,25 @@
 
 #include "pcb.h"
 #include "types.h"
-#include "utils.c"
+#include "utils.h"
 #include "list.h"
 #include "pandos_types.h"
 #include <stddef.h>
 
 struct list_head pcb_free;
+static pcb_t pcb_table[MAXPROC];
 
 void initPcbs() {
 
     //Initialize the list of free PCBs
     INIT_LIST_HEAD(&pcb_free);
 
-    //TODO: needs more stuff
+    //Move elements from pcb table to list
+    for (int i = 0; i < MAXPROC; i++) {
+        list_add(&pcb_table[i].p_list, &pcb_free);
+    }
 }
+
 
 void freePcb(pcb_t *p) {
 
@@ -37,6 +42,9 @@ pcb_t *allocPcb() {
 
     //List is not empty, get first element
     pcb_t* firstElem = container_of(pcb_free.next, pcb_t, p_list);
+
+    //Remove element from list
+    list_del(pcb_free.next);
 
     //Clean pcb before return
     return initializePcb(firstElem);
@@ -60,7 +68,9 @@ int emptyProcQ(struct list_head *head) {
 void insertProcQ(struct list_head *head, pcb_t *p) {
 
     if (head != NULL && p != NULL) {
-        list_add(&p->p_list, head);
+
+        //Add in last position, like a queue
+        list_add_tail(&p->p_list, head);
     }
 }
 
@@ -69,7 +79,7 @@ pcb_t* headProcQ(struct list_head* head){
     if(head == NULL || list_empty(head))
         return NULL;
 
-    return container_of(head->next, pcb_t,p_list);
+    return container_of(head->next, pcb_t, p_list);
 }
 
 pcb_t* removeProcQ(struct list_head* head){
@@ -145,8 +155,14 @@ pcb_t* removeChild(pcb_t *p){
     if(list_empty(&p->p_child))
         return NULL;
 
+    //List not empty, retreive first child of p
+    pcb_t* target = container_of(p->p_child.next, pcb_t, p_child);
+
+    //Remove first child of p
+    list_del(p->p_child.next);
+
     //List not empty, actually return item
-    return container_of(p->p_child.next, pcb_t, p_child);
+    return target;
 }
 
 //Like function above but search for p in parent's child list

@@ -4,9 +4,7 @@
 
 #include "namespace.h"
 #include "types.h"
-#include "utils.c"
-
-
+#include "utils.h"
 
 //
 nsd_t pid_nsTable[MAXPROC];
@@ -49,16 +47,16 @@ nsd_t* getNamespace(pcb_t *p, int type){
                 if(p->namespaces[i]->n_type == type){
 
                     //Namespace of the process is as the same type as requested, check if the namespace is active
-                    int activeNamespace = list_search_el(&pid_nsList_h, &p->namespaces[i]->n_link);
+                   // int activeNamespace = list_search_el(&pid_nsList_h, &p->namespaces[i]->n_link);
 
                     //The namespace linked to the process is still valid
-                    if(activeNamespace){
+                    //if(activeNamespace){
                         return p->namespaces[i];
-                    }else{
+                   // }else{
 
                         //The namespace linked to the process is no longer valid
-                        p->namespaces[i] = NULL; //We can safely
-                    }
+                   //     p->namespaces[i] = NULL; //We can safely
+                    //}
 
                 }
 
@@ -85,28 +83,31 @@ int addNamespace(pcb_t *p, nsd_t *ns){
 
     //Detect namespace type
     switch (ns->n_type) {
+
+
         case NS_PID:
 
-            //Check if already in that namespace
-            for(int i = 0; i < NS_TYPE_MAX; i++){
-                if(p->namespaces[i] != NULL && p->namespaces[i]->n_type == ns->n_type){
+            //Set namespace to himself
+            set_namespace(p,ns);
 
-                    //Process cannot be in the same namespace twice
-                    return false;
+            //Set namespace to all children
+            if(!list_empty(&p->p_child)){
+                
+                //Cycle through all children
+                list_head* iterEl;
+                list_for_each(iterEl, &p->p_child){
+                    pcb_t *currentChild = container_of(iterEl, pcb_t, p_list);
+                    set_namespace(currentChild,ns);
                 }
             }
 
-            //Search for an available spot
-            for(int i = 0; i < NS_TYPE_MAX; i++){
-                if(p->namespaces[i] == NULL){
-
-                    //Link this namespace in the process' namespaces
-                    p->namespaces[i] = ns;
-
-                    //TODO: also link his children
-                    return true;
-                }
+            //Set namespace to parent
+            if(p->p_parent != NULL){
+                set_namespace(p->p_parent,ns);
             }
+            
+            return true;
+        break;
 
         default:
             return false;
@@ -134,12 +135,14 @@ nsd_t *allocNamespace(int type){
             //Add new element to allocated namespaces list (this should automatically remove the element from the free list)
             list_add(firstFreeElem, &pid_nsList_h);
 
+            //Return namespace
+            return container_of(firstFreeElem, nsd_t, n_link);
+
             break;
+
         default:
             return NULL;
     }
-
-
 }
 
 void freeNamespace(nsd_t *ns){

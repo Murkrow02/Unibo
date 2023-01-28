@@ -1,4 +1,4 @@
-"/Users/murkrow/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/bin/cmake" "-DCMAKE_MAKE_PROGRAM=/Users/murkrow/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/ninja/mac/ninja" -G Ninja -S "/Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+" -B "/Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+"
+"/Users/murkrow/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/bin/cmake" "-DCMAKE_MAKE_PROGRAM=/Users/murkrow/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/ninja/mac/ninja" -G Ninja -S "/Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/Panda+" -B "/Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/Panda+"
 -- The C compiler identification is AppleClang 14.0.0.14000029
 -- The ASM compiler identification is Clang with GNU-like command-line
 -- Found assembler: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc
@@ -7,13 +7,10 @@
 -- Check for working C compiler: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc - skipped
 -- Detecting C compile features
 -- Detecting C compile features - done
--- Cross compilation disabled: testing enabled
--- The CXX compiler identification is AppleClang 14.0.0.14000029
--- Detecting CXX compiler ABI info
--- Detecting CXX compiler ABI info - done
--- Check for working CXX compiler: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ - skipped
--- Detecting CXX compile features
--- Detecting CXX compile features - done
--- Configuring done
--- Generating done
--- Build files have been written to: /Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/panda+
+CMake Error at CMakeLists.txt:12 (find_program):
+  Could not find MIPSEL_CC using the following names: mipsel-linux-gnu-gcc
+
+
+-- Configuring incomplete, errors occurred!
+See also "/Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/Panda+/CMakeFiles/CMakeOutput.log".
+See also "/Users/murkrow/Desktop/Repos/Unibo/Secondo Anno/Sistemi Operativi/Panda+/CMakeFiles/CMakeError.log".

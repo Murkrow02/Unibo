@@ -1,7 +1,0 @@
-/home/murkrow/shared/CMakeFiles/test.dir
-/home/murkrow/shared/CMakeFiles/edit_cache.dir
-/home/murkrow/shared/CMakeFiles/rebuild_cache.dir
-/home/murkrow/shared/os/CMakeFiles/os.dir
-/home/murkrow/shared/os/CMakeFiles/test.dir
-/home/murkrow/shared/os/CMakeFiles/edit_cache.dir
-/home/murkrow/shared/os/CMakeFiles/rebuild_cache.dir

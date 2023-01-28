@@ -1,0 +1,1 @@
+/usr/bin/mipsel-linux-gnu-ld -G0 -nostdlib -T /usr/share/umps3/umpscore.ldscript -melf32ltsmip CMakeFiles/phase1.dir/src/p1test.c.o -o phase1  ../os/libos.a ../os/liblibumps.a ../os/libcrtso.a 

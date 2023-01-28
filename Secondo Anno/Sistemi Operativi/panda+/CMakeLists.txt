@@ -5,14 +5,12 @@ enable_testing()
 
 # Cross-compile for the target environment by default
 # Can be disabled to compile with the system's `cc` and run unit tests locally
-option(CROSS_COMPILE "Cross compile for the MIPS architecture" OFF)
+option(CROSS_COMPILE "Cross compile for the MIPS architecture" ON)
 option(DEBUG "Enable GDB debug flags" OFF)
 set(XT_PRG_PREFIX "mipsel-linux-gnu-" CACHE STRING "GCC cross compiler prefix")
 
-if(CROSS_COMPILE)
-    find_program(MIPSEL_CC ${XT_PRG_PREFIX}gcc REQUIRED)
-    find_program(MIPSEL_LD ${XT_PRG_PREFIX}ld REQUIRED)
-endif()
+find_program(MIPSEL_CC ${XT_PRG_PREFIX}gcc REQUIRED)
+find_program(MIPSEL_LD ${XT_PRG_PREFIX}ld REQUIRED)
 
 # Locate the UMPS3 header/obj files
 if(NOT DEFINED UMPS3_DIR_PREFIX)
@@ -30,19 +28,7 @@ if(CROSS_COMPILE)
     set(LDFLAGS_ALL ${LDFLAGS_ALL} -G0 -nostdlib -T ${UMPS3_DIR_PREFIX}/share/umps3/umpscore.ldscript -melf32ltsmip)
 endif()
 
-# PLEASE NOTE: subprojects are ignored as needed, that is, based on the target
-# architecture. That said, we want our development tools (namely the clangd LSP)
-# to know about all files contained in all subprojects. So when cmake is asked
-# to export metadata needed for them we add all subprojects eitherway. Clearly
-# this configuration won't be suitable for production usage, so please don't use
-# any Makefile generated via -DCMAKE_EXPORT_COMPILE_COMMANDS=1 to compile
-# kernels or test libraries.
 
-# Unit testing for the shared `os` subproject
-if(NOT CROSS_COMPILE)
-    message(STATUS "Cross compilation disabled: testing enabled")
-    add_compile_definitions(PANDOS_TESTING=1)
-endif()
 
 # The library code for all project phases, as a subproject
 add_subdirectory(os)
