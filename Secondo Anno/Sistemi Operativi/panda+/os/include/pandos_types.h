@@ -57,13 +57,16 @@ typedef struct pcb_t {
 // semaphore descriptor (SEMD) data structure
 typedef struct semd_t {
 
+    //Semaphore key
     int *s_key;
 
+    //PCB blocked on the semaphore
     struct list_head s_procq;
 
+    //Link all'hash del semaforo
+    struct hlist_node s_link;
 
-    //struct hlist_node s_link;
-
+    //Link alla lista dei semafori liberi
     struct list_head s_freelink;
 } semd_t, *semd_PTR;
 
