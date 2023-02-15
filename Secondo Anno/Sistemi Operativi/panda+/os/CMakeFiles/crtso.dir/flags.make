@@ -4,7 +4,7 @@
 # compile ASM with /usr/bin/mipsel-linux-gnu-gcc
 ASM_DEFINES = 
 
-ASM_INCLUDES = -I/home/murkrow/Downloads/shared/os/include -I/usr/include/umps3
+ASM_INCLUDES = -I/home/murkrow/a/os/include -I/usr/include/umps3
 
-ASM_FLAGS = -pedantic -ffreestanding -Werror -Wall -ansi -std=gnu99 -mips1 -mabi=32 -mno-gpopt -EL -G0 -O0 -mno-abicalls -fno-pic -mfp32
+ASM_FLAGS = -pedantic -ffreestanding -Wall -ansi -std=gnu99 -mips1 -mabi=32 -mno-gpopt -EL -G0 -O0 -mno-abicalls -fno-pic -mfp32
 

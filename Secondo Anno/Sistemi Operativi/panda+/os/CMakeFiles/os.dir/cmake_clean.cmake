@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/os.dir/src/ash.c.o"
+  "CMakeFiles/os.dir/src/ash.c.o.d"
   "CMakeFiles/os.dir/src/namespace.c.o"
   "CMakeFiles/os.dir/src/namespace.c.o.d"
   "CMakeFiles/os.dir/src/pcb.c.o"

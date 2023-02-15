@@ -1,0 +1,14 @@
+/home/murkrow/a/CMakeFiles/test.dir
+/home/murkrow/a/CMakeFiles/edit_cache.dir
+/home/murkrow/a/CMakeFiles/rebuild_cache.dir
+/home/murkrow/a/os/CMakeFiles/os.dir
+/home/murkrow/a/os/CMakeFiles/crtso.dir
+/home/murkrow/a/os/CMakeFiles/crti.dir
+/home/murkrow/a/os/CMakeFiles/libumps.dir
+/home/murkrow/a/os/CMakeFiles/test.dir
+/home/murkrow/a/os/CMakeFiles/edit_cache.dir
+/home/murkrow/a/os/CMakeFiles/rebuild_cache.dir
+/home/murkrow/a/phase1/CMakeFiles/phase1.dir
+/home/murkrow/a/phase1/CMakeFiles/test.dir
+/home/murkrow/a/phase1/CMakeFiles/edit_cache.dir
+/home/murkrow/a/phase1/CMakeFiles/rebuild_cache.dir

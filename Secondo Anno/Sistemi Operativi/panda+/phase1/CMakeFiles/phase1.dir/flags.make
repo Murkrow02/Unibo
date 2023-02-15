@@ -4,7 +4,7 @@
 # compile C with /usr/bin/mipsel-linux-gnu-gcc
 C_DEFINES = 
 
-C_INCLUDES = -I/usr/include/umps3 -I/home/murkrow/Downloads/shared/os/include
+C_INCLUDES = -I/usr/include/umps3 -I/home/murkrow/a/os/include
 
-C_FLAGS = -pedantic -ffreestanding -Werror -Wall -ansi -std=gnu99 -mips1 -mabi=32 -mno-gpopt -EL -G0 -O0 -mno-abicalls -fno-pic -mfp32
+C_FLAGS = -pedantic -ffreestanding -Wall -ansi -std=gnu99 -mips1 -mabi=32 -mno-gpopt -EL -G0 -O0 -mno-abicalls -fno-pic -mfp32
 

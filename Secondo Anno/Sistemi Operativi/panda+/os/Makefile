@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/murkrow/Downloads/shared
+CMAKE_SOURCE_DIR = /home/murkrow/a
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/murkrow/Downloads/shared
+CMAKE_BINARY_DIR = /home/murkrow/a
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -97,14 +97,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/murkrow/Downloads/shared && $(CMAKE_COMMAND) -E cmake_progress_start /home/murkrow/Downloads/shared/CMakeFiles /home/murkrow/Downloads/shared/os//CMakeFiles/progress.marks
-	cd /home/murkrow/Downloads/shared && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 os/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/murkrow/Downloads/shared/CMakeFiles 0
+	cd /home/murkrow/a && $(CMAKE_COMMAND) -E cmake_progress_start /home/murkrow/a/CMakeFiles /home/murkrow/a/os//CMakeFiles/progress.marks
+	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 os/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/murkrow/a/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/murkrow/Downloads/shared && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 os/clean
+	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 os/clean
 .PHONY : clean
 
 # The main clean target
@@ -113,22 +113,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/murkrow/Downloads/shared && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 os/preinstall
+	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 os/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/murkrow/Downloads/shared && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 os/preinstall
+	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 os/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/murkrow/Downloads/shared && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/murkrow/a && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 os/CMakeFiles/os.dir/rule:
-	cd /home/murkrow/Downloads/shared && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 os/CMakeFiles/os.dir/rule
+	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 os/CMakeFiles/os.dir/rule
 .PHONY : os/CMakeFiles/os.dir/rule
 
 # Convenience name for target.
@@ -137,12 +137,12 @@ os: os/CMakeFiles/os.dir/rule
 
 # fast build rule for target.
 os/fast:
-	cd /home/murkrow/Downloads/shared && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/build
+	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/build
 .PHONY : os/fast
 
 # Convenience name for target.
 os/CMakeFiles/crtso.dir/rule:
-	cd /home/murkrow/Downloads/shared && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 os/CMakeFiles/crtso.dir/rule
+	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 os/CMakeFiles/crtso.dir/rule
 .PHONY : os/CMakeFiles/crtso.dir/rule
 
 # Convenience name for target.
@@ -151,12 +151,12 @@ crtso: os/CMakeFiles/crtso.dir/rule
 
 # fast build rule for target.
 crtso/fast:
-	cd /home/murkrow/Downloads/shared && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/crtso.dir/build.make os/CMakeFiles/crtso.dir/build
+	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/crtso.dir/build.make os/CMakeFiles/crtso.dir/build
 .PHONY : crtso/fast
 
 # Convenience name for target.
 os/CMakeFiles/crti.dir/rule:
-	cd /home/murkrow/Downloads/shared && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 os/CMakeFiles/crti.dir/rule
+	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 os/CMakeFiles/crti.dir/rule
 .PHONY : os/CMakeFiles/crti.dir/rule
 
 # Convenience name for target.
@@ -165,12 +165,12 @@ crti: os/CMakeFiles/crti.dir/rule
 
 # fast build rule for target.
 crti/fast:
-	cd /home/murkrow/Downloads/shared && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/crti.dir/build.make os/CMakeFiles/crti.dir/build
+	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/crti.dir/build.make os/CMakeFiles/crti.dir/build
 .PHONY : crti/fast
 
 # Convenience name for target.
 os/CMakeFiles/libumps.dir/rule:
-	cd /home/murkrow/Downloads/shared && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 os/CMakeFiles/libumps.dir/rule
+	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 os/CMakeFiles/libumps.dir/rule
 .PHONY : os/CMakeFiles/libumps.dir/rule
 
 # Convenience name for target.
@@ -179,15 +179,39 @@ libumps: os/CMakeFiles/libumps.dir/rule
 
 # fast build rule for target.
 libumps/fast:
-	cd /home/murkrow/Downloads/shared && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/libumps.dir/build.make os/CMakeFiles/libumps.dir/build
+	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/libumps.dir/build.make os/CMakeFiles/libumps.dir/build
 .PHONY : libumps/fast
+
+src/ash.o: src/ash.c.o
+.PHONY : src/ash.o
+
+# target to build an object file
+src/ash.c.o:
+	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/ash.c.o
+.PHONY : src/ash.c.o
+
+src/ash.i: src/ash.c.i
+.PHONY : src/ash.i
+
+# target to preprocess a source file
+src/ash.c.i:
+	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/ash.c.i
+.PHONY : src/ash.c.i
+
+src/ash.s: src/ash.c.s
+.PHONY : src/ash.s
+
+# target to generate assembly for a file
+src/ash.c.s:
+	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/ash.c.s
+.PHONY : src/ash.c.s
 
 src/namespace.o: src/namespace.c.o
 .PHONY : src/namespace.o
 
 # target to build an object file
 src/namespace.c.o:
-	cd /home/murkrow/Downloads/shared && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/namespace.c.o
+	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/namespace.c.o
 .PHONY : src/namespace.c.o
 
 src/namespace.i: src/namespace.c.i
@@ -195,7 +219,7 @@ src/namespace.i: src/namespace.c.i
 
 # target to preprocess a source file
 src/namespace.c.i:
-	cd /home/murkrow/Downloads/shared && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/namespace.c.i
+	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/namespace.c.i
 .PHONY : src/namespace.c.i
 
 src/namespace.s: src/namespace.c.s
@@ -203,7 +227,7 @@ src/namespace.s: src/namespace.c.s
 
 # target to generate assembly for a file
 src/namespace.c.s:
-	cd /home/murkrow/Downloads/shared && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/namespace.c.s
+	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/namespace.c.s
 .PHONY : src/namespace.c.s
 
 src/pcb.o: src/pcb.c.o
@@ -211,7 +235,7 @@ src/pcb.o: src/pcb.c.o
 
 # target to build an object file
 src/pcb.c.o:
-	cd /home/murkrow/Downloads/shared && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/pcb.c.o
+	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/pcb.c.o
 .PHONY : src/pcb.c.o
 
 src/pcb.i: src/pcb.c.i
@@ -219,7 +243,7 @@ src/pcb.i: src/pcb.c.i
 
 # target to preprocess a source file
 src/pcb.c.i:
-	cd /home/murkrow/Downloads/shared && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/pcb.c.i
+	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/pcb.c.i
 .PHONY : src/pcb.c.i
 
 src/pcb.s: src/pcb.c.s
@@ -227,7 +251,7 @@ src/pcb.s: src/pcb.c.s
 
 # target to generate assembly for a file
 src/pcb.c.s:
-	cd /home/murkrow/Downloads/shared && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/pcb.c.s
+	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/pcb.c.s
 .PHONY : src/pcb.c.s
 
 src/utils.o: src/utils.c.o
@@ -235,7 +259,7 @@ src/utils.o: src/utils.c.o
 
 # target to build an object file
 src/utils.c.o:
-	cd /home/murkrow/Downloads/shared && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/utils.c.o
+	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/utils.c.o
 .PHONY : src/utils.c.o
 
 src/utils.i: src/utils.c.i
@@ -243,7 +267,7 @@ src/utils.i: src/utils.c.i
 
 # target to preprocess a source file
 src/utils.c.i:
-	cd /home/murkrow/Downloads/shared && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/utils.c.i
+	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/utils.c.i
 .PHONY : src/utils.c.i
 
 src/utils.s: src/utils.c.s
@@ -251,7 +275,7 @@ src/utils.s: src/utils.c.s
 
 # target to generate assembly for a file
 src/utils.c.s:
-	cd /home/murkrow/Downloads/shared && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/utils.c.s
+	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/utils.c.s
 .PHONY : src/utils.c.s
 
 usr/share/umps3/crti.o: usr/share/umps3/crti.S.o
@@ -259,7 +283,7 @@ usr/share/umps3/crti.o: usr/share/umps3/crti.S.o
 
 # target to build an object file
 usr/share/umps3/crti.S.o:
-	cd /home/murkrow/Downloads/shared && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/crti.dir/build.make os/CMakeFiles/crti.dir/usr/share/umps3/crti.S.o
+	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/crti.dir/build.make os/CMakeFiles/crti.dir/usr/share/umps3/crti.S.o
 .PHONY : usr/share/umps3/crti.S.o
 
 usr/share/umps3/crtso.o: usr/share/umps3/crtso.S.o
@@ -267,7 +291,7 @@ usr/share/umps3/crtso.o: usr/share/umps3/crtso.S.o
 
 # target to build an object file
 usr/share/umps3/crtso.S.o:
-	cd /home/murkrow/Downloads/shared && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/crtso.dir/build.make os/CMakeFiles/crtso.dir/usr/share/umps3/crtso.S.o
+	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/crtso.dir/build.make os/CMakeFiles/crtso.dir/usr/share/umps3/crtso.S.o
 .PHONY : usr/share/umps3/crtso.S.o
 
 usr/share/umps3/libumps.o: usr/share/umps3/libumps.S.o
@@ -275,7 +299,7 @@ usr/share/umps3/libumps.o: usr/share/umps3/libumps.S.o
 
 # target to build an object file
 usr/share/umps3/libumps.S.o:
-	cd /home/murkrow/Downloads/shared && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/libumps.dir/build.make os/CMakeFiles/libumps.dir/usr/share/umps3/libumps.S.o
+	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/libumps.dir/build.make os/CMakeFiles/libumps.dir/usr/share/umps3/libumps.S.o
 .PHONY : usr/share/umps3/libumps.S.o
 
 # Help Target
@@ -291,6 +315,9 @@ help:
 	@echo "... crtso"
 	@echo "... libumps"
 	@echo "... os"
+	@echo "... src/ash.o"
+	@echo "... src/ash.i"
+	@echo "... src/ash.s"
 	@echo "... src/namespace.o"
 	@echo "... src/namespace.i"
 	@echo "... src/namespace.s"
@@ -314,6 +341,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/murkrow/Downloads/shared && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/murkrow/a && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

@@ -4,7 +4,7 @@ list(APPEND TRGTS ${PROJECT_NAME})
 
 add_library(${PROJECT_NAME}
     src/pcb.c
-    #src/ash.c
+    src/ash.c
     src/namespace.c
     src/utils.c
 )

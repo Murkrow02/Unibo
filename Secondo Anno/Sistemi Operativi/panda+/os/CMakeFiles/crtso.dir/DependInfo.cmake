@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_ASM
-  "/usr/share/umps3/crtso.S" "/home/murkrow/Downloads/shared/os/CMakeFiles/crtso.dir/usr/share/umps3/crtso.S.o"
+  "/usr/share/umps3/crtso.S" "/home/murkrow/a/os/CMakeFiles/crtso.dir/usr/share/umps3/crtso.S.o"
   )
 set(CMAKE_ASM_COMPILER_ID "GNU")
 

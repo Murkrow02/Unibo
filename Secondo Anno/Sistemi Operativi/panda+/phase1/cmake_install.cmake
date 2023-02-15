@@ -1,4 +1,4 @@
-# Install script for directory: /home/murkrow/Downloads/shared/phase1
+# Install script for directory: /home/murkrow/a/phase1
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

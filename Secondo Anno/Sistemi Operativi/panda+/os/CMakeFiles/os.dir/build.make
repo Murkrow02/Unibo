@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/murkrow/Downloads/shared
+CMAKE_SOURCE_DIR = /home/murkrow/a
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/murkrow/Downloads/shared
+CMAKE_BINARY_DIR = /home/murkrow/a
 
 # Include any dependencies generated for this target.
 include os/CMakeFiles/os.dir/depend.make
@@ -72,48 +72,63 @@ include os/CMakeFiles/os.dir/flags.make
 os/CMakeFiles/os.dir/src/pcb.c.o: os/CMakeFiles/os.dir/flags.make
 os/CMakeFiles/os.dir/src/pcb.c.o: os/src/pcb.c
 os/CMakeFiles/os.dir/src/pcb.c.o: os/CMakeFiles/os.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/murkrow/Downloads/shared/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object os/CMakeFiles/os.dir/src/pcb.c.o"
-	cd /home/murkrow/Downloads/shared/os && /usr/bin/mipsel-linux-gnu-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT os/CMakeFiles/os.dir/src/pcb.c.o -MF CMakeFiles/os.dir/src/pcb.c.o.d -o CMakeFiles/os.dir/src/pcb.c.o -c /home/murkrow/Downloads/shared/os/src/pcb.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/murkrow/a/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object os/CMakeFiles/os.dir/src/pcb.c.o"
+	cd /home/murkrow/a/os && /usr/bin/mipsel-linux-gnu-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT os/CMakeFiles/os.dir/src/pcb.c.o -MF CMakeFiles/os.dir/src/pcb.c.o.d -o CMakeFiles/os.dir/src/pcb.c.o -c /home/murkrow/a/os/src/pcb.c
 
 os/CMakeFiles/os.dir/src/pcb.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/os.dir/src/pcb.c.i"
-	cd /home/murkrow/Downloads/shared/os && /usr/bin/mipsel-linux-gnu-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/murkrow/Downloads/shared/os/src/pcb.c > CMakeFiles/os.dir/src/pcb.c.i
+	cd /home/murkrow/a/os && /usr/bin/mipsel-linux-gnu-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/murkrow/a/os/src/pcb.c > CMakeFiles/os.dir/src/pcb.c.i
 
 os/CMakeFiles/os.dir/src/pcb.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/os.dir/src/pcb.c.s"
-	cd /home/murkrow/Downloads/shared/os && /usr/bin/mipsel-linux-gnu-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/murkrow/Downloads/shared/os/src/pcb.c -o CMakeFiles/os.dir/src/pcb.c.s
+	cd /home/murkrow/a/os && /usr/bin/mipsel-linux-gnu-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/murkrow/a/os/src/pcb.c -o CMakeFiles/os.dir/src/pcb.c.s
+
+os/CMakeFiles/os.dir/src/ash.c.o: os/CMakeFiles/os.dir/flags.make
+os/CMakeFiles/os.dir/src/ash.c.o: os/src/ash.c
+os/CMakeFiles/os.dir/src/ash.c.o: os/CMakeFiles/os.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/murkrow/a/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object os/CMakeFiles/os.dir/src/ash.c.o"
+	cd /home/murkrow/a/os && /usr/bin/mipsel-linux-gnu-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT os/CMakeFiles/os.dir/src/ash.c.o -MF CMakeFiles/os.dir/src/ash.c.o.d -o CMakeFiles/os.dir/src/ash.c.o -c /home/murkrow/a/os/src/ash.c
+
+os/CMakeFiles/os.dir/src/ash.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/os.dir/src/ash.c.i"
+	cd /home/murkrow/a/os && /usr/bin/mipsel-linux-gnu-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/murkrow/a/os/src/ash.c > CMakeFiles/os.dir/src/ash.c.i
+
+os/CMakeFiles/os.dir/src/ash.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/os.dir/src/ash.c.s"
+	cd /home/murkrow/a/os && /usr/bin/mipsel-linux-gnu-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/murkrow/a/os/src/ash.c -o CMakeFiles/os.dir/src/ash.c.s
 
 os/CMakeFiles/os.dir/src/namespace.c.o: os/CMakeFiles/os.dir/flags.make
 os/CMakeFiles/os.dir/src/namespace.c.o: os/src/namespace.c
 os/CMakeFiles/os.dir/src/namespace.c.o: os/CMakeFiles/os.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/murkrow/Downloads/shared/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object os/CMakeFiles/os.dir/src/namespace.c.o"
-	cd /home/murkrow/Downloads/shared/os && /usr/bin/mipsel-linux-gnu-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT os/CMakeFiles/os.dir/src/namespace.c.o -MF CMakeFiles/os.dir/src/namespace.c.o.d -o CMakeFiles/os.dir/src/namespace.c.o -c /home/murkrow/Downloads/shared/os/src/namespace.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/murkrow/a/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object os/CMakeFiles/os.dir/src/namespace.c.o"
+	cd /home/murkrow/a/os && /usr/bin/mipsel-linux-gnu-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT os/CMakeFiles/os.dir/src/namespace.c.o -MF CMakeFiles/os.dir/src/namespace.c.o.d -o CMakeFiles/os.dir/src/namespace.c.o -c /home/murkrow/a/os/src/namespace.c
 
 os/CMakeFiles/os.dir/src/namespace.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/os.dir/src/namespace.c.i"
-	cd /home/murkrow/Downloads/shared/os && /usr/bin/mipsel-linux-gnu-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/murkrow/Downloads/shared/os/src/namespace.c > CMakeFiles/os.dir/src/namespace.c.i
+	cd /home/murkrow/a/os && /usr/bin/mipsel-linux-gnu-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/murkrow/a/os/src/namespace.c > CMakeFiles/os.dir/src/namespace.c.i
 
 os/CMakeFiles/os.dir/src/namespace.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/os.dir/src/namespace.c.s"
-	cd /home/murkrow/Downloads/shared/os && /usr/bin/mipsel-linux-gnu-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/murkrow/Downloads/shared/os/src/namespace.c -o CMakeFiles/os.dir/src/namespace.c.s
+	cd /home/murkrow/a/os && /usr/bin/mipsel-linux-gnu-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/murkrow/a/os/src/namespace.c -o CMakeFiles/os.dir/src/namespace.c.s
 
 os/CMakeFiles/os.dir/src/utils.c.o: os/CMakeFiles/os.dir/flags.make
 os/CMakeFiles/os.dir/src/utils.c.o: os/src/utils.c
 os/CMakeFiles/os.dir/src/utils.c.o: os/CMakeFiles/os.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/murkrow/Downloads/shared/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object os/CMakeFiles/os.dir/src/utils.c.o"
-	cd /home/murkrow/Downloads/shared/os && /usr/bin/mipsel-linux-gnu-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT os/CMakeFiles/os.dir/src/utils.c.o -MF CMakeFiles/os.dir/src/utils.c.o.d -o CMakeFiles/os.dir/src/utils.c.o -c /home/murkrow/Downloads/shared/os/src/utils.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/murkrow/a/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object os/CMakeFiles/os.dir/src/utils.c.o"
+	cd /home/murkrow/a/os && /usr/bin/mipsel-linux-gnu-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT os/CMakeFiles/os.dir/src/utils.c.o -MF CMakeFiles/os.dir/src/utils.c.o.d -o CMakeFiles/os.dir/src/utils.c.o -c /home/murkrow/a/os/src/utils.c
 
 os/CMakeFiles/os.dir/src/utils.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/os.dir/src/utils.c.i"
-	cd /home/murkrow/Downloads/shared/os && /usr/bin/mipsel-linux-gnu-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/murkrow/Downloads/shared/os/src/utils.c > CMakeFiles/os.dir/src/utils.c.i
+	cd /home/murkrow/a/os && /usr/bin/mipsel-linux-gnu-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/murkrow/a/os/src/utils.c > CMakeFiles/os.dir/src/utils.c.i
 
 os/CMakeFiles/os.dir/src/utils.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/os.dir/src/utils.c.s"
-	cd /home/murkrow/Downloads/shared/os && /usr/bin/mipsel-linux-gnu-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/murkrow/Downloads/shared/os/src/utils.c -o CMakeFiles/os.dir/src/utils.c.s
+	cd /home/murkrow/a/os && /usr/bin/mipsel-linux-gnu-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/murkrow/a/os/src/utils.c -o CMakeFiles/os.dir/src/utils.c.s
 
 # Object files for target os
 os_OBJECTS = \
 "CMakeFiles/os.dir/src/pcb.c.o" \
+"CMakeFiles/os.dir/src/ash.c.o" \
 "CMakeFiles/os.dir/src/namespace.c.o" \
 "CMakeFiles/os.dir/src/utils.c.o"
 
@@ -121,23 +136,24 @@ os_OBJECTS = \
 os_EXTERNAL_OBJECTS =
 
 os/libos.a: os/CMakeFiles/os.dir/src/pcb.c.o
+os/libos.a: os/CMakeFiles/os.dir/src/ash.c.o
 os/libos.a: os/CMakeFiles/os.dir/src/namespace.c.o
 os/libos.a: os/CMakeFiles/os.dir/src/utils.c.o
 os/libos.a: os/CMakeFiles/os.dir/build.make
 os/libos.a: os/CMakeFiles/os.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/murkrow/Downloads/shared/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C static library libos.a"
-	cd /home/murkrow/Downloads/shared/os && $(CMAKE_COMMAND) -P CMakeFiles/os.dir/cmake_clean_target.cmake
-	cd /home/murkrow/Downloads/shared/os && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/os.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/murkrow/a/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking C static library libos.a"
+	cd /home/murkrow/a/os && $(CMAKE_COMMAND) -P CMakeFiles/os.dir/cmake_clean_target.cmake
+	cd /home/murkrow/a/os && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/os.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 os/CMakeFiles/os.dir/build: os/libos.a
 .PHONY : os/CMakeFiles/os.dir/build
 
 os/CMakeFiles/os.dir/clean:
-	cd /home/murkrow/Downloads/shared/os && $(CMAKE_COMMAND) -P CMakeFiles/os.dir/cmake_clean.cmake
+	cd /home/murkrow/a/os && $(CMAKE_COMMAND) -P CMakeFiles/os.dir/cmake_clean.cmake
 .PHONY : os/CMakeFiles/os.dir/clean
 
 os/CMakeFiles/os.dir/depend:
-	cd /home/murkrow/Downloads/shared && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/murkrow/Downloads/shared /home/murkrow/Downloads/shared/os /home/murkrow/Downloads/shared /home/murkrow/Downloads/shared/os /home/murkrow/Downloads/shared/os/CMakeFiles/os.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/murkrow/a && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/murkrow/a /home/murkrow/a/os /home/murkrow/a /home/murkrow/a/os /home/murkrow/a/os/CMakeFiles/os.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : os/CMakeFiles/os.dir/depend
 
