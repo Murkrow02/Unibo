@@ -13,7 +13,8 @@ os/CMakeFiles/os.dir/src/ash.c.o: os/src/ash.c \
   os/include/ash.h \
   os/include/hashtable.h \
   os/include/hash.h \
-  os/include/log2.h
+  os/include/log2.h \
+  /usr/include/umps3/umps/libumps.h
 
 os/CMakeFiles/os.dir/src/namespace.c.o: os/src/namespace.c \
   os/include/namespace.h \
@@ -66,6 +67,8 @@ os/include/utils.h:
 
 os/include/namespace.h:
 
+os/src/namespace.c:
+
 os/src/ash.c:
 
 os/include/pandos_types.h:
@@ -78,8 +81,6 @@ os/include/container_of.h:
 
 os/include/pandos_const.h:
 
-os/src/namespace.c:
-
 os/include/list.h:
 
 os/include/ash.h:
@@ -89,5 +90,7 @@ os/include/types.h:
 os/include/hashtable.h:
 
 os/include/hash.h:
+
+/usr/include/umps3/umps/libumps.h:
 
 os/include/log2.h:
