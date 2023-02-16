@@ -9,6 +9,9 @@ option(CROSS_COMPILE "Cross compile for the MIPS architecture" ON)
 option(DEBUG "Enable GDB debug flags" OFF)
 set(XT_PRG_PREFIX "mipsel-linux-gnu-" CACHE STRING "GCC cross compiler prefix")
 
+# Set hashtable header path
+#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -I /usr/src/linux-headers-5.19.0-31/include/linux/hashtable.h")
+
 find_program(MIPSEL_CC ${XT_PRG_PREFIX}gcc REQUIRED)
 find_program(MIPSEL_LD ${XT_PRG_PREFIX}ld REQUIRED)
 
@@ -27,8 +30,6 @@ if(CROSS_COMPILE)
     set(CFLAGS_ALL ${CMAKE_C_FLAGS} ${CFLAGS_LANG} ${CFLAGS_MIPS})
     set(LDFLAGS_ALL ${LDFLAGS_ALL} -G0 -nostdlib -T ${UMPS3_DIR_PREFIX}/share/umps3/umpscore.ldscript -melf32ltsmip)
 endif()
-
-
 
 # The library code for all project phases, as a subproject
 add_subdirectory(os)

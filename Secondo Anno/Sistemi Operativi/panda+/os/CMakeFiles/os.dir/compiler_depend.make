@@ -9,6 +9,60 @@ os/CMakeFiles/os.dir/src/ash.c.o: os/src/ash.c \
   /usr/include/umps3/umps/const.h \
   os/include/list.h \
   os/include/ash.h \
+  /usr/mipsel-linux-gnu/include/stdlib.h \
+  /usr/mipsel-linux-gnu/include/bits/libc-header-start.h \
+  /usr/mipsel-linux-gnu/include/features.h \
+  /usr/mipsel-linux-gnu/include/features-time64.h \
+  /usr/mipsel-linux-gnu/include/bits/wordsize.h \
+  /usr/mipsel-linux-gnu/include/sgidefs.h \
+  /usr/mipsel-linux-gnu/include/bits/timesize.h \
+  /usr/mipsel-linux-gnu/include/stdc-predef.h \
+  /usr/mipsel-linux-gnu/include/sys/cdefs.h \
+  /usr/mipsel-linux-gnu/include/bits/long-double.h \
+  /usr/mipsel-linux-gnu/include/gnu/stubs.h \
+  /usr/mipsel-linux-gnu/include/gnu/stubs-o32_hard.h \
+  /usr/lib/gcc-cross/mipsel-linux-gnu/10/include/stddef.h \
+  /usr/mipsel-linux-gnu/include/bits/waitflags.h \
+  /usr/mipsel-linux-gnu/include/bits/waitstatus.h \
+  /usr/mipsel-linux-gnu/include/bits/floatn.h \
+  /usr/mipsel-linux-gnu/include/bits/floatn-common.h \
+  /usr/mipsel-linux-gnu/include/sys/types.h \
+  /usr/mipsel-linux-gnu/include/bits/types.h \
+  /usr/mipsel-linux-gnu/include/bits/typesizes.h \
+  /usr/mipsel-linux-gnu/include/bits/time64.h \
+  /usr/mipsel-linux-gnu/include/bits/types/clock_t.h \
+  /usr/mipsel-linux-gnu/include/bits/types/clockid_t.h \
+  /usr/mipsel-linux-gnu/include/bits/types/time_t.h \
+  /usr/mipsel-linux-gnu/include/bits/types/timer_t.h \
+  /usr/mipsel-linux-gnu/include/bits/stdint-intn.h \
+  /usr/mipsel-linux-gnu/include/endian.h \
+  /usr/mipsel-linux-gnu/include/bits/endian.h \
+  /usr/mipsel-linux-gnu/include/bits/endianness.h \
+  /usr/mipsel-linux-gnu/include/bits/byteswap.h \
+  /usr/mipsel-linux-gnu/include/bits/uintn-identity.h \
+  /usr/mipsel-linux-gnu/include/sys/select.h \
+  /usr/mipsel-linux-gnu/include/bits/select.h \
+  /usr/mipsel-linux-gnu/include/bits/types/sigset_t.h \
+  /usr/mipsel-linux-gnu/include/bits/types/__sigset_t.h \
+  /usr/mipsel-linux-gnu/include/bits/types/struct_timeval.h \
+  /usr/mipsel-linux-gnu/include/bits/types/struct_timespec.h \
+  /usr/mipsel-linux-gnu/include/bits/pthreadtypes.h \
+  /usr/mipsel-linux-gnu/include/bits/thread-shared-types.h \
+  /usr/mipsel-linux-gnu/include/bits/pthreadtypes-arch.h \
+  /usr/mipsel-linux-gnu/include/bits/atomic_wide_counter.h \
+  /usr/mipsel-linux-gnu/include/bits/struct_mutex.h \
+  /usr/mipsel-linux-gnu/include/bits/struct_rwlock.h \
+  /usr/mipsel-linux-gnu/include/alloca.h \
+  /usr/mipsel-linux-gnu/include/bits/stdlib-float.h \
+  /usr/mipsel-linux-gnu/include/stdio.h \
+  /usr/lib/gcc-cross/mipsel-linux-gnu/10/include/stdarg.h \
+  /usr/mipsel-linux-gnu/include/bits/types/__fpos_t.h \
+  /usr/mipsel-linux-gnu/include/bits/types/__mbstate_t.h \
+  /usr/mipsel-linux-gnu/include/bits/types/__fpos64_t.h \
+  /usr/mipsel-linux-gnu/include/bits/types/__FILE.h \
+  /usr/mipsel-linux-gnu/include/bits/types/FILE.h \
+  /usr/mipsel-linux-gnu/include/bits/types/struct_FILE.h \
+  /usr/mipsel-linux-gnu/include/bits/stdio_lim.h \
   os/include/hashtable.h \
   os/include/hash.h \
   os/include/types.h \
@@ -51,36 +105,142 @@ os/CMakeFiles/os.dir/src/utils.c.o: os/src/utils.c \
 
 os/src/utils.c:
 
+os/include/utils.h:
+
+os/include/namespace.h:
+
+os/src/namespace.c:
+
+/usr/mipsel-linux-gnu/include/bits/stdio_lim.h:
+
+/usr/mipsel-linux-gnu/include/bits/types/FILE.h:
+
+/usr/mipsel-linux-gnu/include/bits/typesizes.h:
+
 /usr/lib/gcc-cross/mipsel-linux-gnu/10/include/stddef.h:
+
+os/include/hashtable.h:
+
+/usr/mipsel-linux-gnu/include/gnu/stubs-o32_hard.h:
+
+/usr/mipsel-linux-gnu/include/gnu/stubs.h:
+
+/usr/mipsel-linux-gnu/include/bits/types.h:
+
+/usr/mipsel-linux-gnu/include/bits/types/__mbstate_t.h:
 
 os/include/pcb.h:
 
-os/src/pcb.c:
+/usr/mipsel-linux-gnu/include/bits/long-double.h:
 
-os/include/utils.h:
+/usr/mipsel-linux-gnu/include/bits/types/clockid_t.h:
+
+/usr/mipsel-linux-gnu/include/sys/cdefs.h:
+
+/usr/mipsel-linux-gnu/include/bits/time64.h:
+
+os/include/log2.h:
+
+/usr/mipsel-linux-gnu/include/sgidefs.h:
+
+/usr/mipsel-linux-gnu/include/bits/timesize.h:
+
+/usr/mipsel-linux-gnu/include/bits/struct_mutex.h:
 
 os/src/ash.c:
 
-os/include/pandos_types.h:
+/usr/mipsel-linux-gnu/include/bits/types/clock_t.h:
 
-/usr/include/umps3/umps/const.h:
+os/include/types.h:
+
+/usr/mipsel-linux-gnu/include/bits/select.h:
+
+/usr/mipsel-linux-gnu/include/bits/types/__fpos64_t.h:
 
 /usr/include/umps3/umps/types.h:
 
-os/include/pandos_const.h:
-
-os/src/namespace.c:
+/usr/mipsel-linux-gnu/include/stdc-predef.h:
 
 os/include/list.h:
 
 os/include/ash.h:
 
-os/include/types.h:
+/usr/mipsel-linux-gnu/include/bits/waitstatus.h:
 
-os/include/hashtable.h:
+/usr/mipsel-linux-gnu/include/bits/types/sigset_t.h:
+
+/usr/mipsel-linux-gnu/include/features.h:
+
+/usr/mipsel-linux-gnu/include/sys/types.h:
+
+/usr/mipsel-linux-gnu/include/stdio.h:
+
+/usr/mipsel-linux-gnu/include/bits/waitflags.h:
+
+/usr/mipsel-linux-gnu/include/bits/stdint-intn.h:
+
+/usr/include/umps3/umps/const.h:
+
+/usr/mipsel-linux-gnu/include/endian.h:
 
 os/include/hash.h:
 
-os/include/log2.h:
+/usr/mipsel-linux-gnu/include/stdlib.h:
 
-os/include/namespace.h:
+/usr/mipsel-linux-gnu/include/features-time64.h:
+
+os/include/pandos_const.h:
+
+/usr/mipsel-linux-gnu/include/bits/types/struct_FILE.h:
+
+/usr/mipsel-linux-gnu/include/bits/libc-header-start.h:
+
+/usr/mipsel-linux-gnu/include/bits/floatn-common.h:
+
+/usr/mipsel-linux-gnu/include/bits/stdlib-float.h:
+
+/usr/mipsel-linux-gnu/include/bits/types/time_t.h:
+
+/usr/mipsel-linux-gnu/include/bits/types/timer_t.h:
+
+os/include/pandos_types.h:
+
+/usr/mipsel-linux-gnu/include/bits/endian.h:
+
+/usr/mipsel-linux-gnu/include/bits/endianness.h:
+
+/usr/mipsel-linux-gnu/include/bits/byteswap.h:
+
+/usr/mipsel-linux-gnu/include/bits/floatn.h:
+
+/usr/mipsel-linux-gnu/include/bits/uintn-identity.h:
+
+/usr/mipsel-linux-gnu/include/sys/select.h:
+
+/usr/mipsel-linux-gnu/include/bits/types/struct_timespec.h:
+
+/usr/mipsel-linux-gnu/include/bits/types/struct_timeval.h:
+
+/usr/mipsel-linux-gnu/include/bits/thread-shared-types.h:
+
+/usr/mipsel-linux-gnu/include/bits/pthreadtypes.h:
+
+/usr/mipsel-linux-gnu/include/bits/pthreadtypes-arch.h:
+
+/usr/mipsel-linux-gnu/include/bits/atomic_wide_counter.h:
+
+/usr/mipsel-linux-gnu/include/bits/wordsize.h:
+
+/usr/mipsel-linux-gnu/include/bits/struct_rwlock.h:
+
+/usr/mipsel-linux-gnu/include/alloca.h:
+
+/usr/mipsel-linux-gnu/include/bits/types/__sigset_t.h:
+
+/usr/lib/gcc-cross/mipsel-linux-gnu/10/include/stdarg.h:
+
+/usr/mipsel-linux-gnu/include/bits/types/__fpos_t.h:
+
+os/src/pcb.c:
+
+/usr/mipsel-linux-gnu/include/bits/types/__FILE.h:

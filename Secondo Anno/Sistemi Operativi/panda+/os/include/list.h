@@ -2,6 +2,9 @@
 #ifndef PANDOS_LIST_H
 #define PANDOS_LIST_H
 
+#define HLIST_HEAD_INIT { .first = NULL }
+#define HLIST_HEAD(name) struct hlist_head name = {  .first = NULL }
+#define INIT_HLIST_HEAD(ptr) ((ptr)->first = NULL)
 
 /* Define size_tt with the proper length on different architectures */
 #ifdef __x86_64__

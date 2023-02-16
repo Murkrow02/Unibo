@@ -6,10 +6,9 @@
 #define PHASE1_FILES_ASH_H
 
 #include "pandos_types.h"
-#include "list.h"
 #include "ash.h"
-//#include <linux/hashtable.h>
 #include "hashtable.h"
+#include "list.h"
 
 // array di SEMD con dimensione massima di MAX_PROC.
 struct semd_t semd_table[MAXPROC];
@@ -17,6 +16,9 @@ struct semd_t semd_table[MAXPROC];
 struct list_head semdFree_h;
 // Hash dei semafori attivi
 struct hlist_head semd_h;
+
+DEFINE_HASHTABLE(sem_hash, 10);
+//DECLARE_HASHTABLE(sem_hash, 2048);
 
 // 14. Viene inserito il PCB puntato da p nella coda dei processi bloccati associata al SEMD con chiave semAdd.
 // Se il semaforo corrispondente non è presente nella ASH, alloca un nuovo SEMD dalla lista di quelli liberi (semdFree) e lo inserisce nella ASH,
@@ -40,7 +42,7 @@ int insertBlocked(int *semAdd, pcb_t *p) {
         list_del(&ASSSEM.s_freelink);
 
         //Aggiungo il semaforo alla hashtable
-        hash_add(&semd_h, ASSSEM.s_link, *ASSSEM.s_key);
+        hash_add(sem_hash, &ASSSEM.s_link, *ASSSEM.s_key);
     }
 
     //Aggiungo il PCB alla lista dei processi bloccati
@@ -87,46 +89,49 @@ pcb_t* removeBlocked(int *semAdd) {
 // Se la coda dei processi bloccati per il semaforo diventa vuota, rimuove il descrittore corrispondente dalla ASH
 // e lo inserisce nella coda dei descrittori liberi
 pcb_t* outBlocked(pcb_t *p) {
-    return NULL;
 
-//    //Semaforo associato al pcb p
-//    semd_t ASSSEM = semd_table[&(p->p_semAdd)];
-//
-//    //Prendo primo elemento della lista
-//    headBlocked = ASSSEM.s_procq;
-//
-//    //inizializzo la head mobile
-//    head = headBlocked;
-//
-//    //Scorro la lista e controllo di non essere arrivato alla fine
-//    while(list_is_last(head, headBlocked) == 0) {
-//        //Controllo che il processo da sbloccare sia p
-//        if (head == p) {
-//            //Rimuovo p dalla lista dei processi bloccati
-//            list_del(head);
-//
-//            //Controllo se la lista dei bloccati ora è vuota
-//            if (list_empty(headBlocked) == 1) {
-//
-//                //Rimuovo l'hash del semaforo dagli hash attivi
-//                hash_del(ASSEM.s_link);
-//
-//                //Aggiungo il semaforo tra i semafori liberi
-//                list_add_tail(ASSSEM, semdFree_h);
-//            }
-//            return p
-//        }
-//        //Il processo in analisi non è p quindi scorro
-//        head = list_next(head);
-//    }
-//
-//    //Se p non è nella coda dei bloccati ritorno null -> ERRORE
-//    return NULL;
+    //Semaforo associato al pcb p
+    semd_t ASSSEM = semd_table[*p->p_semAdd];
+
+    //Prendo primo elemento della lista
+    struct list_head* headBlocked = &ASSSEM.s_procq;
+
+    //inizializzo la head mobile
+    struct list_head* head = headBlocked;
+
+    //Scorro la lista e controllo di non essere arrivato alla fine
+    while(list_is_last(head, headBlocked) == 0) {
+
+        //Controllo che il processo da sbloccare sia p
+        if (head == &p->p_list) {
+
+            //Rimuovo p dalla lista dei processi bloccati
+            list_del(head);
+
+            //Controllo se la lista dei bloccati ora è vuota
+            if (list_empty(headBlocked) == 1) {
+
+                //Rimuovo l'hash del semaforo dagli hash attivi
+                hash_del(&ASSSEM.s_link);
+
+                //Aggiungo il semaforo tra i semafori liberi
+                list_add_tail(&ASSSEM.s_freelink, &semdFree_h);
+            }
+            return p;
+        }
+
+        //Il processo in analisi non è p quindi scorro
+        head = list_next(head);
+    }
+
+    //Se p non è nella coda dei bloccati ritorno null -> ERRORE
+    return NULL;
 }
 
 // 17. Restituisce (senza rimuovere) il puntatore al PCB che si trova in testa alla coda dei processi associata al SEMD con chiave semAdd.
 // Ritorna NULL se il SEMD non compare nella ASH oppure se compare ma la sua coda dei processi è vuota.
 pcb_t* headBlocked(int *semAdd) {
+
     //Semaforo associato a semAdd
     semd_t ASSSEM = semd_table[*semAdd];
 
@@ -139,15 +144,15 @@ pcb_t* headBlocked(int *semAdd) {
         return NULL;
     }
 
-    return NULL;
-    //&(container_of(&ASSSEM.s_procq, pcb_t, s_procq));
+    return (container_of(&ASSSEM.s_procq, pcb_t, p_list));
 }
 
 // 18. Inizializza la lista dei semdFree in modo da contenere tutti gli elementi della semdTable.
 // Questo metodo viene invocato una volta sola durante l’inizializzazione della struttura dati.
 void initASH() {
 
-    //DEFINE_HASHTABLE(semd_h, 5);
+    //DEFINE_HASHTABLE(sem_hash, 10);
+    
     //hash_init(semd_h);
 
     //Prendo il primo semaforo da maxproc per inizializzare una testa
