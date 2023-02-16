@@ -9,6 +9,9 @@ phase1/CMakeFiles/phase1.dir/src/p1test.c.o: phase1/src/p1test.c \
   os/include/pandos_const.h \
   /usr/include/umps3/umps/const.h \
   os/include/list.h \
+  os/include/container_of.h \
+  os/include/types.h \
+  os/include/ash.h \
   os/include/namespace.h \
   os/include/pandos_const.h \
   os/include/pandos_types.h \
@@ -16,6 +19,8 @@ phase1/CMakeFiles/phase1.dir/src/p1test.c.o: phase1/src/p1test.c \
 
 
 /usr/include/umps3/umps/libumps.h:
+
+os/include/ash.h:
 
 os/include/list.h:
 
@@ -26,6 +31,8 @@ os/include/pandos_const.h:
 /usr/include/umps3/umps/const.h:
 
 os/include/types.h:
+
+os/include/container_of.h:
 
 os/include/pandos_types.h:
 

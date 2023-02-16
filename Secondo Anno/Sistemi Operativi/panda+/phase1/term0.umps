@@ -14,12 +14,5 @@ outChild ok
 Removing...   
 insertChild, removeChild and emptyChild ok   
 process tree module ok      
-Initialized Namespaces
-getNamespace test #1 started  
-getNamespace test #1 ok
-addNamespace test #1 started
-addNamespace: test ok
-addNamespace(2): test started
-addNamespace(2): test ok
-Namespace module ok
-So Long and Thanks for All the Fish
+Initialized active semaphore hash   
+insertBlocked test #1 started  

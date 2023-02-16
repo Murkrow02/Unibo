@@ -12,8 +12,10 @@
 
 // array di SEMD con dimensione massima di MAX_PROC.
 struct semd_t semd_table[MAXPROC];
+
 // Lista dei SEMD liberi o inutilizzati.
 struct list_head semdFree_h;
+
 // Hash dei semafori attivi
 struct hlist_head semd_h;
 
@@ -28,15 +30,18 @@ int insertBlocked(int *semAdd, pcb_t *p) {
 
     //Semaforo associato alla chiave semAdd
     semd_t ASSSEM = semd_table[*semAdd];
-
+    
+    return 1;
     //Controllo se la tabella di hash non contiene il semaforo
     if(!hash_hashed(&ASSSEM.s_link))
     {
+    
         //Controllo se la lista dei semafori liberi è vuota
         if (list_empty(&semdFree_h) == 1)
         {
             return TRUE;
         }
+
 
         //Alloco un nuovo semd dalla lista di quelli liberi //TODO CONTROLLA NON SO SE VA BENE
         list_del(&ASSSEM.s_freelink);
@@ -55,6 +60,7 @@ int insertBlocked(int *semAdd, pcb_t *p) {
 // Altrimenti, restituisce l’elemento rimosso. Se la coda dei processi bloccati per il semaforo diventa vuota, rimuove il descrittore
 // corrispondente dalla ASH e lo inserisce nella coda dei descrittori liberi (semdFree_h).
 pcb_t* removeBlocked(int *semAdd) {
+
     //Semaforo associato alla chiave
     semd_t ASSSEM = semd_table[*semAdd];
 
@@ -151,19 +157,13 @@ pcb_t* headBlocked(int *semAdd) {
 // Questo metodo viene invocato una volta sola durante l’inizializzazione della struttura dati.
 void initASH() {
 
-    //DEFINE_HASHTABLE(sem_hash, 10);
-    
-    //hash_init(semd_h);
-
-    //Prendo il primo semaforo da maxproc per inizializzare una testa
-    semdFree_h = semd_table[0].s_freelink;
-
     //Inizializziamo una nuova lista con la list-head che abbiamo preso dalla tabella
     INIT_LIST_HEAD(&semdFree_h);
-
-    //Aggiungiamo in coda alla lista dei semafori liberi tutti i semafori restanti nella tabella
-    for (int i = 1; i < MAXPROC; ++i) {
+  
+    //Move elements from pcb table to list
+    for (int i = 0; i < MAXPROC; i++) {
         list_add_tail(&semd_table[i].s_freelink, &semdFree_h);
+
     }
 }
 
