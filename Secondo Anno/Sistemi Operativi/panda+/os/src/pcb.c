@@ -34,8 +34,26 @@ void freePcb(pcb_t *p) {
     list_add(&p->p_list, &pcb_free);
 }
 
-pcb_t *allocPcb() {
+pcb_t* initializePcb(pcb_t *pcb)
+{
+    if (pcb == NULL)
+        return NULL;
 
+    //Empty list pointers
+    pcb->p_list.prev = NULL;
+    pcb->p_list.next = NULL;
+    pcb->p_sib.prev = NULL;
+    pcb->p_sib.next = NULL;
+
+    INIT_LIST_HEAD(&pcb->p_child);
+    
+    pcb->p_parent = NULL;
+    pcb->p_time = 0;
+    pcb->p_semAdd = NULL;
+    return pcb;
+}
+
+pcb_t *allocPcb() {
 
     if(list_empty(&pcb_free))
         return NULL;
@@ -43,11 +61,12 @@ pcb_t *allocPcb() {
     //List is not empty, get first element
     pcb_t* firstElem = container_of(pcb_free.next, pcb_t, p_list);
 
-    //Remove element from list
+    //Remove new pcb from free list
     list_del(pcb_free.next);
 
-    //Clean pcb before return
+    //Init pcb before return
     return initializePcb(firstElem);
+    
 }
 
 void mkEmptyProcQ(struct list_head *head) {

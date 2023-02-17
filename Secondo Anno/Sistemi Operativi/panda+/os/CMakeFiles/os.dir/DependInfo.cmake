@@ -9,7 +9,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/murkrow/a/os/src/ash.c" "os/CMakeFiles/os.dir/src/ash.c.o" "gcc" "os/CMakeFiles/os.dir/src/ash.c.o.d"
-  "/home/murkrow/a/os/src/namespace.c" "os/CMakeFiles/os.dir/src/namespace.c.o" "gcc" "os/CMakeFiles/os.dir/src/namespace.c.o.d"
+  "/home/murkrow/a/os/src/ns.c" "os/CMakeFiles/os.dir/src/ns.c.o" "gcc" "os/CMakeFiles/os.dir/src/ns.c.o.d"
   "/home/murkrow/a/os/src/pcb.c" "os/CMakeFiles/os.dir/src/pcb.c.o" "gcc" "os/CMakeFiles/os.dir/src/pcb.c.o.d"
   "/home/murkrow/a/os/src/utils.c" "os/CMakeFiles/os.dir/src/utils.c.o" "gcc" "os/CMakeFiles/os.dir/src/utils.c.o.d"
   )

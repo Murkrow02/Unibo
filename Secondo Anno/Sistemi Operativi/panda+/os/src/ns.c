@@ -2,7 +2,7 @@
 // Created by Marco Coppola on 19/01/23.
 //
 
-#include "namespace.h"
+#include "ns.h"
 #include "types.h"
 #include "utils.h"
 
@@ -46,6 +46,7 @@ nsd_t* getNamespace(pcb_t *p, int type){
                 //namespaces[i] is not null, check if is the same type as requested
                 if(p->namespaces[i]->n_type == type){
 
+                    //addokbuf("addNamespace test #1 started\n");
                     //Namespace of the process is as the same type as requested, check if the namespace is active
                    // int activeNamespace = list_search_el(&pid_nsList_h, &p->namespaces[i]->n_link);
 

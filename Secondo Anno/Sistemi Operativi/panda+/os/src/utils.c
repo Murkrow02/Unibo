@@ -4,23 +4,6 @@
 
 
 #include "pandos_types.h"
-pcb_t* initializePcb(pcb_t* pcb){
-
-    //TODO: Init other stuff
-
-    //Init children list
-    INIT_LIST_HEAD(&pcb->p_child);
-
-    //Init siblings list
-    INIT_LIST_HEAD(&pcb->p_sib);
-
-    //Initialize the namespaces of this PCB
-    for(int i = 0; i < NS_TYPE_MAX; i++){
-        pcb->namespaces[i] = NULL; //All NULL
-    }
-
-    return pcb;
-}
 
 
 int list_search_el(list_head* searchElement, list_head* list){

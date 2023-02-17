@@ -17,9 +17,9 @@ os/CMakeFiles/os.dir/src/ash.c.o
  /home/murkrow/a/os/include/log2.h
  /usr/include/umps3/umps/libumps.h
 
-os/CMakeFiles/os.dir/src/namespace.c.o
- /home/murkrow/a/os/src/namespace.c
- /home/murkrow/a/os/include/namespace.h
+os/CMakeFiles/os.dir/src/ns.c.o
+ /home/murkrow/a/os/src/ns.c
+ /home/murkrow/a/os/include/ns.h
  /home/murkrow/a/os/include/pandos_types.h
  /home/murkrow/a/os/include/types.h
  /usr/include/umps3/umps/types.h

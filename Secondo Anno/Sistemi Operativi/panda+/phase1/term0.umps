@@ -19,15 +19,14 @@ insertBlocked test #1 started
 insertBlocked test #2 started  
 removeBlocked test started   
 insertBlocked and removeBlocked ok   
-PRIMA  
-TROVATO  
-PRIMA  
-TROVATO  
-NON RITORNA  
 headBlocked and outBlocked ok   
 ASH module ok   
 Initialized Namespaces
 getNamespace test #1 started  
 getNamespace test #1 ok
 addNamespace test #1 started
-getNamespace: Unexpected root namespace for process 3
+addNamespace: test ok
+addNamespace(2): test started
+addNamespace(2): test ok
+Namespace module ok
+So Long and Thanks for All the Fish

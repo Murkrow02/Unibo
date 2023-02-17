@@ -206,29 +206,29 @@ src/ash.c.s:
 	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/ash.c.s
 .PHONY : src/ash.c.s
 
-src/namespace.o: src/namespace.c.o
-.PHONY : src/namespace.o
+src/ns.o: src/ns.c.o
+.PHONY : src/ns.o
 
 # target to build an object file
-src/namespace.c.o:
-	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/namespace.c.o
-.PHONY : src/namespace.c.o
+src/ns.c.o:
+	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/ns.c.o
+.PHONY : src/ns.c.o
 
-src/namespace.i: src/namespace.c.i
-.PHONY : src/namespace.i
+src/ns.i: src/ns.c.i
+.PHONY : src/ns.i
 
 # target to preprocess a source file
-src/namespace.c.i:
-	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/namespace.c.i
-.PHONY : src/namespace.c.i
+src/ns.c.i:
+	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/ns.c.i
+.PHONY : src/ns.c.i
 
-src/namespace.s: src/namespace.c.s
-.PHONY : src/namespace.s
+src/ns.s: src/ns.c.s
+.PHONY : src/ns.s
 
 # target to generate assembly for a file
-src/namespace.c.s:
-	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/namespace.c.s
-.PHONY : src/namespace.c.s
+src/ns.c.s:
+	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/ns.c.s
+.PHONY : src/ns.c.s
 
 src/pcb.o: src/pcb.c.o
 .PHONY : src/pcb.o
@@ -318,9 +318,9 @@ help:
 	@echo "... src/ash.o"
 	@echo "... src/ash.i"
 	@echo "... src/ash.s"
-	@echo "... src/namespace.o"
-	@echo "... src/namespace.i"
-	@echo "... src/namespace.s"
+	@echo "... src/ns.o"
+	@echo "... src/ns.i"
+	@echo "... src/ns.s"
 	@echo "... src/pcb.o"
 	@echo "... src/pcb.i"
 	@echo "... src/pcb.s"
