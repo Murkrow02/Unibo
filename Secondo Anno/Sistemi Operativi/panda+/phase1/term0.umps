@@ -17,4 +17,17 @@ process tree module ok
 Initialized active semaphore hash   
 insertBlocked test #1 started  
 insertBlocked test #2 started  
-Trovato chiave
+removeBlocked test started   
+insertBlocked and removeBlocked ok   
+PRIMA  
+TROVATO  
+PRIMA  
+TROVATO  
+NON RITORNA  
+headBlocked and outBlocked ok   
+ASH module ok   
+Initialized Namespaces
+getNamespace test #1 started  
+getNamespace test #1 ok
+addNamespace test #1 started
+getNamespace: Unexpected root namespace for process 3

@@ -20,6 +20,7 @@ DEFINE_HASHTABLE(semd_h, 10);
 // Se il semaforo corrispondente non è presente nella ASH, alloca un nuovo SEMD dalla lista di quelli liberi (semdFree) e lo inserisce nella ASH,
 // settando I campi in maniera opportuna (i.e. key e s_procQ). Se non è possibile allocare un nuovo SEMD perché la lista di quelli liberi è vuota,
 // restituisce TRUE. In tutti gli altri casi, restituisce FALSE.
+
 int insertBlocked(int *semAdd, pcb_t *p) {
 
     struct semd_t* ASSSEM;
@@ -27,26 +28,37 @@ int insertBlocked(int *semAdd, pcb_t *p) {
       
       //Controlla se il semd_t e' quello che cerchiamo
       if(ASSSEM != NULL && *ASSSEM->s_key == *semAdd){
-         addokbuf("Trovato chiave");
+      
         //Aggiungo il PCB alla lista dei processi bloccati
         list_add_tail(&p->p_list, &ASSSEM->s_procq);
-        addokbuf("aaa");
+        
+        //Aggiungo al processo il suo semaforo dove e bloccato
+        p->p_semAdd = semAdd;
+
+        return FALSE;
       }
+    }
+    
+    //Controlla se ci sono abbastanza semafori liberi
+    if(list_empty(&semdFree_h)){
+      return TRUE; //Non ce ne sono
     }
     
     //Prendi il primo semaforo libero
     semd_t* firstFreeSem = container_of(semdFree_h.next, semd_t, s_freelink);
     
-    //Non ci sono abbastanza semafori liberi
-    if(firstFreeSem == NULL)
-      return TRUE;
+    //Aggiungo al processo il suo semaforo dove e bloccato
+    p->p_semAdd = semAdd;
     
     //Inizializzo la lista dei processi bloccati del nuovo semaforo
     INIT_LIST_HEAD(&firstFreeSem->s_procq);
+    
     //Assegno la chiave semAdd al nuovo semaforo
     firstFreeSem->s_key = semAdd;
+    
     //Aggiungo il PCB alla lista dei processi bloccati
-    list_add_tail(&p->p_list, &firstFreeSem->s_procq);
+    list_add(&p->p_list, &firstFreeSem->s_procq);
+    
     //Elimino il nuovo semaforo da quelli liberi
     list_del(semdFree_h.next);
         
@@ -66,27 +78,30 @@ pcb_t* removeBlocked(int *semAdd) {
       
       //Controlla se il semd_t e' quello che cerchiamo
       if(ASSSEM != NULL && *ASSSEM->s_key == *semAdd){
-        
+      
         //PCB da ritornare
-        pcb_t* returnPCB = container_of(&ASSSEM->s_procq.next, pcb_t, p_list);
+        pcb_t* returnPCB = list_first_entry(&ASSSEM->s_procq, pcb_t, p_list);
         list_del(&ASSSEM->s_procq.next); //Rimuovi dalla coda dei processi
-        //addokbuf(&ASSSEM->s_procq.next->);
         
         //Controllo se la lista dei processi bloccati è vuota
-        if (list_empty(&ASSSEM->s_procq) == TRUE) {
-            addokbuf("bbbb");
+        if (ASSSEM->s_procq.next == ASSSEM->s_procq.prev) { //list_empty not working
+        
             //Rimuovo l'hash del semaforo dagli hash attivi
             hash_del(&ASSSEM->s_link);
 
             //Aggiungo il semaforo tra i semafori liberi
-            list_add_tail(&ASSSEM->s_freelink, &semdFree_h);
+            list_add(&ASSSEM->s_freelink, &semdFree_h);
 
             //TODO secondo te qua bisogna eliminare la lista dei processi bloccati e la chiave?
         }
+        
+        //addokbuf("Ritorno");
         return returnPCB;
       }
       
     }
+    
+    //addokbuf("Non ritorno");
     return NULL;
 }
 
@@ -98,15 +113,20 @@ pcb_t* outBlocked(pcb_t *p) {
 
     //Semaforo associato al pcb p
     struct semd_t* ASSSEM;
-    hash_for_each_possible(semd_h, ASSSEM, s_link, *p->p_semAdd){
+    hash_for_each_possible(semd_h, ASSSEM, s_link, p->p_semAdd){
+    
         //Controlla se il semd_t e' quello che cerchiamo
-        if (ASSSEM != NULL && *ASSSEM->s_key == *p->p_semAdd) {
+
+        if(ASSSEM != NULL && *ASSSEM->s_key == *p->p_semAdd){
 
             list_head* el;
             //Cerco il pcb p nella lista dei bloccati
-            list_foreach(el, &ASSSEM->s_procq) {
+            list_for_each(el, &ASSSEM->s_procq) {
+            
+
                 //Check if currently pointed element is the same as p
                 if(el == &p->p_list){
+                
                     //Rimuovo p dalla lista dei processi bloccati
                     list_del(el);
 
@@ -116,7 +136,7 @@ pcb_t* outBlocked(pcb_t *p) {
                         hash_del(&ASSSEM->s_link);
 
                         //Aggiungo il semaforo tra i semafori liberi
-                        list_add_tail(&ASSSEM->s_freelink, &semdFree_h);
+                        list_add(&ASSSEM->s_freelink, &semdFree_h);
 
                         //TODO secondo te qua bisogna eliminare la lista dei processi bloccati e la chiave?
                     }
@@ -127,6 +147,7 @@ pcb_t* outBlocked(pcb_t *p) {
     }
 
     //Se il processo non viene trovato tra i bloccati -> ERRORE
+
     return NULL;
 }
 
@@ -134,23 +155,24 @@ pcb_t* outBlocked(pcb_t *p) {
 // Ritorna NULL se il SEMD non compare nella ASH oppure se compare ma la sua coda dei processi è vuota.
 pcb_t* headBlocked(int *semAdd) {
 
-    //Semaforo associato a semAdd
     struct semd_t* ASSSEM;
     hash_for_each_possible(semd_h, ASSSEM, s_link, semAdd){
-        //Controlla se il semd_t e' quello che cerchiamo
-        if(ASSSEM != NULL && *ASSSEM->s_key == *semAdd){
-
-            //Controllo se la coda di processi bloccati è vuota
-            if (list_empty(&ASSSEM->s_procq) == TRUE) {
-                return NULL;
-            }
-
-            //Ritorno il pcb in testa alla coda dei processi bloccati
-            return (container_of(&ASSSEM->s_procq.next, pcb_t, p_list));
+      
+      //Controlla se il semd_t e' quello che cerchiamo
+      if(ASSSEM != NULL && *ASSSEM->s_key == *semAdd){
+      
+        if (list_empty(&ASSSEM->s_procq))
+        {
+            return NULL;
         }
+      
+        //PCB da ritornare
+        return list_first_entry(&ASSSEM->s_procq, pcb_t, p_list);
+      }
+      
     }
+    
 
-    //Il semaforo non è contenuto nella hashtable -> ERRORE
     return NULL;
 }
 
@@ -163,7 +185,7 @@ void initASH() {
   
     //Move elements from semd table to list
     for (int i = 0; i < MAXPROC; i++) {
-        list_add_tail(&semd_table[i].s_freelink, &semdFree_h);
+        list_add(&semd_table[i].s_freelink, &semdFree_h);
     }
 }
 

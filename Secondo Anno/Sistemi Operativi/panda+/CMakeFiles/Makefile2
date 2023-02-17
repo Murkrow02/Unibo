@@ -221,9 +221,9 @@ os/CMakeFiles/libumps.dir/clean:
 # Target rules for target phase1/CMakeFiles/phase1.dir
 
 # All Build rule for target.
+phase1/CMakeFiles/phase1.dir/all: os/CMakeFiles/libumps.dir/all
 phase1/CMakeFiles/phase1.dir/all: os/CMakeFiles/os.dir/all
 phase1/CMakeFiles/phase1.dir/all: os/CMakeFiles/crtso.dir/all
-phase1/CMakeFiles/phase1.dir/all: os/CMakeFiles/libumps.dir/all
 	$(MAKE) $(MAKESILENT) -f phase1/CMakeFiles/phase1.dir/build.make phase1/CMakeFiles/phase1.dir/depend
 	$(MAKE) $(MAKESILENT) -f phase1/CMakeFiles/phase1.dir/build.make phase1/CMakeFiles/phase1.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/murkrow/a/CMakeFiles --progress-num=12,13 "Built target phase1"
