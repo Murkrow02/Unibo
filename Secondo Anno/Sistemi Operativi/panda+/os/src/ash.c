@@ -1,7 +1,3 @@
-//
-// Created by Marco Coppola on 19/01/23.
-//
-
 #ifndef PHASE1_FILES_ASH_H
 #define PHASE1_FILES_ASH_H
 
@@ -45,10 +41,13 @@ int insertBlocked(int *semAdd, pcb_t *p) {
     if(firstFreeSem == NULL)
       return TRUE;
     
-    //Aggiungo il PCB alla lista dei processi bloccati
+    //Inizializzo la lista dei processi bloccati del nuovo semaforo
     INIT_LIST_HEAD(&firstFreeSem->s_procq);
+    //Assegno la chiave semAdd al nuovo semaforo
     firstFreeSem->s_key = semAdd;
+    //Aggiungo il PCB alla lista dei processi bloccati
     list_add_tail(&p->p_list, &firstFreeSem->s_procq);
+    //Elimino il nuovo semaforo da quelli liberi
     list_del(semdFree_h.next);
         
     //Aggiungo il semaforo alla hashtable
@@ -62,7 +61,6 @@ int insertBlocked(int *semAdd, pcb_t *p) {
 // corrispondente dalla ASH e lo inserisce nella coda dei descrittori liberi (semdFree_h).
 pcb_t* removeBlocked(int *semAdd) {
 
-
     struct semd_t* ASSSEM;
     hash_for_each_possible(semd_h, ASSSEM, s_link, semAdd){
       
@@ -72,16 +70,18 @@ pcb_t* removeBlocked(int *semAdd) {
         //PCB da ritornare
         pcb_t* returnPCB = container_of(&ASSSEM->s_procq.next, pcb_t, p_list);
         list_del(&ASSSEM->s_procq.next); //Rimuovi dalla coda dei processi
-        addokbuf(&ASSSEM->s_procq.next->);
+        //addokbuf(&ASSSEM->s_procq.next->);
         
         //Controllo se la lista dei processi bloccati è vuota
         if (list_empty(&ASSSEM->s_procq) == TRUE) {
-addokbuf("bbbb");
+            addokbuf("bbbb");
             //Rimuovo l'hash del semaforo dagli hash attivi
             hash_del(&ASSSEM->s_link);
 
             //Aggiungo il semaforo tra i semafori liberi
             list_add_tail(&ASSSEM->s_freelink, &semdFree_h);
+
+            //TODO secondo te qua bisogna eliminare la lista dei processi bloccati e la chiave?
         }
         return returnPCB;
       }
@@ -97,40 +97,36 @@ addokbuf("bbbb");
 pcb_t* outBlocked(pcb_t *p) {
 
     //Semaforo associato al pcb p
-    semd_t ASSSEM = semd_table[*p->p_semAdd];
+    struct semd_t* ASSSEM;
+    hash_for_each_possible(semd_h, ASSSEM, s_link, *p->p_semAdd){
+        //Controlla se il semd_t e' quello che cerchiamo
+        if (ASSSEM != NULL && *ASSSEM->s_key == *p->p_semAdd) {
 
-    //Prendo primo elemento della lista
-    struct list_head* headBlocked = &ASSSEM.s_procq;
+            list_head* el;
+            //Cerco il pcb p nella lista dei bloccati
+            list_foreach(el, &ASSSEM->s_procq) {
+                //Check if currently pointed element is the same as p
+                if(el == &p->p_list){
+                    //Rimuovo p dalla lista dei processi bloccati
+                    list_del(el);
 
-    //inizializzo la head mobile
-    struct list_head* head = headBlocked;
+                    //Conntrollo se la lista dei processi bloccati è ora vuota
+                    if (list_empty(&ASSSEM->s_procq) == TRUE) {
+                        //Rimuovo l'hash del semaforo dagli hash attivi
+                        hash_del(&ASSSEM->s_link);
 
-    //Scorro la lista e controllo di non essere arrivato alla fine
-    while(list_is_last(head, headBlocked) == 0) {
+                        //Aggiungo il semaforo tra i semafori liberi
+                        list_add_tail(&ASSSEM->s_freelink, &semdFree_h);
 
-        //Controllo che il processo da sbloccare sia p
-        if (head == &p->p_list) {
-
-            //Rimuovo p dalla lista dei processi bloccati
-            list_del(head);
-
-            //Controllo se la lista dei bloccati ora è vuota
-            if (list_empty(headBlocked) == 1) {
-
-                //Rimuovo l'hash del semaforo dagli hash attivi
-                hash_del(&ASSSEM.s_link);
-
-                //Aggiungo il semaforo tra i semafori liberi
-                list_add_tail(&ASSSEM.s_freelink, &semdFree_h);
+                        //TODO secondo te qua bisogna eliminare la lista dei processi bloccati e la chiave?
+                    }
+                    return p;
+                }
             }
-            return p;
         }
-
-        //Il processo in analisi non è p quindi scorro
-        head = list_next(head);
     }
 
-    //Se p non è nella coda dei bloccati ritorno null -> ERRORE
+    //Se il processo non viene trovato tra i bloccati -> ERRORE
     return NULL;
 }
 
@@ -139,18 +135,23 @@ pcb_t* outBlocked(pcb_t *p) {
 pcb_t* headBlocked(int *semAdd) {
 
     //Semaforo associato a semAdd
-    semd_t ASSSEM = semd_table[*semAdd];
+    struct semd_t* ASSSEM;
+    hash_for_each_possible(semd_h, ASSSEM, s_link, semAdd){
+        //Controlla se il semd_t e' quello che cerchiamo
+        if(ASSSEM != NULL && *ASSSEM->s_key == *semAdd){
 
-    //Controllo se la tabella di hash non contiene il semaforo
-    if(!hash_hashed(&ASSSEM.s_link)) {
-        return NULL;
-    }
-    //Controllo se la coda di processi bloccati è vuota
-    if (list_empty(&ASSSEM.s_procq) == 1) {
-        return NULL;
+            //Controllo se la coda di processi bloccati è vuota
+            if (list_empty(&ASSSEM->s_procq) == TRUE) {
+                return NULL;
+            }
+
+            //Ritorno il pcb in testa alla coda dei processi bloccati
+            return (container_of(&ASSSEM->s_procq.next, pcb_t, p_list));
+        }
     }
 
-    return (container_of(&ASSSEM.s_procq, pcb_t, p_list));
+    //Il semaforo non è contenuto nella hashtable -> ERRORE
+    return NULL;
 }
 
 // 18. Inizializza la lista dei semdFree in modo da contenere tutti gli elementi della semdTable.
@@ -163,7 +164,6 @@ void initASH() {
     //Move elements from semd table to list
     for (int i = 0; i < MAXPROC; i++) {
         list_add_tail(&semd_table[i].s_freelink, &semdFree_h);
-
     }
 }
 
