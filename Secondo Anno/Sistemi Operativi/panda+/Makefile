@@ -57,23 +57,13 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/murkrow/a
+CMAKE_SOURCE_DIR = .
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/murkrow/a
+CMAKE_BINARY_DIR = .
 
 #=============================================================================
 # Targets provided globally by CMake.
-
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
-	/usr/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
-
-# Special rule for the target test
-test/fast: test
-.PHONY : test/fast
 
 # Special rule for the target edit_cache
 edit_cache:
@@ -97,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/murkrow/a/CMakeFiles /home/murkrow/a//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/murkrow/Downloads/a/CMakeFiles /home/murkrow/Downloads/a//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/murkrow/a/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/murkrow/Downloads/a/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -179,17 +169,17 @@ libumps/fast:
 .PHONY : libumps/fast
 
 #=============================================================================
-# Target rules for targets named phase1
+# Target rules for targets named kernel
 
 # Build rule for target.
-phase1: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase1
-.PHONY : phase1
+kernel: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 kernel
+.PHONY : kernel
 
 # fast build rule for target.
-phase1/fast:
-	$(MAKE) $(MAKESILENT) -f phase1/CMakeFiles/phase1.dir/build.make phase1/CMakeFiles/phase1.dir/build
-.PHONY : phase1/fast
+kernel/fast:
+	$(MAKE) $(MAKESILENT) -f phase1/CMakeFiles/kernel.dir/build.make phase1/CMakeFiles/kernel.dir/build
+.PHONY : kernel/fast
 
 # Help Target
 help:
@@ -199,12 +189,11 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... test"
 	@echo "... crti"
 	@echo "... crtso"
+	@echo "... kernel"
 	@echo "... libumps"
 	@echo "... os"
-	@echo "... phase1"
 .PHONY : help
 
 

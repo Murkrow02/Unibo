@@ -9,6 +9,11 @@ Lanciare all'interno della cartella principale (panda+) il seguente comando:
 
 Per generare un nuovo makefile.
 
+I file binari verranno generati nella cartella `phase1`
+
+##Struttura del progetto
+- `phase1/src`: directory del file di test `p1test.c` per controllare la corretta esecuzione delle funzioni implementate
+- `os`: directory contenente le librerie, i file header e le implementazioni necessarie per il corretto funzionamento del sistema.
 
 ## Fase 1
 ### PCB (Process Control Block)

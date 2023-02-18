@@ -57,23 +57,13 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/murkrow/a
+CMAKE_SOURCE_DIR = ./
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/murkrow/a
+CMAKE_BINARY_DIR = ./
 
 #=============================================================================
 # Targets provided globally by CMake.
-
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
-	/usr/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
-
-# Special rule for the target test
-test/fast: test
-.PHONY : test/fast
 
 # Special rule for the target edit_cache
 edit_cache:
@@ -97,14 +87,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/murkrow/a && $(CMAKE_COMMAND) -E cmake_progress_start /home/murkrow/a/CMakeFiles /home/murkrow/a/phase1//CMakeFiles/progress.marks
-	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase1/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/murkrow/a/CMakeFiles 0
+	cd /home/murkrow/Downloads/a && $(CMAKE_COMMAND) -E cmake_progress_start /home/murkrow/Downloads/a/CMakeFiles /home/murkrow/Downloads/a/phase1//CMakeFiles/progress.marks
+	cd /home/murkrow/Downloads/a && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase1/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/murkrow/Downloads/a/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase1/clean
+	cd /home/murkrow/Downloads/a && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase1/clean
 .PHONY : clean
 
 # The main clean target
@@ -113,39 +103,39 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase1/preinstall
+	cd /home/murkrow/Downloads/a && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase1/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase1/preinstall
+	cd /home/murkrow/Downloads/a && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase1/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/murkrow/a && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/murkrow/Downloads/a && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
-phase1/CMakeFiles/phase1.dir/rule:
-	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase1/CMakeFiles/phase1.dir/rule
-.PHONY : phase1/CMakeFiles/phase1.dir/rule
+phase1/CMakeFiles/kernel.dir/rule:
+	cd /home/murkrow/Downloads/a && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase1/CMakeFiles/kernel.dir/rule
+.PHONY : phase1/CMakeFiles/kernel.dir/rule
 
 # Convenience name for target.
-phase1: phase1/CMakeFiles/phase1.dir/rule
-.PHONY : phase1
+kernel: phase1/CMakeFiles/kernel.dir/rule
+.PHONY : kernel
 
 # fast build rule for target.
-phase1/fast:
-	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f phase1/CMakeFiles/phase1.dir/build.make phase1/CMakeFiles/phase1.dir/build
-.PHONY : phase1/fast
+kernel/fast:
+	cd /home/murkrow/Downloads/a && $(MAKE) $(MAKESILENT) -f phase1/CMakeFiles/kernel.dir/build.make phase1/CMakeFiles/kernel.dir/build
+.PHONY : kernel/fast
 
 src/p1test.o: src/p1test.c.o
 .PHONY : src/p1test.o
 
 # target to build an object file
 src/p1test.c.o:
-	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f phase1/CMakeFiles/phase1.dir/build.make phase1/CMakeFiles/phase1.dir/src/p1test.c.o
+	cd /home/murkrow/Downloads/a && $(MAKE) $(MAKESILENT) -f phase1/CMakeFiles/kernel.dir/build.make phase1/CMakeFiles/kernel.dir/src/p1test.c.o
 .PHONY : src/p1test.c.o
 
 src/p1test.i: src/p1test.c.i
@@ -153,7 +143,7 @@ src/p1test.i: src/p1test.c.i
 
 # target to preprocess a source file
 src/p1test.c.i:
-	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f phase1/CMakeFiles/phase1.dir/build.make phase1/CMakeFiles/phase1.dir/src/p1test.c.i
+	cd /home/murkrow/Downloads/a && $(MAKE) $(MAKESILENT) -f phase1/CMakeFiles/kernel.dir/build.make phase1/CMakeFiles/kernel.dir/src/p1test.c.i
 .PHONY : src/p1test.c.i
 
 src/p1test.s: src/p1test.c.s
@@ -161,7 +151,7 @@ src/p1test.s: src/p1test.c.s
 
 # target to generate assembly for a file
 src/p1test.c.s:
-	cd /home/murkrow/a && $(MAKE) $(MAKESILENT) -f phase1/CMakeFiles/phase1.dir/build.make phase1/CMakeFiles/phase1.dir/src/p1test.c.s
+	cd /home/murkrow/Downloads/a && $(MAKE) $(MAKESILENT) -f phase1/CMakeFiles/kernel.dir/build.make phase1/CMakeFiles/kernel.dir/src/p1test.c.s
 .PHONY : src/p1test.c.s
 
 # Help Target
@@ -172,8 +162,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... test"
-	@echo "... phase1"
+	@echo "... kernel"
 	@echo "... src/p1test.o"
 	@echo "... src/p1test.i"
 	@echo "... src/p1test.s"
@@ -188,6 +177,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/murkrow/a && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/murkrow/Downloads/a && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 
