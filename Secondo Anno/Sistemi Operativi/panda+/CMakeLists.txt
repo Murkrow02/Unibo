@@ -25,5 +25,6 @@ set(LDFLAGS_ALL ${LDFLAGS_ALL} -G0 -nostdlib -T ${UMPS3_DIR_PREFIX}/share/umps3/
 
 
 add_subdirectory(os)
-add_subdirectory(phase1)
+#add_subdirectory(phase1)
+add_subdirectory(phase2)
 

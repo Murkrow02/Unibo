@@ -1,0 +1,74 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/src/main.c
+pcb.h
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/src/pcb.h
+types.h
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/src/types.h
+utils.h
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/src/utils.h
+list.h
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/src/list.h
+stddef.h
+-
+pandos_const.h
+-
+pandos_types.h
+-
+umps3/umps/libumps.h
+-
+ash.h
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/src/ash.h
+ns.h
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/src/ns.h
+scheduler.h
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/src/scheduler.h
+
+os/include/ash.h
+
+os/include/container_of.h
+
+os/include/list.h
+container_of.h
+-
+types.h
+-
+
+os/include/ns.h
+pandos_types.h
+os/include/pandos_types.h
+
+os/include/pandos_const.h
+umps3/umps/const.h
+-
+
+os/include/pandos_types.h
+umps3/umps/types.h
+-
+pandos_const.h
+-
+list.h
+-
+
+os/include/pcb.h
+pandos_types.h
+os/include/pandos_types.h
+
+os/include/scheduler.h
+
+os/include/types.h
+
+os/include/utils.h
+pandos_types.h
+os/include/pandos_types.h
+types.h
+os/include/types.h
+list.h
+os/include/list.h
+

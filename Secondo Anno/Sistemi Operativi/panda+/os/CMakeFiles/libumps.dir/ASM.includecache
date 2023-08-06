@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/usr/include/umps3/umps/arch.h
+
+/usr/include/umps3/umps/bios_defs.h
+
+/usr/include/umps3/umps/cp0.h
+
+/usr/include/umps3/umps/regdef.h
+
+/usr/share/umps3/libumps.S
+umps/regdef.h
+/usr/share/umps3/umps/regdef.h
+umps/arch.h
+/usr/share/umps3/umps/arch.h
+umps/cp0.h
+/usr/share/umps3/umps/cp0.h
+umps/bios_defs.h
+/usr/share/umps3/umps/bios_defs.h
+

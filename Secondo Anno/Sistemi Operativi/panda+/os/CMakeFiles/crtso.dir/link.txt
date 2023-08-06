@@ -1,0 +1,2 @@
+/usr/bin/ar cr libcrtso.a CMakeFiles/crtso.dir/usr/share/umps3/crtso.S.o 
+/usr/bin/ranlib libcrtso.a

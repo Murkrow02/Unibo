@@ -1,0 +1,56 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase1/src/p1test.c
+pandos_const.h
+-
+pandos_types.h
+-
+umps3/umps/libumps.h
+-
+pcb.h
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase1/src/pcb.h
+ash.h
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase1/src/ash.h
+ns.h
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase1/src/ns.h
+
+os/include/ash.h
+
+os/include/container_of.h
+
+os/include/list.h
+container_of.h
+-
+types.h
+-
+
+os/include/ns.h
+pandos_types.h
+os/include/pandos_types.h
+
+os/include/pandos_const.h
+umps3/umps/const.h
+-
+
+os/include/pandos_types.h
+types.h
+os/include/types.h
+umps3/umps/types.h
+-
+pandos_const.h
+os/include/pandos_const.h
+list.h
+-
+
+os/include/pcb.h
+pandos_types.h
+os/include/pandos_types.h
+
+os/include/types.h
+

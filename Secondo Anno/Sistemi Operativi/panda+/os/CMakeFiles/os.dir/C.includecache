@@ -1,0 +1,52 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/scheduler.c
+pcb.h
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/pcb.h
+../../phase2/include/test.h
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/include/test.h
+utils.h
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/utils.h
+
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/include/test.h
+
+os/include/container_of.h
+
+os/include/list.h
+container_of.h
+-
+types.h
+-
+
+os/include/pandos_const.h
+umps3/umps/const.h
+-
+
+os/include/pandos_types.h
+umps3/umps/types.h
+-
+pandos_const.h
+-
+list.h
+-
+
+os/include/pcb.h
+pandos_types.h
+os/include/pandos_types.h
+
+os/include/types.h
+
+os/include/utils.h
+pandos_types.h
+os/include/pandos_types.h
+types.h
+os/include/types.h
+list.h
+os/include/list.h
+

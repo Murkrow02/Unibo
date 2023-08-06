@@ -3,10 +3,11 @@ list(APPEND ASMS crtso crti libumps)
 list(APPEND TRGTS ${PROJECT_NAME})
 
 add_library(${PROJECT_NAME}
-    src/pcb.c
-    src/ash.c
-    src/ns.c
-    src/utils.c
+        src/pcb.c
+        src/ash.c
+        src/ns.c
+        src/utils.c
+        src/scheduler.c
 )
 add_library(sub::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
@@ -30,3 +31,5 @@ foreach(TRGT ${TRGTS})
         PUBLIC ${UMPS3_DIR_PREFIX}/include/umps3
     )
 endforeach()
+
+

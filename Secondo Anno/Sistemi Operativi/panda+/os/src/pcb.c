@@ -48,6 +48,7 @@ pcb_t* initializePcb(pcb_t *pcb)
     INIT_LIST_HEAD(&pcb->p_child);
     
     pcb->p_parent = NULL;
+    pcb->p_supportStruct = NULL;
     pcb->p_time = 0;
     pcb->p_semAdd = NULL;
     return pcb;
