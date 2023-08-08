@@ -269,10 +269,10 @@ Pandos+_SOURCE_DIR:STATIC=/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+
 XT_PRG_PREFIX:STRING=mipsel-linux-gnu-
 
 //Value Computed by CMake
-kernel_BINARY_DIR:STATIC=/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2
+kernel_BINARY_DIR:STATIC=/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase1
 
 //Value Computed by CMake
-kernel_SOURCE_DIR:STATIC=/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2
+kernel_SOURCE_DIR:STATIC=/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase1
 
 //Value Computed by CMake
 os_BINARY_DIR:STATIC=/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os

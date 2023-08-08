@@ -39,12 +39,10 @@ umps3/umps/const.h
 -
 
 os/include/pandos_types.h
-types.h
-os/include/types.h
 umps3/umps/types.h
 -
 pandos_const.h
-os/include/pandos_const.h
+-
 list.h
 -
 

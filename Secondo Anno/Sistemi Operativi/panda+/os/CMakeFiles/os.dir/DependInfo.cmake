@@ -5,6 +5,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
   "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/ash.c" "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/CMakeFiles/os.dir/src/ash.c.o"
+  "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/exception.c" "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/CMakeFiles/os.dir/src/exception.c.o"
   "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/ns.c" "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/CMakeFiles/os.dir/src/ns.c.o"
   "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/pcb.c" "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/CMakeFiles/os.dir/src/pcb.c.o"
   "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/scheduler.c" "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/CMakeFiles/os.dir/src/scheduler.c.o"

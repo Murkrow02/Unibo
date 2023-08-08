@@ -12,6 +12,14 @@ os/CMakeFiles/os.dir/src/ash.c.o: os/include/pandos_const.h
 os/CMakeFiles/os.dir/src/ash.c.o: os/include/pandos_types.h
 os/CMakeFiles/os.dir/src/ash.c.o: os/include/types.h
 
+os/CMakeFiles/os.dir/src/exception.c.o: os/src/exception.c
+os/CMakeFiles/os.dir/src/exception.c.o: os/include/container_of.h
+os/CMakeFiles/os.dir/src/exception.c.o: os/include/exception.h
+os/CMakeFiles/os.dir/src/exception.c.o: os/include/list.h
+os/CMakeFiles/os.dir/src/exception.c.o: os/include/pandos_const.h
+os/CMakeFiles/os.dir/src/exception.c.o: os/include/pandos_types.h
+os/CMakeFiles/os.dir/src/exception.c.o: os/include/types.h
+
 os/CMakeFiles/os.dir/src/ns.c.o: os/src/ns.c
 os/CMakeFiles/os.dir/src/ns.c.o: os/include/container_of.h
 os/CMakeFiles/os.dir/src/ns.c.o: os/include/list.h

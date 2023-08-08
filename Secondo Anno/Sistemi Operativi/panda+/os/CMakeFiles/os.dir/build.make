@@ -128,9 +128,22 @@ os/CMakeFiles/os.dir/src/utils.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/os.dir/src/utils.c.s"
 	cd "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os" && /usr/bin/mipsel-linux-gnu-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/utils.c" -o CMakeFiles/os.dir/src/utils.c.s
 
+os/CMakeFiles/os.dir/src/exception.c.o: os/CMakeFiles/os.dir/flags.make
+os/CMakeFiles/os.dir/src/exception.c.o: os/src/exception.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building C object os/CMakeFiles/os.dir/src/exception.c.o"
+	cd "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os" && /usr/bin/mipsel-linux-gnu-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/os.dir/src/exception.c.o -c "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/exception.c"
+
+os/CMakeFiles/os.dir/src/exception.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/os.dir/src/exception.c.i"
+	cd "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os" && /usr/bin/mipsel-linux-gnu-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/exception.c" > CMakeFiles/os.dir/src/exception.c.i
+
+os/CMakeFiles/os.dir/src/exception.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/os.dir/src/exception.c.s"
+	cd "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os" && /usr/bin/mipsel-linux-gnu-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/exception.c" -o CMakeFiles/os.dir/src/exception.c.s
+
 os/CMakeFiles/os.dir/src/scheduler.c.o: os/CMakeFiles/os.dir/flags.make
 os/CMakeFiles/os.dir/src/scheduler.c.o: os/src/scheduler.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building C object os/CMakeFiles/os.dir/src/scheduler.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Building C object os/CMakeFiles/os.dir/src/scheduler.c.o"
 	cd "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os" && /usr/bin/mipsel-linux-gnu-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/os.dir/src/scheduler.c.o -c "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/scheduler.c"
 
 os/CMakeFiles/os.dir/src/scheduler.c.i: cmake_force
@@ -147,6 +160,7 @@ os_OBJECTS = \
 "CMakeFiles/os.dir/src/ash.c.o" \
 "CMakeFiles/os.dir/src/ns.c.o" \
 "CMakeFiles/os.dir/src/utils.c.o" \
+"CMakeFiles/os.dir/src/exception.c.o" \
 "CMakeFiles/os.dir/src/scheduler.c.o"
 
 # External object files for target os
@@ -156,10 +170,11 @@ os/libos.a: os/CMakeFiles/os.dir/src/pcb.c.o
 os/libos.a: os/CMakeFiles/os.dir/src/ash.c.o
 os/libos.a: os/CMakeFiles/os.dir/src/ns.c.o
 os/libos.a: os/CMakeFiles/os.dir/src/utils.c.o
+os/libos.a: os/CMakeFiles/os.dir/src/exception.c.o
 os/libos.a: os/CMakeFiles/os.dir/src/scheduler.c.o
 os/libos.a: os/CMakeFiles/os.dir/build.make
 os/libos.a: os/CMakeFiles/os.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Linking C static library libos.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Linking C static library libos.a"
 	cd "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os" && $(CMAKE_COMMAND) -P CMakeFiles/os.dir/cmake_clean_target.cmake
 	cd "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os" && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/os.dir/link.txt --verbose=$(VERBOSE)
 

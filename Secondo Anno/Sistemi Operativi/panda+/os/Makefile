@@ -216,6 +216,33 @@ src/ash.c.s:
 	cd "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+" && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/ash.c.s
 .PHONY : src/ash.c.s
 
+src/exception.o: src/exception.c.o
+
+.PHONY : src/exception.o
+
+# target to build an object file
+src/exception.c.o:
+	cd "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+" && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/exception.c.o
+.PHONY : src/exception.c.o
+
+src/exception.i: src/exception.c.i
+
+.PHONY : src/exception.i
+
+# target to preprocess a source file
+src/exception.c.i:
+	cd "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+" && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/exception.c.i
+.PHONY : src/exception.c.i
+
+src/exception.s: src/exception.c.s
+
+.PHONY : src/exception.s
+
+# target to generate assembly for a file
+src/exception.c.s:
+	cd "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+" && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/exception.c.s
+.PHONY : src/exception.c.s
+
 src/ns.o: src/ns.c.o
 
 .PHONY : src/ns.o
@@ -366,6 +393,9 @@ help:
 	@echo "... src/ash.o"
 	@echo "... src/ash.i"
 	@echo "... src/ash.s"
+	@echo "... src/exception.o"
+	@echo "... src/exception.i"
+	@echo "... src/exception.s"
 	@echo "... src/ns.o"
 	@echo "... src/ns.i"
 	@echo "... src/ns.s"

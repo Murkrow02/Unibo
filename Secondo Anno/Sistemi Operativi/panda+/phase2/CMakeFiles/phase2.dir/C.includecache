@@ -29,10 +29,18 @@ ns.h
 /media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/src/ns.h
 scheduler.h
 /media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/src/scheduler.h
+exception.h
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/src/exception.h
+test.h
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/src/test.h
 
 os/include/ash.h
 
 os/include/container_of.h
+
+os/include/exception.h
+pandos_types.h
+-
 
 os/include/list.h
 container_of.h
@@ -71,4 +79,6 @@ types.h
 os/include/types.h
 list.h
 os/include/list.h
+
+phase2/include/test.h
 

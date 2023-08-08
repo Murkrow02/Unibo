@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/os.dir/src/ash.c.o"
+  "CMakeFiles/os.dir/src/exception.c.o"
   "CMakeFiles/os.dir/src/ns.c.o"
   "CMakeFiles/os.dir/src/pcb.c.o"
   "CMakeFiles/os.dir/src/scheduler.c.o"

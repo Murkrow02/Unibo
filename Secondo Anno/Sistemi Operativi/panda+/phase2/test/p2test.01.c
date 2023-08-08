@@ -141,14 +141,11 @@ void uTLB_RefillHandler() {
     LDST((state_t *)0x0FFFF000);
 }
 
-
 /*********************************************************************/
 /*                                                                   */
 /*                 p1 -- the root process                            */
 /*                                                                   */
 void test() {
-
-    print("ENTRATO\n");
 
     SYSCALL(VERHOGEN, (int)&sem_testsem, 0, 0); /* V(sem_testsem)   */
 

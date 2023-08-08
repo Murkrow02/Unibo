@@ -6,17 +6,15 @@
 
 #IncludeRegexTransform: 
 
-/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/scheduler.c
-pcb.h
-/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/pcb.h
-../../phase2/include/test.h
-/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/include/test.h
-utils.h
-/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/utils.h
-
-/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/include/test.h
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/exception.c
+exception.h
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/exception.h
 
 os/include/container_of.h
+
+os/include/exception.h
+pandos_types.h
+-
 
 os/include/list.h
 container_of.h
@@ -36,17 +34,5 @@ pandos_const.h
 list.h
 -
 
-os/include/pcb.h
-pandos_types.h
-os/include/pandos_types.h
-
 os/include/types.h
-
-os/include/utils.h
-pandos_types.h
-os/include/pandos_types.h
-types.h
-os/include/types.h
-list.h
-os/include/list.h
 

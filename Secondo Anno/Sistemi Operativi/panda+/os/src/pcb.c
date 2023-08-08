@@ -17,7 +17,7 @@ void initPcbs() {
     //Initialize the list of free PCBs
     INIT_LIST_HEAD(&pcb_free);
 
-    //Move elements from pcb table to list
+    //Copy elements from pcb table to list
     for (int i = 0; i < MAXPROC; i++) {
         list_add(&pcb_table[i].p_list, &pcb_free);
     }
