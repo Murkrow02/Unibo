@@ -1,0 +1,147 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2
+					],
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"projectIndex" : 0,
+					"source" : "."
+				},
+				{
+					"build" : "os",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "os",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				},
+				{
+					"build" : "phase2",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 2,
+					"source" : "phase2",
+					"targetIndexes" : 
+					[
+						4
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1,
+						2
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Pandos+"
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "os",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						2
+					],
+					"name" : "phase2",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						4
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 1,
+					"id" : "crti::@764cf4c35900eaba4831",
+					"jsonFile" : "target-crti-Debug-2d9c3f9fd450409ec3a6.json",
+					"name" : "crti",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "crtso::@764cf4c35900eaba4831",
+					"jsonFile" : "target-crtso-Debug-120eb5f8e3464d71abc8.json",
+					"name" : "crtso",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "libumps::@764cf4c35900eaba4831",
+					"jsonFile" : "target-libumps-Debug-5cf42842fbf6cc36ea68.json",
+					"name" : "libumps",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "os::@764cf4c35900eaba4831",
+					"jsonFile" : "target-os-Debug-4eb0897088868ad783a6.json",
+					"name" : "os",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "phase2::@4ddafcd85abbd29867b5",
+					"jsonFile" : "target-phase2-Debug-96276bdcb275fd0c6199.json",
+					"name" : "phase2",
+					"projectIndex" : 2
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build",
+		"source" : "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 1
+	}
+}

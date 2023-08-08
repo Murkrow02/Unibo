@@ -1,6 +1,9 @@
 {
     "files.associations": {
         "pcb.h": "c",
-        "exception.h": "c"
+        "exception.h": "c",
+        "libumps.h": "c",
+        "arch.h": "c",
+        "cp0.h": "c"
     }
 }

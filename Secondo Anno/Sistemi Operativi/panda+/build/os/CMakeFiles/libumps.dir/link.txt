@@ -1,0 +1,2 @@
+/usr/bin/mipsel-linux-gnu-ar cr liblibumps.a CMakeFiles/libumps.dir/usr/share/umps3/libumps.S.o 
+/usr/bin/mipsel-linux-gnu-ranlib liblibumps.a

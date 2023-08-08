@@ -16,15 +16,21 @@ pcb_t *running_proc;
 
 //ONLY FOR DEBUG PURPOSES, REMOVE LATER
 int copied_running_status;
+memaddr func_addr;
 
+void scheduler_breakpoint(){
+
+}
+
+char watch = 'n';
 void testfunc(){
-    breakpoint();
+    watch = 'y';
+    2/0;
+    PANIC();
     return;
 }
 
-void breakpoint(){
 
-}
 
 void initScheduler(){
 
@@ -33,17 +39,12 @@ void initScheduler(){
     soft_block_count = 0;
     running_proc = NULL;
 
-    //Initialize the interval timer
-    LDIT(PSECOND);
-
     //Initialize the ready queue
     mkEmptyProcQ(&ready_queue);
     if(&ready_queue == NULL){
         adderrbuf("Cannot init ready queue \n");
         PANIC();
     }
-
-    //TODO: implement interval timer
 
     //Create root process
     pcb_t *root_p = allocPcb();
@@ -67,7 +68,7 @@ void initScheduler(){
      * IEPON = Interrupt Enable Previous ON
      * IMON = Interrupt Mask ON
      * TEBITON = Time Enable BIT ON
-     * KMEPON = Kernel Mode Enable Proevious BIT ON
+     * KMEPON = Kernel Mode Enable Proevious BIT ON (custom)
      * Bisogna usare i Previous bit invece dei current quando si inizializza
      * un nuovo processor state
      */
@@ -76,11 +77,11 @@ void initScheduler(){
     //Init the stack pointer of root to RAMTOP
     RAMTOP(root_p->p_s.reg_sp);
 
-    
 
     //Init program counter to test function
-    root_p->p_s.pc_epc = (memaddr) testfunc;
-    root_p->p_s.reg_t9 = (memaddr) testfunc;
+    func_addr = (memaddr) testfunc;
+    root_p->p_s.pc_epc = func_addr;
+    root_p->p_s.reg_t9 = func_addr;
 
     //Insert root process in ready queue
     insertProcQ(&ready_queue, root_p);
@@ -89,22 +90,36 @@ void initScheduler(){
         PANIC();
     }
     process_count++;
+
+    //Initialize the interval timer
+    LDIT(100000);
 }
 
 cpu_t start;
+//int a = -1;
 void schedule(){
+    //a++;
 
     //Take first available process from ready queue
-    running_proc = removeProcQ(&ready_queue);
+    running_proc = headProcQ(&ready_queue);
+    addokbuf("Running proc from ready queue \n");
+
     if(running_proc == NULL){
         adderrbuf("Cannot get root proc from ready queue \n");
         PANIC(); //TODO: check what to do on empty procq
     }
 
+    //Start the interval timer
+    //STCK(start);
+
     //Load the state of active process in the processor
     copied_running_status = running_proc->p_s.status;
-    addokbuf("DSA \n");
-    STCK(start);
+    
+    //running_proc->p_s.pc_epc = func_addr + WORDLEN*a;
+    //running_proc->p_s.reg_t9 = func_addr+ WORDLEN*a;
+
+
+    addokbuf("Loading process to CPU \n");
+    scheduler_breakpoint();
     LDST(&(running_proc->p_s));
-    addokbuf("ASD \n");
 }

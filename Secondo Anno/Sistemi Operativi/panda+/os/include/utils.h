@@ -2,9 +2,14 @@
 #define PHASE1_FILES_UTILS
 
 
-#define KME_C 0b00000000000000000000000000000010 //KERNEL MODE ENABLE (CURRENT) BIT
+#define KME_C  0b00000000000000000000000000000010 //KERNEL MODE ENABLE (CURRENT) BIT
 #define KMEPON 0b00000000000000000000000000001000 //KERNEL MODE ENABLE (PREVIOUS) BIT
 
+#define CPU_STATE ((state_t *)BIOSDATAPAGE) //Current state of the processor
+#define CPU_STATUS CPU_STATE->status //Current status of the processor
+#define CPU_CAUSE CPU_STATE->cause //Current cause of the processor
+
+#define PC_INC CPU_STATE->pc_epc += WORDLEN; CPU_STATE->reg_t9 += WORDLEN;
 
 #include "pandos_types.h"
 #include "types.h"

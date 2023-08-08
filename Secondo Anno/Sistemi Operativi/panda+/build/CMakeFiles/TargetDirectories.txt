@@ -1,0 +1,11 @@
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/CMakeFiles/rebuild_cache.dir
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/CMakeFiles/edit_cache.dir
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/os/CMakeFiles/edit_cache.dir
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/os/CMakeFiles/rebuild_cache.dir
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/os/CMakeFiles/libumps.dir
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/os/CMakeFiles/crti.dir
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/os/CMakeFiles/crtso.dir
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/os/CMakeFiles/os.dir
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/phase2/CMakeFiles/rebuild_cache.dir
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/phase2/CMakeFiles/edit_cache.dir
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/phase2/CMakeFiles/phase2.dir
