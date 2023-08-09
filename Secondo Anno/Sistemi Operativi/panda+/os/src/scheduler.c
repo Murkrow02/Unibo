@@ -23,7 +23,7 @@ void scheduler_breakpoint(){
 }
 
 char watch = 'n';
-void testfunc(){
+extern void testfunc(){
     PANIC();
     watch = 'y';
 }
@@ -73,7 +73,6 @@ void initScheduler(){
     //Init the stack pointer of root to RAMTOP
     RAMTOP(root_p->p_s.reg_sp);
 
-
     //Init program counter to test function
     func_addr = (memaddr) test;
     root_p->p_s.pc_epc = func_addr;
@@ -92,31 +91,21 @@ cpu_t start;
 void schedule(){
 
     //Take first available process from ready queue
-    //running_proc = headProcQ(&ready_queue);
-    //addokbuf("Running proc from ready queue \n");
+    running_proc = headProcQ(&ready_queue);
+    ///addokbuf("Running proc from ready queue \n");
 
-    //if(running_proc == NULL){
-    //    adderrbuf("Cannot get root proc from ready queue \n");
-    //    PANIC(); //TODO: check what to do on empty procq
-    //}
-
-    //Start the interval timer
+    if(running_proc == NULL){
+        adderrbuf("Cannot get root proc from ready queue \n");
+        PANIC(); //TODO: check what to do on empty procq
+    }
     
 
     //Load the state of active process in the processor
-    //copied_running_status = running_proc->p_s.status;
+    copied_running_status = running_proc->p_s.status;
 
-    //addokbuf("Loading process to CPU \n");
+    addokbuf("Loading process to CPU \n");
 
-
-    //Creating ONLY FOR DEBUG THE PROCESS HERE
-    pcb_PTR firstProc = allocPcb();
-    firstProc->p_s.status = ALLOFF | IEPON | IMON | TEBITON;
-    firstProc->p_s.pc_epc = firstProc->p_s.reg_t9 = (memaddr)testfunc;
-    RAMTOP(firstProc->p_s.reg_sp);
-
-    addokbuf("Starting \n");
-
+    setTIMER(TIMESLICE * (*((cpu_t *)TIMESCALEADDR))); // PLT 5 ms
     STCK(start); // start timer
-    LDST(&(firstProc->p_s));
+    LDST(&running_proc->p_s);
 }

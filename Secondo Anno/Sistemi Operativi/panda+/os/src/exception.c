@@ -1,53 +1,36 @@
 #include "exception.h"
 #include <umps3/umps/arch.h>
 #include "utils.h"
+#include "pandos_const.h"
 #include <umps3/umps/libumps.h>
+
+#define CAUSE_IP_GET(cause, il_no) ((cause) & (1 << ((il_no) + 8))) // performs a bit shift based on the parameters
 
 // Copy of the exception cause register
 int copied_exception_cause;
 
-void interrupt_handler()
-{
-    //Check which interrupt line is active
-    for (int line = 1; line < N_INTERRUPT_LINES; line++)
-    {
-        if ((CPU_STATE->cause) & CAUSE_IP(line))
-        {
-            //Check if the interrupt line is the timer
-            if (line == 1)
-            {
-                addokbuf("TIMER INTERRUPT \n");
-                //schedule();
-                break;
-            }
-        }
-    }
-}
 
-void syscall_handler()
-{
-    addokbuf("SYSCALL \n");
-}
 
 void exception_hanlder()
-{
-    //Determine the cause of the exception
-    int exception_cause = DECODED_EXCEPTION_CAUSE;
+{    
+    state_t *exceptionState = (state_t *)BIOSDATAPAGE;
+    int causeCode = CAUSE_GET_EXCCODE(getCAUSE());
 
-    switch (exception_cause)
+
+    switch (causeCode)
     {
-    case 0: //Interrupt
-        interrupt_handler();
+    case IOINTERRUPTS: // Interrupt
+        //interrupt_handler(exceptionState);
         break;
-    case 1 ... 3: //TLB Exception
-        //tlb_handler();
+    case 1 ... 3: // TLB Exception
+        //tlb_handler(exceptionState);
         break;
-    case 4 ... 7: //Trap
+    case 4 ... 7: // Trap
     case 9 ... 12:
-        //trap_handler();
+        //trap_handler(exceptionState);
         break;
-    case 8: //Syscall
-        syscall_handler();
+    case 8: // System Call
+        //syscall_handler(exceptionState);
         break;
     default:
         PANIC();

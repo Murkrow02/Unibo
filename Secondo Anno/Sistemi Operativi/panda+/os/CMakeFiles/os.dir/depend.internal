@@ -41,7 +41,6 @@ os/CMakeFiles/os.dir/src/pcb.c.o
  os/include/pandos_types.h
  os/include/pcb.h
  os/include/types.h
- os/include/utils.h
 os/CMakeFiles/os.dir/src/scheduler.c.o
  /media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/scheduler.c
  /media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/include/test.h
@@ -52,6 +51,14 @@ os/CMakeFiles/os.dir/src/scheduler.c.o
  os/include/pcb.h
  os/include/types.h
  os/include/utils.h
+os/CMakeFiles/os.dir/src/syscall.c.o
+ /media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/syscall.c
+ os/include/container_of.h
+ os/include/list.h
+ os/include/pandos_const.h
+ os/include/pandos_types.h
+ os/include/syscall.h
+ os/include/types.h
 os/CMakeFiles/os.dir/src/utils.c.o
  /media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/utils.c
  os/include/container_of.h

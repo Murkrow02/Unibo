@@ -3,7 +3,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "os/libcrtso.a"
+			"path" : "os/libcrti.a"
 		}
 	],
 	"backtrace" : 1,
@@ -27,19 +27,19 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 23,
+				"line" : 24,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 30,
+				"line" : 31,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 31,
+				"line" : 32,
 				"parent" : 0
 			}
 		]
@@ -124,9 +124,9 @@
 			]
 		}
 	],
-	"id" : "crtso::@764cf4c35900eaba4831",
-	"name" : "crtso",
-	"nameOnDisk" : "libcrtso.a",
+	"id" : "crti::@764cf4c35900eaba4831",
+	"name" : "crti",
+	"nameOnDisk" : "libcrti.a",
 	"paths" : 
 	{
 		"build" : "os",
@@ -147,7 +147,7 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "/usr/share/umps3/crtso.S",
+			"path" : "/usr/share/umps3/crti.S",
 			"sourceGroupIndex" : 0
 		}
 	],

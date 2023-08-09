@@ -9,9 +9,6 @@
 //Copy of the exception cause register
 #define DECODED_EXCEPTION_CAUSE CAUSE_GET_EXCCODE(CPU_STATE->cause)
 
-
 void exception_hanlder();
-void testRefillHandler();
-
 
 #endif 

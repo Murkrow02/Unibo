@@ -4,6 +4,8 @@
         "exception.h": "c",
         "libumps.h": "c",
         "arch.h": "c",
-        "cp0.h": "c"
+        "cp0.h": "c",
+        "scheduler.h": "c",
+        "utils.h": "c"
     }
 }

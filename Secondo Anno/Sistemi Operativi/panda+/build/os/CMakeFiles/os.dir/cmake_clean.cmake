@@ -5,6 +5,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/os.dir/src/ns.c.o"
   "CMakeFiles/os.dir/src/pcb.c.o"
   "CMakeFiles/os.dir/src/scheduler.c.o"
+  "CMakeFiles/os.dir/src/syscall.c.o"
   "CMakeFiles/os.dir/src/utils.c.o"
   "libos.a"
   "libos.pdb"

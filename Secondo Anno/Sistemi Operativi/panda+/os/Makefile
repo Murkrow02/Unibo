@@ -351,6 +351,33 @@ src/scheduler.c.s:
 	cd "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+" && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/scheduler.c.s
 .PHONY : src/scheduler.c.s
 
+src/syscall.o: src/syscall.c.o
+
+.PHONY : src/syscall.o
+
+# target to build an object file
+src/syscall.c.o:
+	cd "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+" && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/syscall.c.o
+.PHONY : src/syscall.c.o
+
+src/syscall.i: src/syscall.c.i
+
+.PHONY : src/syscall.i
+
+# target to preprocess a source file
+src/syscall.c.i:
+	cd "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+" && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/syscall.c.i
+.PHONY : src/syscall.c.i
+
+src/syscall.s: src/syscall.c.s
+
+.PHONY : src/syscall.s
+
+# target to generate assembly for a file
+src/syscall.c.s:
+	cd "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+" && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/syscall.c.s
+.PHONY : src/syscall.c.s
+
 src/utils.o: src/utils.c.o
 
 .PHONY : src/utils.o
@@ -435,6 +462,9 @@ help:
 	@echo "... src/scheduler.o"
 	@echo "... src/scheduler.i"
 	@echo "... src/scheduler.s"
+	@echo "... src/syscall.o"
+	@echo "... src/syscall.i"
+	@echo "... src/syscall.s"
 	@echo "... src/utils.o"
 	@echo "... src/utils.i"
 	@echo "... src/utils.s"

@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_CHECK_C
   "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/ns.c" "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/os/CMakeFiles/os.dir/src/ns.c.o"
   "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/pcb.c" "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/os/CMakeFiles/os.dir/src/pcb.c.o"
   "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/scheduler.c" "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/os/CMakeFiles/os.dir/src/scheduler.c.o"
+  "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/syscall.c" "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/os/CMakeFiles/os.dir/src/syscall.c.o"
   "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/utils.c" "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/os/CMakeFiles/os.dir/src/utils.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")

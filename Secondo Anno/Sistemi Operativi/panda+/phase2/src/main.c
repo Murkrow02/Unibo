@@ -28,6 +28,10 @@ void init_pv()
     pv->exception_stackPtr = KERNELSTACK;
 }
 
+void test2() {
+    PANIC();
+    return;
+}
 int main(void) {
 
     //Fill the free pcb list
@@ -39,7 +43,7 @@ int main(void) {
     initNamespaces();
 
     //Initialize the scheduler
-    initScheduler();
+    //initScheduler();
 
     //Initialize the pass up vector
     init_pv();
@@ -47,10 +51,25 @@ int main(void) {
     addokbuf("Init OK \n");
 
     //Initialize the interval timer
-    LDIT(100000);
+    //LDIT(100000);
+
+
+     /* Insert first low priority process */
+    pcb_PTR firstProc = allocPcb();
+
+    //++activeProc;
+    //insert_ready_queue(PROCESS_PRIO_LOW, firstProc);
+    firstProc->p_s.status = ALLOFF | IEPON | IMON | TEBITON;
+    firstProc->p_s.pc_epc = firstProc->p_s.reg_t9 = (memaddr)test2;
+    RAMTOP(firstProc->p_s.reg_sp);
+
+
+    setTIMER(TIMESLICE * (*((cpu_t *)TIMESCALEADDR))); // PLT 5 ms
+    //STCK(startTime);
+    LDST(&firstProc->p_s);
 
     //Start the scheduler
-    schedule();
+    //schedule();
 
     addokbuf("FINISHED   \n");
 

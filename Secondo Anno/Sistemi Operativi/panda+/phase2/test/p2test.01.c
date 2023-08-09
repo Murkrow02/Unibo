@@ -117,7 +117,7 @@ void print(char *msg) {
     devregtr *command = base;
     devregtr  status;
 
-    SYSCALL(PASSEREN, (int)&sem_term_mut, 0, 0); /* P(sem_term_mut) */
+    //SYSCALL(PASSEREN, (int)&sem_term_mut, 0, 0); /* P(sem_term_mut) */
     while (*s != EOS) {
         devregtr value[2] = {PRINTCHR | (((devregtr)*s) << 8), 0 };
         status         = SYSCALL(DOIO, (int)command, (int)value, 0);
@@ -126,7 +126,7 @@ void print(char *msg) {
         }
         s++;
     }
-    SYSCALL(VERHOGEN, (int)&sem_term_mut, 0, 0); /* V(sem_term_mut) */
+    //SYSCALL(VERHOGEN, (int)&sem_term_mut, 0, 0); /* V(sem_term_mut) */
 }
 
 
@@ -146,6 +146,9 @@ void uTLB_RefillHandler() {
 /*                 p1 -- the root process                            */
 /*                                                                   */
 void test() {
+
+    PANIC();
+    print("z\n");
 
     SYSCALL(VERHOGEN, (int)&sem_testsem, 0, 0); /* V(sem_testsem)   */
 

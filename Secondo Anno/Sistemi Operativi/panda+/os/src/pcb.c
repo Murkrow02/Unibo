@@ -38,6 +38,10 @@ pcb_t* initializePcb(pcb_t *pcb)
 {
     if (pcb == NULL)
         return NULL;
+        
+    INIT_LIST_HEAD(&pcb->p_list);
+    INIT_LIST_HEAD(&pcb->p_child);
+    INIT_LIST_HEAD(&pcb->p_sib);
 
     //Empty list pointers
     pcb->p_list.prev = NULL;
@@ -45,12 +49,14 @@ pcb_t* initializePcb(pcb_t *pcb)
     pcb->p_sib.prev = NULL;
     pcb->p_sib.next = NULL;
 
-    INIT_LIST_HEAD(&pcb->p_child);
     
+
     pcb->p_parent = NULL;
     pcb->p_supportStruct = NULL;
     pcb->p_time = 0;
     pcb->p_semAdd = NULL;
+    pcb->p_pid = 12; //TODO SET
+    pcb->p_supportStruct = NULL;
     return pcb;
 }
 
@@ -58,6 +64,7 @@ pcb_t *allocPcb() {
 
     if(list_empty(&pcb_free))
         return NULL;
+
 
     //List is not empty, get first element
     pcb_t* firstElem = container_of(pcb_free.next, pcb_t, p_list);
