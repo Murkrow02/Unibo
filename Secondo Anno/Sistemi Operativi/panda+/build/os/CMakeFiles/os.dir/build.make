@@ -154,6 +154,19 @@ os/CMakeFiles/os.dir/src/scheduler.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/os.dir/src/scheduler.c.s"
 	cd "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/os" && /usr/bin/mipsel-linux-gnu-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/scheduler.c" -o CMakeFiles/os.dir/src/scheduler.c.s
 
+os/CMakeFiles/os.dir/src/interrupts.c.o: os/CMakeFiles/os.dir/flags.make
+os/CMakeFiles/os.dir/src/interrupts.c.o: ../os/src/interrupts.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Building C object os/CMakeFiles/os.dir/src/interrupts.c.o"
+	cd "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/os" && /usr/bin/mipsel-linux-gnu-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/os.dir/src/interrupts.c.o -c "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/interrupts.c"
+
+os/CMakeFiles/os.dir/src/interrupts.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/os.dir/src/interrupts.c.i"
+	cd "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/os" && /usr/bin/mipsel-linux-gnu-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/interrupts.c" > CMakeFiles/os.dir/src/interrupts.c.i
+
+os/CMakeFiles/os.dir/src/interrupts.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/os.dir/src/interrupts.c.s"
+	cd "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/os" && /usr/bin/mipsel-linux-gnu-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/interrupts.c" -o CMakeFiles/os.dir/src/interrupts.c.s
+
 # Object files for target os
 os_OBJECTS = \
 "CMakeFiles/os.dir/src/pcb.c.o" \
@@ -161,7 +174,8 @@ os_OBJECTS = \
 "CMakeFiles/os.dir/src/ns.c.o" \
 "CMakeFiles/os.dir/src/utils.c.o" \
 "CMakeFiles/os.dir/src/exception.c.o" \
-"CMakeFiles/os.dir/src/scheduler.c.o"
+"CMakeFiles/os.dir/src/scheduler.c.o" \
+"CMakeFiles/os.dir/src/interrupts.c.o"
 
 # External object files for target os
 os_EXTERNAL_OBJECTS =
@@ -172,9 +186,10 @@ os/libos.a: os/CMakeFiles/os.dir/src/ns.c.o
 os/libos.a: os/CMakeFiles/os.dir/src/utils.c.o
 os/libos.a: os/CMakeFiles/os.dir/src/exception.c.o
 os/libos.a: os/CMakeFiles/os.dir/src/scheduler.c.o
+os/libos.a: os/CMakeFiles/os.dir/src/interrupts.c.o
 os/libos.a: os/CMakeFiles/os.dir/build.make
 os/libos.a: os/CMakeFiles/os.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Linking C static library libos.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "Linking C static library libos.a"
 	cd "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/os" && $(CMAKE_COMMAND) -P CMakeFiles/os.dir/cmake_clean_target.cmake
 	cd "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/os" && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/os.dir/link.txt --verbose=$(VERBOSE)
 

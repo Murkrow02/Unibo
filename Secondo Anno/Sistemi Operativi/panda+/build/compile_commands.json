@@ -30,6 +30,11 @@
   "file": "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/scheduler.c"
 },
 {
+  "directory": "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/os",
+  "command": "/usr/bin/mipsel-linux-gnu-gcc  -I\"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/include\" -I/usr/include/umps3 -g -pedantic -ffreestanding -Wall -ansi -std=gnu99 -mips1 -mabi=32 -mno-gpopt -EL -G0 -O0 -mno-abicalls -fno-pic -mfp32 -o CMakeFiles/os.dir/src/interrupts.c.o -c \"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/interrupts.c\"",
+  "file": "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/interrupts.c"
+},
+{
   "directory": "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/phase2",
   "command": "/usr/bin/mipsel-linux-gnu-gcc  -I\"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/include\" -I\"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/test\" -I/usr/include/umps3 -I\"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/include\" -g -pedantic -ffreestanding -Wall -ansi -std=gnu99 -mips1 -mabi=32 -mno-gpopt -EL -G0 -O0 -mno-abicalls -fno-pic -mfp32 -o CMakeFiles/phase2.dir/src/main.c.o -c \"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/src/main.c\"",
   "file": "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/src/main.c"

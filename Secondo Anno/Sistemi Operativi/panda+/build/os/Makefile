@@ -243,6 +243,33 @@ src/exception.c.s:
 	cd "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build" && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/exception.c.s
 .PHONY : src/exception.c.s
 
+src/interrupts.o: src/interrupts.c.o
+
+.PHONY : src/interrupts.o
+
+# target to build an object file
+src/interrupts.c.o:
+	cd "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build" && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/interrupts.c.o
+.PHONY : src/interrupts.c.o
+
+src/interrupts.i: src/interrupts.c.i
+
+.PHONY : src/interrupts.i
+
+# target to preprocess a source file
+src/interrupts.c.i:
+	cd "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build" && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/interrupts.c.i
+.PHONY : src/interrupts.c.i
+
+src/interrupts.s: src/interrupts.c.s
+
+.PHONY : src/interrupts.s
+
+# target to generate assembly for a file
+src/interrupts.c.s:
+	cd "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build" && $(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/src/interrupts.c.s
+.PHONY : src/interrupts.c.s
+
 src/ns.o: src/ns.c.o
 
 .PHONY : src/ns.o
@@ -396,6 +423,9 @@ help:
 	@echo "... src/exception.o"
 	@echo "... src/exception.i"
 	@echo "... src/exception.s"
+	@echo "... src/interrupts.o"
+	@echo "... src/interrupts.i"
+	@echo "... src/interrupts.s"
 	@echo "... src/ns.o"
 	@echo "... src/ns.i"
 	@echo "... src/ns.s"

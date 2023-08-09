@@ -9,6 +9,7 @@ add_library(${PROJECT_NAME}
         src/utils.c
         src/exception.c
         src/scheduler.c
+        src/interrupts.c
 )
 add_library(sub::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 

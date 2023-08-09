@@ -219,12 +219,12 @@ os/CMakeFiles/crtso.dir/clean:
 os/CMakeFiles/os.dir/all:
 	$(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/depend
 	$(MAKE) $(MAKESILENT) -f os/CMakeFiles/os.dir/build.make os/CMakeFiles/os.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/CMakeFiles" --progress-num=7,8,9,10,11,12,13 "Built target os"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/CMakeFiles" --progress-num=7,8,9,10,11,12,13,14 "Built target os"
 .PHONY : os/CMakeFiles/os.dir/all
 
 # Build rule for subdir invocation for target.
 os/CMakeFiles/os.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/CMakeFiles" 7
+	$(CMAKE_COMMAND) -E cmake_progress_start "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/CMakeFiles" 8
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 os/CMakeFiles/os.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/CMakeFiles" 0
 .PHONY : os/CMakeFiles/os.dir/rule
@@ -248,12 +248,12 @@ phase2/CMakeFiles/phase2.dir/all: os/CMakeFiles/crtso.dir/all
 phase2/CMakeFiles/phase2.dir/all: os/CMakeFiles/os.dir/all
 	$(MAKE) $(MAKESILENT) -f phase2/CMakeFiles/phase2.dir/build.make phase2/CMakeFiles/phase2.dir/depend
 	$(MAKE) $(MAKESILENT) -f phase2/CMakeFiles/phase2.dir/build.make phase2/CMakeFiles/phase2.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/CMakeFiles" --progress-num=14,15,16 "Built target phase2"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/CMakeFiles" --progress-num=15,16,17 "Built target phase2"
 .PHONY : phase2/CMakeFiles/phase2.dir/all
 
 # Build rule for subdir invocation for target.
 phase2/CMakeFiles/phase2.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/CMakeFiles" 14
+	$(CMAKE_COMMAND) -E cmake_progress_start "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/CMakeFiles" 15
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase2/CMakeFiles/phase2.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/CMakeFiles" 0
 .PHONY : phase2/CMakeFiles/phase2.dir/rule

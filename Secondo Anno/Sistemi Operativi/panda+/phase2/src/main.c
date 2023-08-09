@@ -30,9 +30,6 @@ void init_pv()
 
 int main(void) {
 
-    //Initialize the pass up vector
-    init_pv();
-
     //Fill the free pcb list
     initPcbs();
 
@@ -44,11 +41,18 @@ int main(void) {
     //Initialize the scheduler
     initScheduler();
 
+    //Initialize the pass up vector
+    init_pv();
+
+    addokbuf("Init OK \n");
+
+    //Initialize the interval timer
+    LDIT(100000);
+
     //Start the scheduler
     schedule();
 
-
-    addokbuf("OK   \n");
+    addokbuf("FINISHED   \n");
 
     return 1;
 }

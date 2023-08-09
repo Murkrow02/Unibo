@@ -21,6 +21,9 @@ os/CMakeFiles/os.dir/src/exception.c.o: os/include/pandos_types.h
 os/CMakeFiles/os.dir/src/exception.c.o: os/include/types.h
 os/CMakeFiles/os.dir/src/exception.c.o: os/include/utils.h
 
+os/CMakeFiles/os.dir/src/interrupts.c.o: os/src/interrupts.c
+os/CMakeFiles/os.dir/src/interrupts.c.o: os/include/interrupts.h
+
 os/CMakeFiles/os.dir/src/ns.c.o: os/src/ns.c
 os/CMakeFiles/os.dir/src/ns.c.o: os/include/container_of.h
 os/CMakeFiles/os.dir/src/ns.c.o: os/include/list.h
