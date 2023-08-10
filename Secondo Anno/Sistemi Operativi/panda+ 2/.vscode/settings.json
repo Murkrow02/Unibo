@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "pcb.h": "c",
+        "stddef.h": "c",
+        "pandos_types.h": "c",
+        "types.h": "c",
+        "utils.h": "c"
+    }
+}

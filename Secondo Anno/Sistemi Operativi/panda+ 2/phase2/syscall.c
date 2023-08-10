@@ -27,15 +27,7 @@ void copy_state(state_t *new, state_t *old)
  */
 void term_proc_and_child(pcb_PTR proc)
 {
-    pcb_PTR p;
-    while (!isPcbFree(proc->p_pid))
-    {
-        p = proc;
-        while (!emptyChild(p))
-            p = container_of(p->p_child.next, pcb_t, p_sib);
-
-        term_single_proc(p); // termino p
-    }
+   
 }
 
 /**

@@ -768,8 +768,7 @@ int semTermRead_phase3[8];
 /* Extern functions */
 extern void test();
 extern void uTLB_RefillHandler();
-extern void exception_handler();
-extern void scheduler();
+extern void exception_handler();extern void scheduler();
 
 /**
  * It initializes all the global variables

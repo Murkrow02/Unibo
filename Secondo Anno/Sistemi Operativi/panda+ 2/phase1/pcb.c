@@ -1,128 +1,207 @@
-#include "headers/pcb.h"
-static pcb_t pcbFree_table[MAXPROC];    /* PCB array with maximum size 'MAXPROC' */
-static LIST_HEAD(pcbFree_h);            /* List of free PCBs                     */
+//
+// Created by Marco Coppola on 19/01/23.
+//
 
-extern void set_pid(pcb_PTR p);
+#include "headers/pcb.h"
+#include "../generic_headers/types.h"
+#include "../generic_headers/utils.h"
+#include "headers/listx.h"
+#include "../generic_headers/pandos_types.h"
+#include <stddef.h>
+
+struct list_head pcb_free;
+static pcb_t pcb_table[MAXPROC];
 
 void initPcbs() {
-    for(int i = 0; i < MAXPROC; i++){
-		pcb_t* pcb = &pcbFree_table[i];
-		list_add_tail(&pcb->p_list, &pcbFree_h);
-	}
+
+    //Initialize the list of free PCBs
+    INIT_LIST_HEAD(&pcb_free);
+
+    //Copy elements from pcb table to list
+    for (int i = 0; i < MAXPROC; i++) {
+        list_add(&pcb_table[i].p_list, &pcb_free);
+    }
 }
 
 
 void freePcb(pcb_t *p) {
-	list_add_tail(&p->p_list, &pcbFree_h);
+
+    //Check if pcb points to null
+    if (p == NULL) //TODO: check if already in list
+        return;
+
+    //Add element in list of free pcbs
+    list_add(&p->p_list, &pcb_free);
 }
 
+pcb_t* initializePcb(pcb_t *pcb)
+{
+    if (pcb == NULL)
+        return NULL;
+        
+    INIT_LIST_HEAD(&pcb->p_list);
+    INIT_LIST_HEAD(&pcb->p_child);
+    INIT_LIST_HEAD(&pcb->p_sib);
+
+    //Empty list pointers
+    pcb->p_list.prev = NULL;
+    pcb->p_list.next = NULL;
+    pcb->p_sib.prev = NULL;
+    pcb->p_sib.next = NULL;
+
+    
+
+    pcb->p_parent = NULL;
+    pcb->p_supportStruct = NULL;
+    pcb->p_time = 0;
+    pcb->p_semAdd = NULL;
+    pcb->p_pid = 12; //TODO SET
+    pcb->p_supportStruct = NULL;
+    return pcb;
+}
 
 pcb_t *allocPcb() {
-	if(list_empty(&pcbFree_h))
+
+    if(list_empty(&pcb_free))
         return NULL;
-	else {
-		pcb_t* newElem = container_of(pcbFree_h.next, pcb_t, p_list);   /* Getting first element of pcbFree  */
-        list_del(pcbFree_h.next);                                       /* Delete first element from pcbFree */
-        
-		INIT_LIST_HEAD(&newElem->p_list);                               /* Initialize variables              */
-		newElem->p_parent = NULL;
-		INIT_LIST_HEAD(&newElem->p_child);
-		INIT_LIST_HEAD(&newElem->p_sib);
-		newElem->p_time = 0;
-		newElem->p_semAdd = NULL;
-        set_pid(newElem);
 
-        newElem->p_supportStruct = NULL;
 
-		return newElem;
-	}
+    //List is not empty, get first element
+    pcb_t* firstElem = container_of(pcb_free.next, pcb_t, p_list);
+
+    //Remove new pcb from free list
+    list_del(pcb_free.next);
+
+    //Init pcb before return
+    return initializePcb(firstElem);
+    
 }
 
 void mkEmptyProcQ(struct list_head *head) {
-    INIT_LIST_HEAD(head);
-}
 
+    //If head is null do nothing
+    if (head != NULL)
+        INIT_LIST_HEAD(head);
+}
 
 int emptyProcQ(struct list_head *head) {
-	return list_empty(head);
+
+    //If head is null we assume that is empty
+    if (head == NULL)
+        return 1;
+    return list_empty(head);
 }
 
+void insertProcQ(struct list_head *head, pcb_t *p) {
 
-void insertProcQ(struct list_head* head, pcb_t* p) {
-	list_add_tail(&p->p_list, head);
+    if (head != NULL && p != NULL) {
+
+        //Add in last position, like a queue
+        list_add_tail(&p->p_list, head);
+    }
 }
 
+pcb_t* headProcQ(struct list_head* head){
 
-pcb_t* headProcQ(struct list_head* head) {
-	return list_empty(head) ? NULL : container_of(head->next, pcb_t, p_list);
-}
-
-
-pcb_t* removeProcQ(struct list_head* head) {
-    if(list_empty(head))
+    if(head == NULL || list_empty(head))
         return NULL;
-    struct list_head *removedElement = head->next;
-    list_del(head->next);
-    return container_of(removedElement, pcb_t, p_list);
+
+    return container_of(head->next, pcb_t, p_list);
 }
 
+pcb_t* removeProcQ(struct list_head* head){
 
-pcb_t* outProcQ(struct list_head* head, pcb_t* p) {
-    struct list_head* pos;
-    list_for_each(pos, head) {
-        if(container_of(pos, pcb_t, p_list) == p){
-            list_del(&p->p_list);
-            return p;
+    if(head==NULL || list_empty(head))
+        return NULL;
+
+    pcb_t* el = container_of(head->next, pcb_t,p_list);
+    list_del(head->next);
+    return el;
+}
+
+//Like function above but search for p in any position
+pcb_t* outProcQ(struct list_head* head, pcb_t *p){
+
+    if(head == NULL || p == NULL || list_empty(head))
+        return NULL;
+
+    list_head* el;
+    list_for_each(el, head){
+
+        //Check if currently pointed element is the same as p
+        if(el == &p->p_list){
+
+            //Get container element
+            pcb_t* target = container_of(el, pcb_t, p_list);
+
+            //Remove element from list
+            list_del(el);
+
+            return target;
         }
     }
+
+    //If we landed here then no element was found in the list
     return NULL;
 }
 
+/*
+ * ALBERI
+ * */
 
-int emptyChild(pcb_t *p) {
+int emptyChild(pcb_t *p){
     return list_empty(&p->p_child);
 }
 
+void insertChild(pcb_t *prnt,pcb_t *p){
 
-void insertChild(pcb_t *prnt, pcb_t *p) {
-    list_add_tail(&p->p_sib, &prnt->p_child);   /* Add p to prnt children list and sib list */
-    p->p_parent = prnt;                         /* prnt is the parent of p                  */
+    //Check that neither prnt nor p  is null
+    if(prnt == NULL || p == NULL){
+        return;
+    }
+
+    //Copy namespaces from parent (MAYBE NOT REQUIRED)
+//    for(int i = 0; i < MAXPROC; i++){
+//        p->namespaces[i] =
+//    }
+
+    //Add child to parent list
+    list_add(&p->p_list, &prnt->p_child);
+
+    //Update child pointer to parent
+    p->p_parent = prnt;
 }
 
+pcb_t* removeChild(pcb_t *p){
 
-pcb_t* removeChild(pcb_t *p) {
+    //Check that p is not pointing to NULL
+    if(p == NULL)
+        return NULL;
+
+    //Check that list is not empty
     if(list_empty(&p->p_child))
         return NULL;
-    pcb_t *firstChild = container_of(p->p_child.next, pcb_t, p_sib);
 
-    list_del(p->p_child.next);          /* Remove p's first child from p_child list and p_sib list */
-    INIT_LIST_HEAD(&firstChild->p_sib); /* Initialize firstChild p_sib list as a empty list        */
-    firstChild->p_parent = NULL;        /* FirstChild as no parent anymore                         */
+    //List not empty, retreive first child of p
+    pcb_t* target = container_of(p->p_child.next, pcb_t, p_child);
 
-    return firstChild;
+    //Remove first child of p
+    list_del(p->p_child.next);
+
+    //List not empty, actually return item
+    return target;
 }
 
+//Like function above but search for p in parent's child list
+pcb_t* outChild(pcb_t* p){
 
-pcb_t* outChild(pcb_t *p) {
-    pcb_t* prnt = p->p_parent;
-    if(prnt != NULL) {
-        
-        list_del(&p->p_sib);       /* Remove p from p_child list and initialize */
-        INIT_LIST_HEAD(&p->p_sib); /* firstChild p_sib list as a empty list     */
-        
-        p->p_parent = NULL;        /* p as no parent anymore                    */
-
-        return p;
+    //Check NULL pointer
+    if(p == NULL || p->p_parent == NULL){
+        return NULL;
     }
-    return NULL;
-}
 
+    //P has a parent, delete from his list of children
+    list_del(&p->p_list);
 
-int isPcbFree(int pid) {
-    struct list_head *pos;
-    list_for_each(pos, &pcbFree_h) {
-        if(container_of(pos, pcb_t, p_list)->p_pid == pid)
-            return TRUE;
-    }
-    return FALSE;
+    return p;
 }
