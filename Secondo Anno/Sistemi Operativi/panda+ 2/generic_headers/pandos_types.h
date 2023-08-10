@@ -12,16 +12,19 @@
 #include "../phase1/headers/listx.h"
 
 
+/* PID namespace */
+#define NS_PID 0
+#define NS_TYPE_LAST NS_PID
+#define NS_TYPE_MAX (NS_TYPE_LAST + 1)
+
 typedef signed int   cpu_t;
 typedef unsigned int memaddr;
-
 
 /* Page Table Entry descriptor */
 typedef struct pteEntry_t {
     unsigned int pte_entryHI;
     unsigned int pte_entryLO;
 } pteEntry_t;
-
 
 /* Support level context */
 typedef struct context_t {
@@ -30,16 +33,21 @@ typedef struct context_t {
     unsigned int pc;
 } context_t;
 
-
 /* Support level descriptor */
 typedef struct support_t {
-    struct list_head p_list;                    /* Aggiunto da noi              */
-    int        sup_asid;                        /* process ID					*/
-    state_t    sup_exceptState[2];              /* old state exceptions			*/
-    context_t  sup_exceptContext[2];            /* new contexts for passing up	*/
-    pteEntry_t sup_privatePgTbl[USERPGTBLSIZE]; /* user page table				*/
+    int        sup_asid;                        /* process ID                                 */
+    state_t    sup_exceptState[2];              /* old state exceptions                       */
+    context_t  sup_exceptContext[2];            /* new contexts for passing up        */
+    pteEntry_t sup_privatePgTbl[USERPGTBLSIZE]; /* user page table                            */
 } support_t;
 
+typedef struct nsd_t {
+    /* Namespace type */
+    int n_type;
+
+    /* Namespace list */
+    struct list_head n_link;
+} nsd_t, *nsd_PTR;
 
 /* process table entry type */
 typedef struct pcb_t {
@@ -61,10 +69,10 @@ typedef struct pcb_t {
     /* Pointer to the support struct */
     support_t *p_supportStruct;
 
-    /* Indicator of priority; 0 - low, 1 - high */
-    int p_prio;
+    /* Namespace list */
+    nsd_t *namespaces[NS_TYPE_MAX];
 
-    /* process id */
+    /* Process ID */
     int p_pid;
 } pcb_t, *pcb_PTR;
 
@@ -76,16 +84,10 @@ typedef struct semd_t {
     /* Queue of PCBs blocked on the semaphore */
     struct list_head s_procq;
 
-    /* Semaphore list */
-    struct list_head s_link;
+    /* Semaphore hash table */
+    struct hlist_node s_link;
+    /* Free Semaphores list */
+    struct list_head s_freelink;
 } semd_t, *semd_PTR;
-
-
-/* Page swap pool information structure type */
-typedef struct swap_t {
-    int         sw_asid;   /* ASID number			*/
-    int         sw_pageNo; /* page's virt page no.	*/
-    pteEntry_t *sw_pte;    /* page's PTE entry.	*/
-} swap_t;
 
 #endif

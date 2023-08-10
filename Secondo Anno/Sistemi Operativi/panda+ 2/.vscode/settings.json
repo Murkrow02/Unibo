@@ -4,6 +4,7 @@
         "stddef.h": "c",
         "pandos_types.h": "c",
         "types.h": "c",
-        "utils.h": "c"
+        "utils.h": "c",
+        "listx.h": "c"
     }
 }

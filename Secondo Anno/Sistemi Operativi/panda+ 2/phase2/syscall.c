@@ -61,22 +61,7 @@ void term_single_proc(pcb_PTR p)
  */
 pcb_PTR find_pcb(int pid)
 {
-    struct list_head *pos;
-    pcb_PTR p;
-
-    list_for_each(pos, &queueHighProc)
-    {
-        if ((p = container_of(pos, pcb_t, p_list))->p_pid == pid)
-            return p;
-    }
-
-    list_for_each(pos, &queueLowProc)
-    {
-        if ((p = container_of(pos, pcb_t, p_list))->p_pid == pid)
-            return p;
-    }
-    p = isPcbBlocked(pid);
-    return p;
+    
 }
 
 /**
@@ -106,7 +91,6 @@ pcb_PTR free_process(int *semaddr)
 {
     pcb_PTR pid = removeBlocked(semaddr);
     --blockedProc;
-    insert_ready_queue(pid->p_prio, pid);
     return pid;
 }
 
@@ -308,11 +292,5 @@ void get_ID_process(state_t *excState)
 // SYSCALL YIELD
 void yield(state_t *excState)
 {
-    copy_state(excState, &currentActiveProc->p_s);
-    if (currentActiveProc->p_prio == PROCESS_PRIO_HIGH)
-        yieldHighProc = currentActiveProc;
-    else
-        insert_ready_queue(currentActiveProc->p_prio, currentActiveProc);
-
-    scheduler();
+    
 }
