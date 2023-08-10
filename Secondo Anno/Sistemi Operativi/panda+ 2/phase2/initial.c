@@ -1,7 +1,7 @@
 #include <umps/libumps.h>
 #include "../generic_headers/pandos_const.h"
 #include "../generic_headers/pandos_types.h"
-#include "../phase1/headers/asl.h"
+#include "../phase1/headers/ash.h"
 #include "../phase1/headers/pcb.h"
 #include "../phase1/headers/listx.h"
 
@@ -757,7 +757,6 @@ int semTerminalDeviceWriting[8];
 int master_sem;                   // master semaphore to controll the end of the uproc
 support_t sd_table[UPROCMAX];     // table of usable support descriptor
 struct list_head sd_free;         // list of free support descriptor
-swap_t swap_pool_table[POOLSIZE]; // swap pool table di grandezza 2*UPROMAX
 int swap_pool_sem;                // semaforo che gestisce l'accesso alla swap pool table
 
 // semafori per la gestione dei device in fase 3
@@ -816,7 +815,7 @@ void init_passupvector(passupvector_t *vector)
  */
 void insert_ready_queue(int prio, pcb_PTR p)
 {
-    p->p_prio = prio;
+   
     if (prio == PROCESS_PRIO_HIGH)
         insertProcQ(&queueHighProc, p);
     else

@@ -46,11 +46,7 @@ void scheduler()
  */
 void freeYieldHP()
 {
-    if (yieldHighProc != NULL)
-    {
-        insert_ready_queue(yieldHighProc->p_prio, yieldHighProc);
-        yieldHighProc = NULL;
-    }
+   
 }
 
 /**

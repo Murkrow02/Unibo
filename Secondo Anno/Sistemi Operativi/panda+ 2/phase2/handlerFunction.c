@@ -5,24 +5,13 @@
 // handler IL_CPUTIMER
 void plt_time_handler(state_t *excState)
 {
-    setTIMER(-2); // ACK
-    copy_state(excState, &currentActiveProc->p_s);
-    insert_ready_queue(currentActiveProc->p_prio, currentActiveProc);
-    scheduler();
+    
 }
 
 // handler IL_TIMER
 void intervall_timer_handler(state_t *excState)
 {
-    LDIT(100000); // ACK
-    pcb_PTR p;
-    while ((p = removeBlocked(&semIntervalTimer)) != NULL)
-    {
-        --blockedProc;
-        insert_ready_queue(p->p_prio, p);
-    }
-    semIntervalTimer = 0;
-    load_or_scheduler(excState);
+   
 }
 
 /**
@@ -101,9 +90,7 @@ void device_handler(int interLine, state_t *excState)
 
     if (proc == NULL || proc == currentActiveProc)
     {
-        currentActiveProc->p_s.reg_v0 = statusCode;
-        insert_ready_queue(currentActiveProc->p_prio, currentActiveProc);
-        scheduler();
+       
     }
     else
     {
