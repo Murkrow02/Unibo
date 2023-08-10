@@ -1,12 +1,13 @@
 #ifndef PHASE1_FILES_ASH_H
 #define PHASE1_FILES_ASH_H
 
-#include "headers/hashtable.h"
-#include "headers/ash.h"
-#include "../os/types.h"
-#include "../os/utils.h"
-#include "headers/listx.h"
-#include "../os/pandos_types.h"
+
+#include <hashtable.h>
+#include <ash.h>
+#include <types.h>
+#include <utils.h>
+#include <listx.h>
+#include <pandos_types.h>
 #include <stddef.h>
 
 // array di SEMD con dimensione massima di MAX_PROC.

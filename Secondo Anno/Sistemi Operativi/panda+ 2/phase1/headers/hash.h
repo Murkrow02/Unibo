@@ -1,7 +1,7 @@
 #ifndef _LINUX_HASH_H
 #define _LINUX_HASH_H
 
-#include "../../os/types.h"
+#include <pandos_types.h>
 
 
 /* Fast hashing routine for ints,  longs and pointers.

@@ -2,8 +2,8 @@
 #ifndef _LINUX_LIST_H
 #define _LINUX_LIST_H
 
-#include "../../os/container_of.h"
-#include "../../os/types.h"
+#include <container_of.h>
+#include <types.h>
 
 typedef struct list_head {
     struct list_head *next, *prev;

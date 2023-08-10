@@ -2,12 +2,12 @@
 // Created by Marco Coppola on 19/01/23.
 //
 
-#include "headers/pcb.h"
-#include "../os/types.h"
-#include "../os/utils.h"
-#include "headers/listx.h"
-#include "../os/pandos_types.h"
+#include <pcb.h>
+#include <listx.h>
+#include <pandos_types.h>
 #include <stddef.h>
+#include <utils.h>
+
 
 struct list_head pcb_free;
 static pcb_t pcb_table[MAXPROC];

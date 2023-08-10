@@ -1,11 +1,11 @@
 #include <umps/libumps.h>
-#include "../os/pandos_const.h"
-#include "../os/pandos_types.h"
-#include "../phase1/headers/ash.h"
-#include "../phase1/headers/pcb.h"
-#include "../phase1/headers/listx.h"
-#include "headers/p2test.h"
-#include "headers/exception.h"
+#include <pandos_const.h>
+#include <pandos_types.h>
+#include <ash.h>
+#include <pcb.h>
+#include <listx.h>
+#include <p2test.h>
+#include <exception.h>
 
 char a = 'n';
 void test2(){

@@ -7,9 +7,10 @@
 #ifndef _LINUX_HASHTABLE_H
 #define _LINUX_HASHTABLE_H
 
-#include "listx.h"
-#include "hash.h"
-#include "log2.h"
+#include <hash.h>
+#include <listx.h>
+#include <log2.h>
+
 
 #define DEFINE_HASHTABLE(name, bits)						\
 	struct hlist_head name[1 << (bits)] =					\

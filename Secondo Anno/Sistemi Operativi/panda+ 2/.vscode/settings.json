@@ -5,6 +5,11 @@
         "pandos_types.h": "c",
         "types.h": "c",
         "utils.h": "c",
-        "listx.h": "c"
+        "listx.h": "c",
+        "p2test.h": "c",
+        "container_of.h": "c",
+        "pandos_const.h": "c",
+        "hashtable.h": "c",
+        "ash.h": "c"
     }
 }

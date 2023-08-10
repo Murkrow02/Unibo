@@ -2,11 +2,11 @@
 // Created by Marco Coppola on 19/01/23.
 //
 
-#include "headers/ns.h"
-#include "../os/types.h"
-#include "../os/utils.h"
-#include "headers/listx.h"
-#include "../os/pandos_types.h"
+#include <ns.h>
+#include <types.h>
+#include <utils.h>
+#include <pandos_types.h>
+#include <listx.h>
 #include <stddef.h>
 
 //

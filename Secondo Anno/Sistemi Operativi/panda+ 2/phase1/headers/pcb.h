@@ -1,9 +1,9 @@
 #ifndef PSB_H_INCLUDED
 #define PSB_H_INCLUDED
 
-#include "../../os/pandos_const.h"
-#include "../../os/pandos_types.h"
-#include "listx.h"
+#include <pandos_const.h>
+#include <pandos_types.h>
+#include <listx.h>
 
 
 /* pcbFree list's functions */
