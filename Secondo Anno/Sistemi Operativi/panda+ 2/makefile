@@ -17,13 +17,22 @@ endif
 UMPS3_DATA_DIR = $(UMPS3_DIR_PREFIX)/share/umps3
 UMPS3_INCLUDE_DIR = $(UMPS3_DIR_PREFIX)/include/umps3
 
+# Additional folder to include
+MYFOLDER_INCLUDE_DIR = /path/to/myfolder
+
 # Compiler options
 CFLAGS_LANG = -ffreestanding -ansi
 CFLAGS_MIPS = -mips1 -mabi=32 -mno-gpopt -EL -G 0 -mno-abicalls -fno-pic -mfp32
-CFLAGS = $(CFLAGS_LANG) $(CFLAGS_MIPS) -I$(UMPS3_INCLUDE_DIR) -std=gnu99 -Wall -O0
+CFLAGS = $(CFLAGS_LANG) $(CFLAGS_MIPS) -I$(UMPS3_INCLUDE_DIR) -I$(MYFOLDER_INCLUDE_DIR) -std=gnu99 -Wall -O0
+
+# Additional folder to include
+#MAKEFILE_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
+#OS_FOLDER = $(MAKEFILE_DIR)/os
+#PHASE_ONE_FOLDER = $(MAKEFILE_DIR)/phase1/headers
+#PHASE_TWO_FOLDER = $(MAKEFILE_DIR)/phase2/headers
 
 # Linker options
-LDFLAGS = -G 0 -nostdlib -T $(UMPS3_DATA_DIR)/umpscore.ldscript -m elf32ltsmip
+LDFLAGS = -G0 -nostdlib -T ${UMPS3_DIR_PREFIX}/share/umps3/umpscore.ldscript -melf32ltsmip #-L$(OS_FOLDER) -L$(PHASE_ONE_FOLDER) -L$(PHASE_TWO_FOLDER)
 
 # Add the location of crt*.S to the search path
 VPATH = $(UMPS3_DATA_DIR)
@@ -35,7 +44,7 @@ all : kernel.core.umps
 kernel.core.umps : kernel
 	umps3-elf2umps -k $<
 
-kernel : phase1/ash.o  phase1/pcb.o phase2/exceptionHandler.o phase2/handlerFunction.o phase2/syscall.o phase2/scheduler.o phase2/klog.o  crtso.o libumps.o phase2/initial.o
+kernel : phase1/ash.o phase1/pcb.o crtso.o libumps.o phase2/initial.o #phase2/test/p2test.o
 	$(LD) -o $@ $^ $(LDFLAGS)
 
 clean :

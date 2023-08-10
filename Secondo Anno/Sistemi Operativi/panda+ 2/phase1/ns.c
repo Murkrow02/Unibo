@@ -3,10 +3,10 @@
 //
 
 #include "headers/ns.h"
-#include "../generic_headers/types.h"
-#include "../generic_headers/utils.h"
+#include "../os/types.h"
+#include "../os/utils.h"
 #include "headers/listx.h"
-#include "../generic_headers/pandos_types.h"
+#include "../os/pandos_types.h"
 #include <stddef.h>
 
 //

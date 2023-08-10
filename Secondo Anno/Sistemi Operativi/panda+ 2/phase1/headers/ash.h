@@ -1,8 +1,8 @@
 #ifndef ASL_H_INCLUDED
 #define ASL_H_INCLUDED
 
-#include "../../generic_headers/pandos_const.h"
-#include "../../generic_headers/pandos_types.h"
+#include "../../os/pandos_const.h"
+#include "../../os/pandos_types.h"
 #include "listx.h"
 #include "pcb.h"
 

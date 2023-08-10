@@ -1,7 +1,7 @@
 #ifndef _LINUX_HASH_H
 #define _LINUX_HASH_H
 
-#include "../../generic_headers/types.h"
+#include "../../os/types.h"
 
 
 /* Fast hashing routine for ints,  longs and pointers.
