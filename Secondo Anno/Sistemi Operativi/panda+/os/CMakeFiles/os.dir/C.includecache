@@ -9,6 +9,16 @@
 /media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/pcb.c
 pcb.h
 /media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/pcb.h
+types.h
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/types.h
+utils.h
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/utils.h
+list.h
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/list.h
+pandos_types.h
+/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/pandos_types.h
+stddef.h
+-
 
 os/include/container_of.h
 
@@ -35,4 +45,12 @@ pandos_types.h
 os/include/pandos_types.h
 
 os/include/types.h
+
+os/include/utils.h
+pandos_types.h
+os/include/pandos_types.h
+types.h
+os/include/types.h
+list.h
+os/include/list.h
 

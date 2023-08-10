@@ -1,0 +1,203 @@
+{
+	"archive" : {},
+	"artifacts" : 
+	[
+		{
+			"path" : "os/libos.a"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"target_compile_options",
+			"target_include_directories"
+		],
+		"files" : 
+		[
+			"os/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 5,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 31,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 32,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"backtrace" : 2,
+					"fragment" : "-ffreestanding"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "-Wall"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "-std=gnu99"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "-mips1"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "-mabi=32"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "-mno-gpopt"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "-EL"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "-G0"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "-O0"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "-mno-abicalls"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "-fno-pic"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "-mfp32"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 3,
+					"path" : "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/include"
+				},
+				{
+					"backtrace" : 3,
+					"path" : "/usr/include/umps3"
+				}
+			],
+			"language" : "C",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			]
+		}
+	],
+	"id" : "os::@764cf4c35900eaba4831",
+	"name" : "os",
+	"nameOnDisk" : "libos.a",
+	"paths" : 
+	{
+		"build" : "os",
+		"source" : "os"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "os/src/pcb.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "os/src/ash.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "os/src/ns.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "os/src/utils.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "os/src/exception.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "os/src/scheduler.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "os/src/interrupts.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "os/src/syscall.c",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "STATIC_LIBRARY"
+}

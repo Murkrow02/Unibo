@@ -1,0 +1,147 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2
+					],
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"projectIndex" : 0,
+					"source" : "."
+				},
+				{
+					"build" : "os",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "os",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				},
+				{
+					"build" : "phase2",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 2,
+					"source" : "phase2",
+					"targetIndexes" : 
+					[
+						4
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1,
+						2
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Pandos+"
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "os",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						2
+					],
+					"name" : "phase2",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						4
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 1,
+					"id" : "crti::@764cf4c35900eaba4831",
+					"jsonFile" : "target-crti-a2bf66b7ea18cccddf90.json",
+					"name" : "crti",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "crtso::@764cf4c35900eaba4831",
+					"jsonFile" : "target-crtso-a7dd80e678f3ccde6fec.json",
+					"name" : "crtso",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "libumps::@764cf4c35900eaba4831",
+					"jsonFile" : "target-libumps-6a3cd899988f675130c0.json",
+					"name" : "libumps",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "os::@764cf4c35900eaba4831",
+					"jsonFile" : "target-os-5303609812cf517c6126.json",
+					"name" : "os",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "phase2::@4ddafcd85abbd29867b5",
+					"jsonFile" : "target-phase2-7828d6412a05cc9b6d3f.json",
+					"name" : "phase2",
+					"projectIndex" : 2
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+",
+		"source" : "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 1
+	}
+}

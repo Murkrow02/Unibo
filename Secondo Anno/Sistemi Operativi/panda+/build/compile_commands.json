@@ -1,52 +1,52 @@
 [
 {
   "directory": "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/os",
-  "command": "/usr/bin/mipsel-linux-gnu-gcc  -I\"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/include\" -I/usr/include/umps3 -g -pedantic -ffreestanding -Wall -ansi -std=gnu99 -mips1 -mabi=32 -mno-gpopt -EL -G0 -O0 -mno-abicalls -fno-pic -mfp32 -o CMakeFiles/os.dir/src/pcb.c.o -c \"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/pcb.c\"",
+  "command": "/usr/bin/mipsel-linux-gnu-gcc  -I\"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/include\" -I/usr/include/umps3 -g -ffreestanding -Wall -std=gnu99 -mips1 -mabi=32 -mno-gpopt -EL -G0 -O0 -mno-abicalls -fno-pic -mfp32 -o CMakeFiles/os.dir/src/pcb.c.o -c \"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/pcb.c\"",
   "file": "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/pcb.c"
 },
 {
   "directory": "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/os",
-  "command": "/usr/bin/mipsel-linux-gnu-gcc  -I\"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/include\" -I/usr/include/umps3 -g -pedantic -ffreestanding -Wall -ansi -std=gnu99 -mips1 -mabi=32 -mno-gpopt -EL -G0 -O0 -mno-abicalls -fno-pic -mfp32 -o CMakeFiles/os.dir/src/ash.c.o -c \"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/ash.c\"",
+  "command": "/usr/bin/mipsel-linux-gnu-gcc  -I\"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/include\" -I/usr/include/umps3 -g -ffreestanding -Wall -std=gnu99 -mips1 -mabi=32 -mno-gpopt -EL -G0 -O0 -mno-abicalls -fno-pic -mfp32 -o CMakeFiles/os.dir/src/ash.c.o -c \"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/ash.c\"",
   "file": "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/ash.c"
 },
 {
   "directory": "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/os",
-  "command": "/usr/bin/mipsel-linux-gnu-gcc  -I\"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/include\" -I/usr/include/umps3 -g -pedantic -ffreestanding -Wall -ansi -std=gnu99 -mips1 -mabi=32 -mno-gpopt -EL -G0 -O0 -mno-abicalls -fno-pic -mfp32 -o CMakeFiles/os.dir/src/ns.c.o -c \"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/ns.c\"",
+  "command": "/usr/bin/mipsel-linux-gnu-gcc  -I\"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/include\" -I/usr/include/umps3 -g -ffreestanding -Wall -std=gnu99 -mips1 -mabi=32 -mno-gpopt -EL -G0 -O0 -mno-abicalls -fno-pic -mfp32 -o CMakeFiles/os.dir/src/ns.c.o -c \"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/ns.c\"",
   "file": "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/ns.c"
 },
 {
   "directory": "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/os",
-  "command": "/usr/bin/mipsel-linux-gnu-gcc  -I\"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/include\" -I/usr/include/umps3 -g -pedantic -ffreestanding -Wall -ansi -std=gnu99 -mips1 -mabi=32 -mno-gpopt -EL -G0 -O0 -mno-abicalls -fno-pic -mfp32 -o CMakeFiles/os.dir/src/utils.c.o -c \"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/utils.c\"",
+  "command": "/usr/bin/mipsel-linux-gnu-gcc  -I\"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/include\" -I/usr/include/umps3 -g -ffreestanding -Wall -std=gnu99 -mips1 -mabi=32 -mno-gpopt -EL -G0 -O0 -mno-abicalls -fno-pic -mfp32 -o CMakeFiles/os.dir/src/utils.c.o -c \"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/utils.c\"",
   "file": "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/utils.c"
 },
 {
   "directory": "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/os",
-  "command": "/usr/bin/mipsel-linux-gnu-gcc  -I\"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/include\" -I/usr/include/umps3 -g -pedantic -ffreestanding -Wall -ansi -std=gnu99 -mips1 -mabi=32 -mno-gpopt -EL -G0 -O0 -mno-abicalls -fno-pic -mfp32 -o CMakeFiles/os.dir/src/exception.c.o -c \"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/exception.c\"",
+  "command": "/usr/bin/mipsel-linux-gnu-gcc  -I\"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/include\" -I/usr/include/umps3 -g -ffreestanding -Wall -std=gnu99 -mips1 -mabi=32 -mno-gpopt -EL -G0 -O0 -mno-abicalls -fno-pic -mfp32 -o CMakeFiles/os.dir/src/exception.c.o -c \"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/exception.c\"",
   "file": "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/exception.c"
 },
 {
   "directory": "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/os",
-  "command": "/usr/bin/mipsel-linux-gnu-gcc  -I\"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/include\" -I/usr/include/umps3 -g -pedantic -ffreestanding -Wall -ansi -std=gnu99 -mips1 -mabi=32 -mno-gpopt -EL -G0 -O0 -mno-abicalls -fno-pic -mfp32 -o CMakeFiles/os.dir/src/scheduler.c.o -c \"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/scheduler.c\"",
+  "command": "/usr/bin/mipsel-linux-gnu-gcc  -I\"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/include\" -I/usr/include/umps3 -g -ffreestanding -Wall -std=gnu99 -mips1 -mabi=32 -mno-gpopt -EL -G0 -O0 -mno-abicalls -fno-pic -mfp32 -o CMakeFiles/os.dir/src/scheduler.c.o -c \"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/scheduler.c\"",
   "file": "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/scheduler.c"
 },
 {
   "directory": "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/os",
-  "command": "/usr/bin/mipsel-linux-gnu-gcc  -I\"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/include\" -I/usr/include/umps3 -g -pedantic -ffreestanding -Wall -ansi -std=gnu99 -mips1 -mabi=32 -mno-gpopt -EL -G0 -O0 -mno-abicalls -fno-pic -mfp32 -o CMakeFiles/os.dir/src/interrupts.c.o -c \"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/interrupts.c\"",
+  "command": "/usr/bin/mipsel-linux-gnu-gcc  -I\"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/include\" -I/usr/include/umps3 -g -ffreestanding -Wall -std=gnu99 -mips1 -mabi=32 -mno-gpopt -EL -G0 -O0 -mno-abicalls -fno-pic -mfp32 -o CMakeFiles/os.dir/src/interrupts.c.o -c \"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/interrupts.c\"",
   "file": "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/interrupts.c"
 },
 {
   "directory": "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/os",
-  "command": "/usr/bin/mipsel-linux-gnu-gcc  -I\"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/include\" -I/usr/include/umps3 -g -pedantic -ffreestanding -Wall -ansi -std=gnu99 -mips1 -mabi=32 -mno-gpopt -EL -G0 -O0 -mno-abicalls -fno-pic -mfp32 -o CMakeFiles/os.dir/src/syscall.c.o -c \"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/syscall.c\"",
+  "command": "/usr/bin/mipsel-linux-gnu-gcc  -I\"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/include\" -I/usr/include/umps3 -g -ffreestanding -Wall -std=gnu99 -mips1 -mabi=32 -mno-gpopt -EL -G0 -O0 -mno-abicalls -fno-pic -mfp32 -o CMakeFiles/os.dir/src/syscall.c.o -c \"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/syscall.c\"",
   "file": "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/src/syscall.c"
 },
 {
   "directory": "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/phase2",
-  "command": "/usr/bin/mipsel-linux-gnu-gcc  -I\"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/include\" -I\"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/test\" -I/usr/include/umps3 -I\"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/include\" -g -pedantic -ffreestanding -Wall -ansi -std=gnu99 -mips1 -mabi=32 -mno-gpopt -EL -G0 -O0 -mno-abicalls -fno-pic -mfp32 -o CMakeFiles/phase2.dir/src/main.c.o -c \"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/src/main.c\"",
+  "command": "/usr/bin/mipsel-linux-gnu-gcc  -I\"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/include\" -I\"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/test\" -I/usr/include/umps3 -I\"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/include\" -g -ffreestanding -Wall -std=gnu99 -mips1 -mabi=32 -mno-gpopt -EL -G0 -O0 -mno-abicalls -fno-pic -mfp32 -o CMakeFiles/phase2.dir/src/main.c.o -c \"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/src/main.c\"",
   "file": "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/src/main.c"
 },
 {
   "directory": "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/build/phase2",
-  "command": "/usr/bin/mipsel-linux-gnu-gcc  -I\"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/include\" -I\"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/test\" -I/usr/include/umps3 -I\"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/include\" -g -pedantic -ffreestanding -Wall -ansi -std=gnu99 -mips1 -mabi=32 -mno-gpopt -EL -G0 -O0 -mno-abicalls -fno-pic -mfp32 -o CMakeFiles/phase2.dir/test/p2test.01.c.o -c \"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/test/p2test.01.c\"",
+  "command": "/usr/bin/mipsel-linux-gnu-gcc  -I\"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/include\" -I\"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/test\" -I/usr/include/umps3 -I\"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/include\" -g -ffreestanding -Wall -std=gnu99 -mips1 -mabi=32 -mno-gpopt -EL -G0 -O0 -mno-abicalls -fno-pic -mfp32 -o CMakeFiles/phase2.dir/test/p2test.01.c.o -c \"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/test/p2test.01.c\"",
   "file": "/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/test/p2test.01.c"
 }
 ]

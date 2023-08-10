@@ -38,9 +38,9 @@ int main(void) {
     initPcbs();
 
     //Initialize the active semaphore ash table
-    initASH();
+    //initASH();
 
-    initNamespaces();
+    //initNamespaces();
 
     //Initialize the scheduler
     //initScheduler();
@@ -56,6 +56,8 @@ int main(void) {
 
      /* Insert first low priority process */
     pcb_PTR firstProc = allocPcb();
+    if(firstProc == NULL)
+        PANIC();
 
     //++activeProc;
     //insert_ready_queue(PROCESS_PRIO_LOW, firstProc);
@@ -73,5 +75,5 @@ int main(void) {
 
     addokbuf("FINISHED   \n");
 
-    return 1;
+    return 0;
 }

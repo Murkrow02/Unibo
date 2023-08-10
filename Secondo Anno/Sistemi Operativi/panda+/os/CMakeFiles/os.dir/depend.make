@@ -40,6 +40,7 @@ os/CMakeFiles/os.dir/src/pcb.c.o: os/include/pandos_const.h
 os/CMakeFiles/os.dir/src/pcb.c.o: os/include/pandos_types.h
 os/CMakeFiles/os.dir/src/pcb.c.o: os/include/pcb.h
 os/CMakeFiles/os.dir/src/pcb.c.o: os/include/types.h
+os/CMakeFiles/os.dir/src/pcb.c.o: os/include/utils.h
 
 os/CMakeFiles/os.dir/src/scheduler.c.o: os/src/scheduler.c
 os/CMakeFiles/os.dir/src/scheduler.c.o: phase2/include/test.h

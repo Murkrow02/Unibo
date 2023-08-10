@@ -6,5 +6,5 @@ C_DEFINES =
 
 C_INCLUDES = -I"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/include" -I"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/phase2/test" -I/usr/include/umps3 -I"/media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+/os/include"
 
-C_FLAGS = -pedantic -ffreestanding -Wall -ansi -std=gnu99 -mips1 -mabi=32 -mno-gpopt -EL -G0 -O0 -mno-abicalls -fno-pic -mfp32
+C_FLAGS = -ffreestanding -Wall -std=gnu99 -mips1 -mabi=32 -mno-gpopt -EL -G0 -O0 -mno-abicalls -fno-pic -mfp32
 

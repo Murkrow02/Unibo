@@ -17,7 +17,7 @@ if(NOT DEFINED UMPS3_DIR_PREFIX)
     endif()
 endif()
 
-set(CFLAGS_LANG -pedantic -ffreestanding -Wall -ansi -std=gnu99)
+set(CFLAGS_LANG -ffreestanding -Wall -std=gnu99)
 
 set(CFLAGS_MIPS -mips1 -mabi=32 -mno-gpopt -EL -G0 -O0 -mno-abicalls -fno-pic -mfp32)
 set(CFLAGS_ALL ${CMAKE_C_FLAGS} ${CFLAGS_LANG} ${CFLAGS_MIPS})
