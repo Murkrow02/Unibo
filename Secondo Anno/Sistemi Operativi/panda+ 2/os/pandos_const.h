@@ -7,11 +7,10 @@
  *
  ****************************************************************************/
 
-#include <umps/const.h>
+#include <umps3/umps/const.h>
 
-/* Number of semaphore's device */
-#define SEMDEVLEN 49
-#define RECVD    5
+#undef NULL
+#define NULL 0
 
 /* Hardware & software constants */
 #define PAGESIZE 4096 /* page size in bytes	*/
@@ -42,20 +41,16 @@
 
 #define MAXPROC 20
 
-#define CREATEPROCESS -1
-#define TERMPROCESS   -2
-#define PASSEREN      -3
-#define VERHOGEN      -4
-#define DOIO          -5
-#define GETTIME       -6
-#define CLOCKWAIT     -7
-#define GETSUPPORTPTR -8
-#define GETPROCESSID  -9
-#define YIELD         -10
-
-
-#define PROCESS_PRIO_LOW  0
-#define PROCESS_PRIO_HIGH 1
+#define CREATEPROCESS 1
+#define TERMPROCESS   2
+#define PASSEREN      3
+#define VERHOGEN      4
+#define DOIO          5
+#define GETTIME       6
+#define CLOCKWAIT     7
+#define GETSUPPORTPTR 8
+#define GETPROCESSID  9
+#define GETCHILDREN   10
 
 
 /* Status register constants */
@@ -116,8 +111,6 @@
 
 #define OKCHARTRANS  5
 #define TRANSMITCHAR 2
-#define RECEIVECHAR 	2		// aggiunta comando di ricezione del carattere
-#define PRINTCHR	2		// aggiunta comando di stampa del carattere
 
 #define SEEKTOCYL  2
 #define DISKREAD   3
@@ -167,22 +160,6 @@
 
 #define RAMTOP(T) ((T) = ((*((int *)RAMBASEADDR)) + (*((int *)RAMBASESIZE))))
 
-/*
- * NOTE: Function coming from a 2012 project
- 
-* This function takes the CAUSE register (3.3 of pops) and reads the bits corresponding to IP
- * The "il_no" parameter represents all the possible devices we have. (file /umps3/umps/arch.h line 68)
- * So the function allows us to go and check for each device which of them is working.
- * If a device is running CAUSE_IP_GET returns 1, 0 otherwise.
- * As requested by chapter 3.4 exception 0 we call the interrupt of the first device
- * that we find "on" / "running" / "of which we get 1 from this function"
-*/
-#define CAUSE_IP_GET(cause, il_no) ((cause) & (1 << ((il_no) + 8))) // performs a bit shift based on the parameters
-
-
-#define NRSEMAPHORES 49         /* Numero semafori devices + pseudo clock */
-#define NSUPPSEM 48 		/* Numero di semafori devices per il livello di supporto */
-
 
 #define DISKBACK     1
 #define FLASHBACK    0
@@ -192,9 +169,5 @@
 #define POOLSIZE (UPROCMAX * 2)
 /* End of Mikeyg constants */
 
-#define CHARRECV			5		/* Character received*/
-
-/* Inizio indirizzo di device registers */
-#define START_DEVREG		0x10000054
 
 #endif

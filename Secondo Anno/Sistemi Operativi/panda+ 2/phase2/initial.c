@@ -7,7 +7,9 @@
 #include "headers/p2test.h"
 #include "headers/exception.h"
 
-void test(){
+char a = 'n';
+void test2(){
+    a = 'y';
     PANIC();
 }
 
@@ -34,7 +36,7 @@ int main(int argc, int *argv[])
     /* Insert first low priority process */
     pcb_PTR firstProc = allocPcb();
     firstProc->p_s.status = ALLOFF | IEPON | IMON | TEBITON;
-    firstProc->p_s.pc_epc = firstProc->p_s.reg_t9 = (memaddr)test;
+    firstProc->p_s.pc_epc = firstProc->p_s.reg_t9 = (memaddr)test2;
     RAMTOP(firstProc->p_s.reg_sp); 
 
 
