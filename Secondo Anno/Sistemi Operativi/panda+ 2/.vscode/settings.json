@@ -10,6 +10,8 @@
         "container_of.h": "c",
         "pandos_const.h": "c",
         "hashtable.h": "c",
-        "ash.h": "c"
+        "ash.h": "c",
+        "ns.h": "c",
+        "exception.h": "c"
     }
 }

@@ -11,9 +11,9 @@
 
 #define PC_INC CPU_STATE->pc_epc += WORDLEN; CPU_STATE->reg_t9 += WORDLEN;
 
-#include "pandos_types.h"
-#include "types.h"
-#include "../phase1/headers/listx.h"
+#include <listx.h>
+#include <types.h>
+#include <pandos_types.h>
 
 //Initialize pcb by cleaning its parameters
 pcb_t* initializePcb(pcb_t* pcb);
@@ -22,7 +22,7 @@ pcb_t* initializePcb(pcb_t* pcb);
 int list_search_el(list_head* searchElement, list_head* list);
 
 //Sets the namespace ns to the process p, both are expected as non-null
-//void set_namespace(pcb_t *p, nsd_t *ns);
+void set_namespace(pcb_t *p, nsd_t *ns);
 
 void addokbuf(char *strp);
 void adderrbuf(char *strp);

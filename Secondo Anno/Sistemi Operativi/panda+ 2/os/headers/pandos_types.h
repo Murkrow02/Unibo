@@ -8,8 +8,8 @@
  ****************************************************************************/
 
 #include <umps/types.h>
-#include "pandos_const.h"
-#include "../phase1/headers/listx.h"
+#include <pandos_const.h>
+#include  <listx.h>
 
 
 /* PID namespace */
@@ -79,15 +79,19 @@ typedef struct pcb_t {
 
 /* semaphore descriptor (SEMD) data structure */
 typedef struct semd_t {
+
     /* Semaphore key */
     int *s_key;
+
     /* Queue of PCBs blocked on the semaphore */
     struct list_head s_procq;
 
     /* Semaphore hash table */
     struct hlist_node s_link;
+
     /* Free Semaphores list */
     struct list_head s_freelink;
+    
 } semd_t, *semd_PTR;
 
 #endif

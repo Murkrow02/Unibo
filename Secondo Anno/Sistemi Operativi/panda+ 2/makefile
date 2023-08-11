@@ -19,7 +19,7 @@ UMPS3_INCLUDE_DIR = $(UMPS3_DIR_PREFIX)/include/umps3
 
 # Project-related variables
 MAKEFILE_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
-OS_FOLDER = os
+OS_FOLDER = os/headers
 PHASE_ONE_FOLDER = phase1/headers
 PHASE_TWO_FOLDER = phase2/headers
 
@@ -42,7 +42,7 @@ all : kernel.core.umps
 kernel.core.umps : kernel
 	umps3-elf2umps -k $<
 
-kernel : phase1/ash.o phase1/pcb.o crtso.o libumps.o phase2/initial.o phase2/test/p2test.o
+kernel : os/utils.o phase1/ash.o phase1/pcb.o phase1/ns.o crtso.o libumps.o phase2/initial.o phase2/scheduler.o phase2/exception.o phase2/test/p2test.o
 	$(LD) -o $@ $^ $(LDFLAGS)
 
 clean :

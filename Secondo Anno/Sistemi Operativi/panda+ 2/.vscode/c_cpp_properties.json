@@ -5,7 +5,8 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "/usr/include/umps3",
-                "${workspaceFolder}/os"
+                "${workspaceFolder}/os",
+                "${workspaceFolder}/os/headers"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
