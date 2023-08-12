@@ -5,6 +5,7 @@
 #include <scheduler.h>
 #include <pcb.h>
 #include <types.h>
+#include <utils.h>
 
 int semTerminalDeviceReading[8];
 int semTerminalDeviceWriting[8];
@@ -75,7 +76,7 @@ void create_process(state_t *statep, support_t *supportp, struct nsd_t *ns)
     {
         //If the process is null, the allocation failed
         //set error code -1 in v0 of the caller
-        (*statep).reg_v0 = NOPROC;
+        PROCESSOR_SAVED_STATE->reg_v0 = NOPROC;
         return;
     }
 
@@ -101,7 +102,7 @@ void create_process(state_t *statep, support_t *supportp, struct nsd_t *ns)
     processCount++;
 
     // Return the pid of the new process
-    (*statep).reg_v0 = newProcess->p_pid;
+    PROCESSOR_SAVED_STATE->reg_v0 = newProcess->p_pid;
 }
 
 //SYS8 should be called before calling SYS1 to get the support structure
