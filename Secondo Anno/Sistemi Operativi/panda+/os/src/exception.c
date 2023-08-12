@@ -3,6 +3,7 @@
 #include "utils.h"
 #include "pandos_const.h"
 #include <umps3/umps/libumps.h>
+#include <syscall.h>
 
 #define CAUSE_IP_GET(cause, il_no) ((cause) & (1 << ((il_no) + 8))) // performs a bit shift based on the parameters
 
@@ -30,9 +31,20 @@ void exception_hanlder()
         //trap_handler(exceptionState);
         break;
     case 8: // System Call
-        //syscall_handler(exceptionState);
+        syscall_handler(syscall_code);
         break;
     default:
         PANIC();
+    }
+}
+
+void syscall_handler(unsigned int syscall_code) {
+    switch (syscall_code) {
+        case CREATEPROCESS:
+            create_process((state_t *)(REG_A1_SS), (int)(REG_A2_SS), (support_t *)(REG_A3_SS));
+            break;
+        default:
+            PANIC();
+            break;
     }
 }

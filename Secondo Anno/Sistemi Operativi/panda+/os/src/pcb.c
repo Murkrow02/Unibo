@@ -34,6 +34,8 @@ void freePcb(pcb_t *p) {
     list_add(&p->p_list, &pcb_free);
 }
 
+int lastInsertedPcb = 1;
+
 pcb_t* initializePcb(pcb_t *pcb)
 {
     if (pcb == NULL)
@@ -55,7 +57,12 @@ pcb_t* initializePcb(pcb_t *pcb)
     pcb->p_supportStruct = NULL;
     pcb->p_time = 0;
     pcb->p_semAdd = NULL;
-    pcb->p_pid = 12; //TODO SET
+
+    //Incrementa sempre il numero del pcb
+    //TODO CHECK SE FUNZIONA
+    pcb->p_pid = lastInsertedPcb;
+    lastInsertedPcb++;
+
     pcb->p_supportStruct = NULL;
     return pcb;
 }
