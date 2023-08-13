@@ -116,4 +116,8 @@ pcb_t* outChild(pcb_t *p);
 // funzione che, dato un id di un pcb, ti dice si trova nella lista dei pcb liberi
 int isPcbFree(int pid);
 
+
+//Initialize pcb by cleaning its parameters
+pcb_t* initializePcb(pcb_t* pcb);
+
 #endif

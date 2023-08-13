@@ -1,7 +1,10 @@
 #ifndef SCHEDULER_H_INCLUDED
 #define SCHEDULER_H_INCLUDED
 
-void initScheduler();
+#include <pandos_types.h>
+
 void schedule();
+void initScheduler();
+
 
 #endif

@@ -145,10 +145,10 @@ void uTLB_RefillHandler() {
 /*                                                                   */
 /*                 p1 -- the root process                            */
 /*                                                                   */
+char entered = 'n';
 void test() {
 
-    PANIC();
-    print("z\n");
+    entered = 'y';
 
     SYSCALL(VERHOGEN, (int)&sem_testsem, 0, 0); /* V(sem_testsem)   */
 

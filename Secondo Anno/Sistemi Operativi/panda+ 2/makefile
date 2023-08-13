@@ -42,11 +42,13 @@ all : kernel.core.umps
 kernel.core.umps : kernel
 	umps3-elf2umps -k $<
 
-kernel : os/utils.o phase1/ash.o phase1/pcb.o phase1/ns.o crtso.o libumps.o phase2/initial.o phase2/scheduler.o phase2/exception.o phase2/test/p2test.o
+kernel : os/utils.o phase1/ash.o phase1/pcb.o phase1/ns.o crtso.o libumps.o phase2/initial.o phase2/scheduler.o phase2/exception.o phase2/syscall.o phase2/test/p2test.o
 	$(LD) -o $@ $^ $(LDFLAGS)
 
 clean :
-	-rm -f  *.o ./phase1/*.o ./phase2/*.o  kernel kernel.*.umps *.umps
+	-rm -f  *.o ./phase1/*.o ./phase2/*.o ./os/*.o ./phase2/test/*.o 
+
+# kernel kernel.core.umps
 
 # Pattern rule for assembly modules
 %.o : %.S

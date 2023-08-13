@@ -1,10 +1,21 @@
-//
-// Created by Marco Coppola on 27/01/23.
-//
-
-
 #include <pandos_types.h>
 
+int extractBits(int num, int start, int end) {
+
+    // Calculate the number of bits to extract
+    int numBits = end - start + 1;
+    
+    // Create a mask with the desired bits set to 1
+    int mask = (1 << numBits) - 1;
+    
+    // Shift the mask to the desired position
+    mask <<= start;
+    
+    // Extract the desired bits using bitwise AND
+    int extractedBits = (num & mask) >> start;
+    
+    return extractedBits;
+}
 
 int list_search_el(list_head* searchElement, list_head* list){
 
@@ -22,27 +33,7 @@ int list_search_el(list_head* searchElement, list_head* list){
 }
 
 
-void set_namespace(pcb_t *p, nsd_t *ns){
 
-    //Cycle through all possible spots to find one of the same kind as ns
-    for(int i = 0; i < NS_TYPE_MAX; i++){
-
-        //If a namespace of the same type is found, replace this one
-        if(p->namespaces[i] != NULL && p->namespaces[i]->n_type == ns->n_type){
-            p->namespaces[i] = ns;
-            return;
-        }
-    }
-
-    //Cycle through all possible spots to find a free one
-    for(int i = 0; i < NS_TYPE_MAX; i++){
-
-        //If a blank space is found, insert the namespace there
-        if(p->namespaces[i] == NULL){
-            p->namespaces[i] = ns;
-        }
-    }
-}
 
 //TODO REMOVE THESE LINES
 

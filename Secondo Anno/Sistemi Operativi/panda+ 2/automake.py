@@ -25,7 +25,7 @@ class FileChangeHandler(FileSystemEventHandler):
 
 
             os.chdir(makefile_folder)
-            subprocess.run('make clean && make', shell=True)
+            subprocess.run('make && make clean', shell=True)
         except Exception as e:
             print(f"Error running 'make': {e}")
 

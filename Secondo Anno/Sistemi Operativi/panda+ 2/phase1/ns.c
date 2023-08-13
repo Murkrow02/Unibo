@@ -149,6 +149,29 @@ nsd_t *allocNamespace(int type){
     }
 }
 
+void set_namespace(pcb_t *p, nsd_t *ns){
+
+    //Cycle through all possible spots to find one of the same kind as ns
+    for(int i = 0; i < NS_TYPE_MAX; i++){
+
+        //If a namespace of the same type is found, replace this one
+        if(p->namespaces[i] != NULL && p->namespaces[i]->n_type == ns->n_type){
+            p->namespaces[i] = ns;
+            return;
+        }
+    }
+
+    //Cycle through all possible spots to find a free one
+    for(int i = 0; i < NS_TYPE_MAX; i++){
+
+        //If a blank space is found, insert the namespace there
+        if(p->namespaces[i] == NULL){
+            p->namespaces[i] = ns;
+        }
+    }
+}
+
+
 void freeNamespace(nsd_t *ns){
     //TODO: implement this function even if not called by the phase1 test
 }

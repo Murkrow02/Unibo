@@ -9,20 +9,30 @@
 #define CPU_STATUS CPU_STATE->status //Current status of the processor
 #define CPU_CAUSE CPU_STATE->cause //Current cause of the processor
 
+// Macro per reg_a0 in SavedStatus(BIOSDATAPAGE) che contiene il syscallCode.
+#define REG_A0_SS CPU_STATE->reg_a0
+// Macro per reg_a1 in SavedStatus(BIOSDATAPAGE) che contiene il 1° parametro da passare alla syscall.
+#define REG_A1_SS CPU_STATE->reg_a1
+// Macro per reg_a2 in SavedStatus(BIOSDATAPAGE) che contiene il 2° parametro da passare alla syscall.
+#define REG_A2_SS CPU_STATE->reg_a2
+// Macro per reg_a3 in SavedStatus(BIOSDATAPAGE) che contiene il 3° parametro da passare alla syscall.
+#define REG_A3_SS CPU_STATE->reg_a3
+
+
 #define PC_INC CPU_STATE->pc_epc += WORDLEN; CPU_STATE->reg_t9 += WORDLEN;
 
 #include <listx.h>
 #include <types.h>
 #include <pandos_types.h>
 
-//Initialize pcb by cleaning its parameters
-pcb_t* initializePcb(pcb_t* pcb);
+// Function to extract only the desired bits from an integer
+int extractBits(int num, int start, int end);
 
 //Check if given list element pointer is inside list
 int list_search_el(list_head* searchElement, list_head* list);
 
-//Sets the namespace ns to the process p, both are expected as non-null
-void set_namespace(pcb_t *p, nsd_t *ns);
+
+
 
 void addokbuf(char *strp);
 void adderrbuf(char *strp);

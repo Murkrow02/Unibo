@@ -32,6 +32,11 @@ void scheduler_breakpoint(){
 char watch = 'n';
  void testfunc(){
     watch = 'y';
+    // while (1)
+    // {
+        
+    // }
+    
     PANIC();
 }
 
@@ -76,7 +81,7 @@ inline void initScheduler(){
     root_p->p_s.status = ALLOFF | IEPON | IMON | TEBITON;
 
     //Init program counter to test function
-    func_addr = (memaddr) testfunc;
+    func_addr = (memaddr) test;
     root_p->p_s.pc_epc = root_p->p_s.reg_t9 = func_addr;
 
     //Init the stack pointer of root to RAMTOP
@@ -105,13 +110,13 @@ void schedule(){
     //Save running proc state in its pcb
     if(running_proc != NULL){
 
-        //STATE
-        running_proc->p_s = running_proc->p_s;
+        //Save current state of the running process in its pcb
+        STST(running_proc->p_s);
 
-        //TIME STOPPED
+        //Stop time of the running process
         STCK(running_proc_stop);
 
-        //TIME RUNNING
+        //Save the time the process has been running
         running_proc->p_time = running_proc->p_time + (running_proc_stop - running_proc_start);
     }
 

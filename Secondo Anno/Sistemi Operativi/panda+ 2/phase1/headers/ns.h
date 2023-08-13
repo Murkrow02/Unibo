@@ -25,4 +25,8 @@ nsd_t *allocNamespace(int type);
 void freeNamespace(nsd_t *ns);
 
 
+//Sets the namespace ns to the process p, both are expected as non-null
+void set_namespace(pcb_t *p, nsd_t *ns);
+
+
 #endif //PHASE1_FILES_NAMESPACE_H
