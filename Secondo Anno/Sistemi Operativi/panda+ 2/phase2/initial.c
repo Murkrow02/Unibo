@@ -33,7 +33,7 @@ int main(int argc, int *argv[])
     init_pv();
 
     /* Start the scheduler */
-    schedule();
+    scheduleNext();
 
     /* Should never reach this point */
     addokbuf("Scheduler returned\n");

@@ -20,6 +20,7 @@
 #include <pandos_types.h>
 #include <umps3/umps/libumps.h>
 #include <ash.h>
+#include <utils.h>
 
 typedef unsigned int devregtr;
 
@@ -109,33 +110,29 @@ void p5sys(), p8root(), child1(), child2(), p8leaf1(), p8leaf2(), p8leaf3(),
 extern void p5gen();
 extern void p5mm();
 
-void z_test_breakpoint(){};
+
+void z_test_breakpoint() {} /* MURK added */
 
 /* a procedure to print on terminal 0 */
 void print(char *msg) {
-    char     *s       = msg;
-    devregtr *base    = (devregtr *)(TERM0ADDR);
-    devregtr *command = base;
-    devregtr  status;
 
-    SYSCALL(PASSEREN, (int)&sem_term_mut, 0, 0); /* P(sem_term_mut) */
+    return;
 
-    while (*s != EOS) {
-        devregtr value[2] = {PRINTCHR | (((devregtr)*s) << 8), 0 };
-        status         = SYSCALL(DOIO, (int)command, (int)value, 0);
-        if (status != 0 || (value[0] & TERMSTATMASK) != RECVD) {
+    // char     *s       = msg;
+    // devregtr *base    = (devregtr *)(TERM0ADDR);
+    // devregtr *command = base;
+    // devregtr  status;
 
-            //FOR NOW IT ENTERS HERE SINCE THE DOIO SYSCALL IS NOT IMPLEMENTED
-    z_test_breakpoint();
-
-            PANIC();
-        }
-        s++;
-    }
-
-
-    SYSCALL(VERHOGEN, (int)&sem_term_mut, 0, 0); /* V(sem_term_mut) */
-
+    // SYSCALL(PASSEREN, (int)&sem_term_mut, 0, 0); /* P(sem_term_mut) */
+    // while (*s != EOS) {
+    //     devregtr value[2] = {PRINTCHR | (((devregtr)*s) << 8), 0 };
+    //     status         = SYSCALL(DOIO, (int)command, (int)value, 0);
+    //     if (status != 0 || (value[0] & TERMSTATMASK) != RECVD) {
+    //         PANIC();
+    //     }
+    //     s++;
+    // }
+    // SYSCALL(VERHOGEN, (int)&sem_term_mut, 0, 0); /* V(sem_term_mut) */
 }
 
 
@@ -150,15 +147,12 @@ void uTLB_RefillHandler() {
     LDST((state_t *)0x0FFFF000);
 }
 
+
 /*********************************************************************/
 /*                                                                   */
 /*                 p1 -- the root process                            */
 /*                                                                   */
-char entered = 'n';
 void test() {
-
-    entered = 'y';
-
     SYSCALL(VERHOGEN, (int)&sem_testsem, 0, 0); /* V(sem_testsem)   */
 
     print("p1 v(sem_testsem)\n");
@@ -280,14 +274,27 @@ void test() {
 
     print("p2 was started\n");
 
+
+
+
     SYSCALL(VERHOGEN, (int)&sem_startp2, 0, 0); /* V(sem_startp2)   */
+
+    SYSCALL(VERHOGEN, (int)&sem_endp2, 0, 0); /* V(sem_endp2) (blocking V!) */  
+adderrbuf("ASD\n"); /* MURK ADDED */
+
+    /*NOTE P2 HAS BEEN EDITED !!!! */
+    /*NOTE P2 HAS BEEN EDITED !!!! */
+    /*NOTE P2 HAS BEEN EDITED !!!! */
+
     
-    SYSCALL(VERHOGEN, (int)&sem_endp2, 0, 0); /* V(sem_endp2) (blocking V!)     */
-    
-    /* make sure we really blocked */
+
+    /* make sure we really blocked (P2 WILL CHANGE THIS TO 1) */
     if (p1p2synch == 0) {
+        adderrbuf("error: p1/p2 synchronization bad\n"); /* MURK ADDED */
         print("error: p1/p2 synchronization bad\n");
     }
+
+
     
     p3pid = SYSCALL(CREATEPROCESS, (int)&p3state, (int)NULL, (int)NULL); /* start p3     */
 
@@ -350,6 +357,14 @@ void test() {
 
 /* p2 -- semaphore and cputime-SYS test process */
 void p2() {
+
+    while (1)
+    {
+        p1p2synch = 1; /* MURK ADDED */
+    }
+    return; /* MURK ADDED */
+
+
     int   i;              /* just to waste time  */
     cpu_t now1, now2;     /* times of day        */
     cpu_t cpu_t1, cpu_t2; /* cpu time used       */

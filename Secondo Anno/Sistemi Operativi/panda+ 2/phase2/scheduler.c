@@ -3,7 +3,6 @@
 #include <pandos_types.h>
 #include <utils.h>
 #include <scheduler.h>
-#include <umps3/umps/libumps.h>
 #include <umps3/umps/arch.h>
 
 //Running processes
@@ -23,10 +22,8 @@ int sem_interval_timer;
 int sem_terminal_in[8];
 int sem_terminal_out[8];
 
-
 //ONLY FOR DEBUG PURPOSES, REMOVE LATER
-int copied_running_status;
-memaddr func_addr;
+int running_proc_pid;
 
 void scheduler_breakpoint(){
 
@@ -48,23 +45,10 @@ void addToReadyQueue(pcb_PTR proc){
     insertProcQ(&ready_queue, proc);
 }
 
-//Easy way to block process by saving its state and inserting it back into the ready queue
-void blockRunningProcess(){
-
-    //Save the state of the running process
-    saveStateTo(&running_proc->p_s);
-
-    //Insert the running process in the ready queue
-    addToReadyQueue(running_proc);
-
-    //Schedule the next process
-    schedule();
-}
-
 //Increment the program counter of the running process
 void incrementProgramCounter(){
-    running_proc->p_s.pc_epc += WORD_SIZE;
-    running_proc->p_s.reg_t9 += WORD_SIZE;
+    CPU_STATE->pc_epc += WORDLEN;
+    CPU_STATE->reg_t9 += WORDLEN;
 }
 
 
@@ -107,7 +91,7 @@ inline void initScheduler(){
     root_p->p_s.status = ALLOFF | IEPON | IMON | TEBITON;
 
     //Init program counter to test function
-    func_addr = (memaddr) test;
+    memaddr func_addr = (memaddr) test;
     root_p->p_s.pc_epc = root_p->p_s.reg_t9 = func_addr;
 
     //Init the stack pointer of root to RAMTOP
@@ -124,11 +108,12 @@ inline void initScheduler(){
 
 cpu_t running_proc_start;
 cpu_t running_proc_stop;
-void schedule(){
+void scheduleNext(){
 
 
     //Halt if there are no processes
     if(process_count == 0){
+        adderrbuf("No processes to schedule \n");
         //TODO: CHECK HOW TO HALT
         //HALT();
     }
@@ -153,6 +138,9 @@ void schedule(){
     if(running_proc == NULL){
         adderrbuf("Cannot get root proc from ready queue \n");
     }
+
+    //Save the pid of the running process
+    running_proc_pid = running_proc->p_pid;
     
     // PLT (Process Local Timer) 5ms (this will give the process a maximum of 5ms to run before being preempted)
     setTIMER(TIMESLICE * (*((cpu_t *)TIMESCALEADDR))); 

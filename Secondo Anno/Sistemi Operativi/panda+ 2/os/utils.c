@@ -38,6 +38,15 @@ int extractBits(int num, int start, int end) {
     return extractedBits;
 }
 
+//Copies a string from src to dest
+void strcopy(char *dest, char *src, int len) {
+    int i;
+    for (i = 0; i < len; i++) {
+        dest[i] = src[i];
+    }
+    dest[i] = '\0';
+}
+
 int list_search_el(list_head* searchElement, list_head* list){
 
     list_head* el;

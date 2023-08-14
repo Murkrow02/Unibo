@@ -34,6 +34,9 @@ void copyState(state_t *original, state_t *dest);
 // Function to extract only the desired bits from an integer
 int extractBits(int num, int start, int end);
 
+//Copies a string from src to dest
+void strcopy(char *dest, char *src, int len);
+
 //Check if given list element pointer is inside list
 int list_search_el(list_head* searchElement, list_head* list);
 

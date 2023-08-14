@@ -3,7 +3,7 @@
 
 #include <pandos_types.h>
 
-void schedule();
+void scheduleNext();
 
 
 void initScheduler();
@@ -12,7 +12,7 @@ void initScheduler();
 void addToReadyQueue(pcb_PTR proc);
 
 //Easy way to block process by saving its state and inserting it back into the ready queue
-void blockRunningProcess();
+void blockRunningAndScheduleNext();
 
 //Increment the program counter of the running process
 void incrementProgramCounter();

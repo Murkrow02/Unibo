@@ -29,11 +29,13 @@ void exception_hanlder(){
             //trap_handler();
             break;
         case 8: // System Call
-            syscall_handler();
 
             //Increment pc_epc and reg_t9 to prevent syscall from being executed again
             incrementProgramCounter();
 
+            //Handle the syscall
+            syscall_handler();
+            
             break;
         default:
             z_breakpoint_exception_panic();

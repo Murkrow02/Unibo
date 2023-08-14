@@ -5,6 +5,7 @@
 #include <scheduler.h>
 #include <pcb.h>
 #include <types.h>
+#include <ash.h>
 
 //Running processes
 extern int process_count;
@@ -34,18 +35,21 @@ void syscall_handler() {
 
 
     switch (REG_A0_SS) {
-        case VERHOGEN:
-            //TODO
-            z_breakpoint_verhogen();
-            break;
-        case PASSEREN:
-            z_breakpoint_passeren();
-            //TODO
-            break;
+
         case CREATEPROCESS:
             z_breakpoint_create_process();
             create_process();
             break;
+
+        case PASSEREN:
+            z_breakpoint_passeren();
+            passeren();
+            break;
+        case VERHOGEN:
+            z_breakpoint_verhogen();
+            verhogen();
+            break;
+
         case DOIO:
             z_breakpoint_doio();
             do_io();
@@ -77,7 +81,6 @@ void create_process()
     support_t *supportp = (int)(REG_A2_SS);
     struct nsd_t *ns = (support_t *)(REG_A3_SS);
 
-
     // Allocate a new process
     pcb_t *newProcess = allocPcb();
 
@@ -85,7 +88,7 @@ void create_process()
     {
         //If the process is null, the allocation failed
         //set error code -1 in v0 of the caller
-        (*statep).reg_v0 = NOPROC;
+        CPU_STATE->reg_v0 = NOPROC;
         return;
     }
 
@@ -104,26 +107,94 @@ void create_process()
     //make a child of the current process
     insertChild(running_proc, newProcess);
 
-    // Insert the process in the ready queue
-    insertProcQ(&(ready_queue), newProcess);
-
-    // Increment the number of active processes
+    //Insert the new process in the ready queue
+    addToReadyQueue(newProcess);
     process_count++;
 
+
     // Return the pid of the new process
-    (*statep).reg_v0 = newProcess->p_pid;
+    CPU_STATE->reg_v0 = newProcess->p_pid;
 }
+
+///SYS3 MURK
+void passeren() {
+
+    //Retrieve the semaphore
+    int *sem = (int *)(REG_A1_SS);
+
+    //Check if the semaphore is valid
+    if (sem == NULL)
+    {
+        adderrbuf("Invalid semaphore pointer\n");
+        return;
+    }
+
+    //Check if need to block the process
+    if (*sem <= 0)
+    {
+        //Insert the process in the semaphore queue
+        insertBlocked(sem, running_proc);
+
+        //Increment the soft block counter
+        soft_block_count++;
+
+        //Schedule the next process
+        scheduleNext();
+    }
+    else
+    {
+        //Decrement the semaphore
+        (*sem)--;
+    }
+
+    //TODO
+}
+
+///SYS4 MURK
+void verhogen() {
+
+    //Retrieve the semaphore
+    int *sem = (int *)(REG_A1_SS);
+
+    //Check if the semaphore is valid
+    if (sem == NULL)
+    {
+        adderrbuf("Invalid semaphore pointer\n");
+        return;
+    }
+
+    //Check if the semaphore is already at its maximum value
+    if (*sem == 1)
+    {
+        addToReadyQueue(running_proc);
+        scheduleNext();
+        return;
+    }
+
+    //Check if there are blocked processes
+    if (*sem <= 0)
+    {
+        //Remove the first process from the semaphore queue
+        pcb_t *unblocked = removeBlocked(sem);
+
+        //Decrement the soft block counter
+        soft_block_count--;
+
+        //Insert the process in the ready queue
+        insertProcQ(&(ready_queue), unblocked);
+    }
+
+    //Increment the semaphore
+    (*sem)++;
+}
+
 
 ///SYS5 MURK
 void do_io() {
 
-    //Block the running process
-    //blockRunningProcess();
-
-    (*statep).reg_v0 = newProcess->p_pid;
-
-
-    //TODO
+    //VEDI PERCHE PORCODIO VA NEL REGISTRO 1 INVECE CHE 2
+     (*CPU_STATE).reg_v0 = (unsigned int) 23;
+    z_breakpoint_doio();
 }
 
 //SYS8 should be called before calling SYS1 to get the support structure

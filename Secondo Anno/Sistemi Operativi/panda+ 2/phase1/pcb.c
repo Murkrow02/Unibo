@@ -12,6 +12,9 @@
 struct list_head pcb_free;
 static pcb_t pcb_table[MAXPROC];
 
+//Used to assign a unique pid to each process
+int lastInsertedPcbPid = 1;
+
 void initPcbs() {
 
     //Initialize the list of free PCBs
@@ -55,7 +58,7 @@ pcb_t* initializePcb(pcb_t *pcb)
     pcb->p_supportStruct = NULL;
     pcb->p_time = 0;
     pcb->p_semAdd = NULL;
-    pcb->p_pid = 12; //TODO SET
+    pcb->p_pid = lastInsertedPcbPid++;
     pcb->p_supportStruct = NULL;
     return pcb;
 }
