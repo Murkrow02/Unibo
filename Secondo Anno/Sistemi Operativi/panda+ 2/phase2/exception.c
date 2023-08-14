@@ -1,14 +1,11 @@
 #include <exception.h>
 #include <scheduler.h>
 #include <utils.h>
+#include <interrupt.h>
 #include "headers/syscall.h"
-
-
 
 void z_breakpoint_exception(){}
 void z_breakpoint_exception_panic(){}
-void z_breakpoint_interrupt(){}
-void z_breakpoint_syscall(){}
 
 void exception_hanlder(){
     
@@ -22,8 +19,7 @@ void exception_hanlder(){
     switch (ex_cause)
     {
         case IOINTERRUPTS: // Interrupt
-            z_breakpoint_interrupt();
-            //interrupt_handler();
+            interrupt_handler();
             break;
         case 1 ... 3: // TLB Exception
             //tlb_handler();
@@ -33,8 +29,11 @@ void exception_hanlder(){
             //trap_handler();
             break;
         case 8: // System Call
-            z_breakpoint_syscall();
             syscall_handler();
+
+            //Increment pc_epc and reg_t9 to prevent syscall from being executed again
+            incrementProgramCounter();
+
             break;
         default:
             z_breakpoint_exception_panic();

@@ -1,4 +1,25 @@
 #include <pandos_types.h>
+#include <utils.h>
+
+//Copies the state of the running process to another state_t
+void saveStateTo(state_t *dest){
+    copyState(CPU_STATE, dest);
+}
+
+//Copies the state of a process to another
+void copyState(state_t *original, state_t *dest)
+{
+    dest->entry_hi = original->entry_hi;
+    dest->cause = original->cause;
+    dest->status = original->status;
+    dest->pc_epc = original->pc_epc;
+    dest->hi = original->hi;
+    dest->lo = original->lo;
+    for (int i = 0; i < STATE_GPR_LEN; i++)
+    {
+        dest->gpr[i] = original->gpr[i];
+    }
+}
 
 int extractBits(int num, int start, int end) {
 

@@ -3,6 +3,8 @@
 #include <pandos_types.h>
 #include <utils.h>
 #include <scheduler.h>
+#include <umps3/umps/libumps.h>
+#include <umps3/umps/arch.h>
 
 //Running processes
 int process_count;
@@ -16,9 +18,10 @@ struct list_head ready_queue;
 //Running process
 pcb_t *running_proc;
 
-//Semaphore array
-//TODO: check the right number (one foreach device + 1 for the pseudo-clock and count terminal devices twice for I/O)
-semd_t semaphores[50]; 
+//Semaphore arrays
+int sem_interval_timer;
+int sem_terminal_in[8];
+int sem_terminal_out[8];
 
 
 //ONLY FOR DEBUG PURPOSES, REMOVE LATER
@@ -29,17 +32,40 @@ void scheduler_breakpoint(){
 
 }
 
-char watch = 'n';
- void testfunc(){
-    watch = 'y';
-    // while (1)
-    // {
-        
-    // }
-    
+int watch = 1;
+void testfunc()
+{
+    while (1)
+    {
+        watch++;
+    }
+
     PANIC();
 }
 
+//Easy way to append a process to the ready queue
+void addToReadyQueue(pcb_PTR proc){
+    insertProcQ(&ready_queue, proc);
+}
+
+//Easy way to block process by saving its state and inserting it back into the ready queue
+void blockRunningProcess(){
+
+    //Save the state of the running process
+    saveStateTo(&running_proc->p_s);
+
+    //Insert the running process in the ready queue
+    addToReadyQueue(running_proc);
+
+    //Schedule the next process
+    schedule();
+}
+
+//Increment the program counter of the running process
+void incrementProgramCounter(){
+    running_proc->p_s.pc_epc += WORD_SIZE;
+    running_proc->p_s.reg_t9 += WORD_SIZE;
+}
 
 
 inline void initScheduler(){
@@ -88,7 +114,7 @@ inline void initScheduler(){
     RAMTOP(root_p->p_s.reg_sp);     
 
     //Insert root process in ready queue
-    insertProcQ(&ready_queue, root_p);
+    addToReadyQueue(root_p);
     if(headProcQ(&ready_queue) == NULL){
         adderrbuf("Cannot insert root proc to ready queue \n");
     }
@@ -128,7 +154,7 @@ void schedule(){
         adderrbuf("Cannot get root proc from ready queue \n");
     }
     
-    // PLT 5ms
+    // PLT (Process Local Timer) 5ms (this will give the process a maximum of 5ms to run before being preempted)
     setTIMER(TIMESLICE * (*((cpu_t *)TIMESCALEADDR))); 
 
     //Save start time of the new process

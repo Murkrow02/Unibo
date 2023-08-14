@@ -109,6 +109,7 @@ void p5sys(), p8root(), child1(), child2(), p8leaf1(), p8leaf2(), p8leaf3(),
 extern void p5gen();
 extern void p5mm();
 
+void z_test_breakpoint(){};
 
 /* a procedure to print on terminal 0 */
 void print(char *msg) {
@@ -117,16 +118,24 @@ void print(char *msg) {
     devregtr *command = base;
     devregtr  status;
 
-    //SYSCALL(PASSEREN, (int)&sem_term_mut, 0, 0); /* P(sem_term_mut) */
+    SYSCALL(PASSEREN, (int)&sem_term_mut, 0, 0); /* P(sem_term_mut) */
+
     while (*s != EOS) {
         devregtr value[2] = {PRINTCHR | (((devregtr)*s) << 8), 0 };
         status         = SYSCALL(DOIO, (int)command, (int)value, 0);
         if (status != 0 || (value[0] & TERMSTATMASK) != RECVD) {
+
+            //FOR NOW IT ENTERS HERE SINCE THE DOIO SYSCALL IS NOT IMPLEMENTED
+    z_test_breakpoint();
+
             PANIC();
         }
         s++;
     }
-    //SYSCALL(VERHOGEN, (int)&sem_term_mut, 0, 0); /* V(sem_term_mut) */
+
+
+    SYSCALL(VERHOGEN, (int)&sem_term_mut, 0, 0); /* V(sem_term_mut) */
+
 }
 
 

@@ -25,6 +25,12 @@
 #include <types.h>
 #include <pandos_types.h>
 
+//Copies the state of the running process to another state_t
+void saveStateTo(state_t *dest);
+
+//Copies the state of a process to another
+void copyState(state_t *original, state_t *dest);
+
 // Function to extract only the desired bits from an integer
 int extractBits(int num, int start, int end);
 
