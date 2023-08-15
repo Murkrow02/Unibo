@@ -284,7 +284,7 @@ void get_support_data() {
 ///SYS9
 void get_pid(int parent) {
     //TODO check namespaces
-    if (parent == 0) {
+    if (parent == 1) {
         CPU_STATE->reg_v0 = (unsigned int) running_proc->p_parent->p_pid;
     } else {
         CPU_STATE->reg_v0 = (unsigned int) running_proc->p_pid;
