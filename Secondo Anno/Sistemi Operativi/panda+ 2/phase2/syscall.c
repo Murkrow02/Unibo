@@ -180,7 +180,6 @@ void terminate_process(int pid) {
             iterating_queue = iterating_queue.next;
             process = headProcQ(&iterating_queue);
         }
-
     }
 }
 
@@ -265,7 +264,29 @@ void do_io() {
     z_breakpoint_doio();
 }
 
-//SYS8 should be called before calling SYS1 to get the support structure
+///SYS8 VALEX
+/// \n\n
+/// <summary>
+///should be called before calling SYS1 to get the support structure
+///Returns the support structure of the running process,
+///if the running process has no support structure, NULL is returned
+/// \n\n
+///Called like SYSCALL(GETSUPPORTPTR, 0, 0, 0);
+/// </summary>
 void get_support_data() {
-    //TODO
+    if (running_proc->p_supportStruct == NULL) {
+        CPU_STATE->reg_v0 = NULL;
+    } else {
+        CPU_STATE->reg_v0 = (unsigned int) running_proc->p_supportStruct;
+    }
+}
+
+///SYS9
+void get_pid(int parent) {
+    //TODO check namespaces
+    if (parent == 0) {
+        CPU_STATE->reg_v0 = (unsigned int) running_proc->p_parent->p_pid;
+    } else {
+        CPU_STATE->reg_v0 = (unsigned int) running_proc->p_pid;
+    }
 }
