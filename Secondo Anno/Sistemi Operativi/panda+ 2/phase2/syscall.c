@@ -116,6 +116,74 @@ void create_process()
     CPU_STATE->reg_v0 = newProcess->p_pid;
 }
 
+
+///SYS2 VALEX
+/// <summary>
+/// Terminates the process with pid passed as parameter
+/// Called like SYSCALL(TERMINATEPROCESS, pid, 0, 0)
+/// If pid is 0, the current process and all his progeny is terminated
+/// otherwise the process with the given pid is terminated with all his progeny
+/// \param pid The pid of the process to terminate</param>
+/// </summary>
+///CI HO MESSO 2 MIN A FARLA NON FUNZIONERA MAI
+void terminate_process(int pid) {
+    if (pid == 0) {
+        //Terminate the current process and all his progeny
+
+        //Iterate over the children of the current process
+        pcb_t *child = NULL;
+        while ((child = removeChild(running_proc)) != NULL) {
+            //Terminate the child
+            terminate_process(child->p_pid);
+        }
+
+        //Remove the current process from the ready queue
+        removeFromReadyQueue(running_proc);
+
+        //Decrement the process counter
+        process_count--;
+
+        //Free the current process
+        freePcb(running_proc);
+
+    } else {
+        //Terminate the process with the given pid and all his progeny
+
+        //Get the process with the given pid
+        pcb_t *process = NULL;
+
+        //search the process in the ready queue with headProcQ
+        struct list_head iterating_queue = ready_queue;
+        process = headProcQ(&ready_queue);
+        while (process != NULL) {
+            if (process->p_pid == pid) {
+
+                //Remove the process from the ready queue
+                //Iterate over the children of the passed process
+                pcb_t *child = NULL;
+                while ((child = removeChild(process)) != NULL) {
+                    //Terminate the child
+                    terminate_process(child->p_pid);
+                }
+
+                //Remove the process from the ready queue
+                removeFromReadyQueue(process);
+
+                //Decrement the process counter
+                process_count--;
+
+                //Free the process
+                freePcb(process);
+
+                break;
+            }
+            iterating_queue = iterating_queue.next;
+            process = headProcQ(&iterating_queue);
+        }
+
+    }
+}
+
 ///SYS3 MURK
 void passeren() {
 
