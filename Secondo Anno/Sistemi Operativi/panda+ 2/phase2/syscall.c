@@ -84,8 +84,10 @@ void killSelfAndProgeny(pcb_PTR proc)
 //Internal function used to kill a process
 void killOne(pcb_PTR proc){
 
+
     //Remove the current process from the children of his parent (if any)
-    outChild(proc);
+    //outChild(proc); //TODO:
+
 
     //TODO: remove the process from the semaphore queue (if any)
 
@@ -113,7 +115,7 @@ void killOne(pcb_PTR proc){
 /// \param supportp Pointer to the support structure
 /// \param ns Pointer to the namespace?
 /// </summary>
-void create_process()
+int create_process()
 {
     //Collect the parameters
     state_t *statep = (state_t *)(REG_A1_SS);
@@ -127,8 +129,7 @@ void create_process()
     {
         //If the process is null, the allocation failed
         //set error code -1 in v0 of the caller
-        CPU_STATE->reg_v0 = NOPROC;
-        return;
+        return NOPROC;
     }
 
     // Copy the state of the process
@@ -152,7 +153,7 @@ void create_process()
 
 
     // Return the pid of the new process
-    CPU_STATE->reg_v0 = newProcess->p_pid;
+    return newProcess->p_pid;
 }
 
 
@@ -173,6 +174,7 @@ void terminate_process() {
     //Calling process requested to kill itself and all his progeny
     if (pid == 0 || (running_proc != NULL && pid == running_proc->p_pid)) {
 
+        //killOne(running_proc);
         killSelfAndProgeny(running_proc);
         running_proc = NULL;
         scheduleNext();
@@ -268,11 +270,9 @@ void verhogen() {
 
 
 ///SYS5 MURK
-void do_io() {
+int do_io() {
 
-    //VEDI PERCHE PORCODIO VA NEL REGISTRO 1 INVECE CHE 2
-     (*CPU_STATE).reg_v0 = (unsigned int) 23;
-    z_breakpoint_doio();
+    return 2; //RITORNA QUA
 }
 
 ///SYS8 VALEX

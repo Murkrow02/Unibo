@@ -118,21 +118,20 @@ void print(char *msg) {
 
     return;
 
-    // char     *s       = msg;
-    // devregtr *base    = (devregtr *)(TERM0ADDR);
-    // devregtr *command = base;
-    // devregtr  status;
+    char     *s       = msg;
+    devregtr *base    = (devregtr *)(TERM0ADDR);
+    devregtr *command = base;
+    devregtr  status;
 
-    // SYSCALL(PASSEREN, (int)&sem_term_mut, 0, 0); /* P(sem_term_mut) */
-    // while (*s != EOS) {
-    //     devregtr value[2] = {PRINTCHR | (((devregtr)*s) << 8), 0 };
-    //     status         = SYSCALL(DOIO, (int)command, (int)value, 0);
-    //     if (status != 0 || (value[0] & TERMSTATMASK) != RECVD) {
-    //         PANIC();
-    //     }
-    //     s++;
-    // }
-    // SYSCALL(VERHOGEN, (int)&sem_term_mut, 0, 0); /* V(sem_term_mut) */
+    SYSCALL(PASSEREN, (int)&sem_term_mut, 0, 0); /* P(sem_term_mut) */
+    while (*s != EOS) {
+        devregtr value[2] = {PRINTCHR | (((devregtr)*s) << 8), 0 };
+        if (status != 0 || (value[0] & TERMSTATMASK) != RECVD) {
+            PANIC();
+        }
+        s++;
+    }
+    SYSCALL(VERHOGEN, (int)&sem_term_mut, 0, 0); /* V(sem_term_mut) */
 }
 
 
@@ -152,6 +151,7 @@ void uTLB_RefillHandler() {
 /*                                                                   */
 /*                 p1 -- the root process                            */
 /*                                                                   */
+
 void test() {
 
     z_test_breakpoint(); /* MURK ADDED */
@@ -277,9 +277,6 @@ void test() {
 
     print("p2 was started\n");
 
-
-
-
     SYSCALL(VERHOGEN, (int)&sem_startp2, 0, 0); /* V(sem_startp2)   */
 
     SYSCALL(VERHOGEN, (int)&sem_endp2, 0, 0); /* V(sem_endp2) (blocking V!) */  
@@ -362,12 +359,11 @@ void test() {
 /* p2 -- semaphore and cputime-SYS test process */
 void p2() {
 
-    while (1)
-    {
+    //while (1)
+   // {
         p1p2synch = 1; /* MURK ADDED */
-    }
-      //  SYSCALL(TERMPROCESS, 0, 0, 0); /* terminate p2 */
-    return; /* MURK ADDED */
+    //}
+    SYSCALL(TERMPROCESS, 0, 0, 0); /* terminate p2 */
 
 
     int   i;              /* just to waste time  */
