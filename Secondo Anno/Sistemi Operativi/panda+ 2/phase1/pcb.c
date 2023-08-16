@@ -10,7 +10,7 @@
 
 
 struct list_head pcb_free;
-static pcb_t pcb_table[MAXPROC];
+pcb_t pcb_table[MAXPROC];
 
 //Used to assign a unique pid to each process
 int lastInsertedPcbPid = 1;

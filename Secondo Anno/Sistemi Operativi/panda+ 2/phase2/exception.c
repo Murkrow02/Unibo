@@ -30,9 +30,6 @@ void exception_hanlder(){
             break;
         case 8: // System Call
 
-            //Increment pc_epc and reg_t9 to prevent syscall from being executed again
-            incrementProgramCounter();
-
             //Handle the syscall
             syscall_handler();
             

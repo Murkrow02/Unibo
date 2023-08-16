@@ -153,6 +153,9 @@ void uTLB_RefillHandler() {
 /*                 p1 -- the root process                            */
 /*                                                                   */
 void test() {
+
+    z_test_breakpoint(); /* MURK ADDED */
+
     SYSCALL(VERHOGEN, (int)&sem_testsem, 0, 0); /* V(sem_testsem)   */
 
     print("p1 v(sem_testsem)\n");
@@ -280,7 +283,6 @@ void test() {
     SYSCALL(VERHOGEN, (int)&sem_startp2, 0, 0); /* V(sem_startp2)   */
 
     SYSCALL(VERHOGEN, (int)&sem_endp2, 0, 0); /* V(sem_endp2) (blocking V!) */  
-adderrbuf("ASD\n"); /* MURK ADDED */
 
     /*NOTE P2 HAS BEEN EDITED !!!! */
     /*NOTE P2 HAS BEEN EDITED !!!! */
@@ -293,6 +295,8 @@ adderrbuf("ASD\n"); /* MURK ADDED */
         adderrbuf("error: p1/p2 synchronization bad\n"); /* MURK ADDED */
         print("error: p1/p2 synchronization bad\n");
     }
+
+    adderrbuf("ASD\n"); /* MURK ADDED */
 
 
     
@@ -362,6 +366,7 @@ void p2() {
     {
         p1p2synch = 1; /* MURK ADDED */
     }
+      //  SYSCALL(TERMPROCESS, 0, 0, 0); /* terminate p2 */
     return; /* MURK ADDED */
 
 

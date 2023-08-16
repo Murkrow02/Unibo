@@ -11,6 +11,9 @@ void initScheduler();
 //Easy way to append a process to the ready queue
 void addToReadyQueue(pcb_PTR proc);
 
+//Easy way to remove a process from the ready queue
+void removeFromReadyQueue(pcb_PTR proc);
+
 //Easy way to block process by saving its state and inserting it back into the ready queue
 void blockRunningAndScheduleNext();
 

@@ -22,7 +22,7 @@ int sem_interval_timer;
 int sem_terminal_in[8];
 int sem_terminal_out[8];
 
-//ONLY FOR DEBUG PURPOSES, REMOVE LATER
+//Running process pid
 int running_proc_pid;
 
 void scheduler_breakpoint(){
@@ -45,11 +45,15 @@ void addToReadyQueue(pcb_PTR proc){
     insertProcQ(&ready_queue, proc);
 }
 
-//Increment the program counter of the running process
-void incrementProgramCounter(){
-    CPU_STATE->pc_epc += WORDLEN;
-    CPU_STATE->reg_t9 += WORDLEN;
+//Easy way to remove a process from the ready queue
+void removeFromReadyQueue(pcb_PTR proc){
+    outProcQ(&ready_queue, proc);
 }
+
+//Increment the program counter of the running process
+// void incrementProgramCounter(){
+//     CPU_STATE->pc_epc += 90;
+// }
 
 
 inline void initScheduler(){
@@ -106,6 +110,9 @@ inline void initScheduler(){
     process_count++;
 }
 
+//DEBUG ONLY
+int pc = 0;
+
 cpu_t running_proc_start;
 cpu_t running_proc_stop;
 void scheduleNext(){
@@ -121,14 +128,17 @@ void scheduleNext(){
     //Save running proc state in its pcb
     if(running_proc != NULL){
 
+        //PANIC();
+
         //Save current state of the running process in its pcb
-        STST(running_proc->p_s);
+        copyState(CPU_STATE, &running_proc->p_s);
 
         //Stop time of the running process
         STCK(running_proc_stop);
 
         //Save the time the process has been running
         running_proc->p_time = running_proc->p_time + (running_proc_stop - running_proc_start);
+
     }
 
     //Take first available process from ready queue
@@ -147,5 +157,10 @@ void scheduleNext(){
 
     //Save start time of the new process
     STCK(running_proc_start); 
+
+    //DEBUG
+    pc = running_proc->p_s.pc_epc;
+
+    //Load process to CPU
     LDST(&running_proc->p_s);
 }

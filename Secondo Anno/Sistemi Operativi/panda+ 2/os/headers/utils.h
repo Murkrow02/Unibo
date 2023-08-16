@@ -8,6 +8,7 @@
 #define CPU_STATE ((state_t *)BIOSDATAPAGE) //Current state of the processor
 #define CPU_STATUS CPU_STATE->status //Current status of the processor
 #define CPU_CAUSE CPU_STATE->cause //Current cause of the processor
+#define PC_INCREMENT CPU_STATE->pc_epc +=WORDLEN; //Increment the program counter of the running process
 
 // Macro per reg_a0 in SavedStatus(BIOSDATAPAGE) che contiene il syscallCode.
 #define REG_A0_SS CPU_STATE->reg_a0

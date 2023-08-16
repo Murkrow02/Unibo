@@ -21,9 +21,10 @@ void z_breakpoint_interrupt_panic(){}
 
 void plt_handler()
 {
-    //setTIMER(-2); // ACK (WTF?)
+    setTIMER(-2); // ACK (WTF?)
     addToReadyQueue(running_proc);
     scheduleNext();
+    return;
 }
 
 void interrupt_handler(){

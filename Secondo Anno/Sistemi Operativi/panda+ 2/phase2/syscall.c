@@ -7,6 +7,10 @@
 #include <types.h>
 #include <ash.h>
 
+
+//PCB table (used to search for a process given its pid)
+extern pcb_t pcb_table[MAXPROC];
+
 //Running processes
 extern int process_count;
 
@@ -26,6 +30,7 @@ void z_breakpoint_verhogen() {}
 void z_breakpoint_passeren() {}
 void z_breakpoint_doio() {}
 void z_breakpoint_create_process() {}
+void z_breakpoint_terminate() {}
 
 void syscall_handler() {
 
@@ -39,6 +44,10 @@ void syscall_handler() {
         case CREATEPROCESS:
             z_breakpoint_create_process();
             create_process();
+            break;
+        case TERMPROCESS:
+            z_breakpoint_terminate();
+            terminate_process();
             break;
 
         case PASSEREN:
@@ -58,6 +67,36 @@ void syscall_handler() {
             PANIC();
             break;
     }
+}
+
+
+void killSelfAndProgeny(pcb_PTR proc)
+{
+    //Iterate over the children of the current process and kill them
+    pcb_PTR child;
+    while (child = removeChild(proc) != NULL)
+    {
+        killOne(child);
+    }
+    killOne(proc);
+}
+
+//Internal function used to kill a process
+void killOne(pcb_PTR proc){
+
+    //Remove the current process from the children of his parent (if any)
+    outChild(proc);
+
+    //TODO: remove the process from the semaphore queue (if any)
+
+
+    //Remove the process from semaphore queue
+    outBlocked(proc);
+
+    //Remove the process from the ready queue
+    removeFromReadyQueue(proc);
+
+    process_count--;
 }
 
 
@@ -126,59 +165,30 @@ void create_process()
 /// \param pid The pid of the process to terminate</param>
 /// </summary>
 ///CI HO MESSO 2 MIN A FARLA NON FUNZIONERA MAI
-void terminate_process(int pid) {
-    if (pid == 0) {
-        //Terminate the current process and all his progeny
+void terminate_process() {
 
-        //Iterate over the children of the current process
-        pcb_t *child = NULL;
-        while ((child = removeChild(running_proc)) != NULL) {
-            //Terminate the child
-            terminate_process(child->p_pid);
-        }
+    //Retrieve the pid of the process to kill
+    int pid = (int)(REG_A1_SS);
 
-        //Remove the current process from the ready queue
-        removeFromReadyQueue(running_proc);
+    //Calling process requested to kill itself and all his progeny
+    if (pid == 0 || (running_proc != NULL && pid == running_proc->p_pid)) {
 
-        //Decrement the process counter
-        process_count--;
-
-        //Free the current process
-        freePcb(running_proc);
+        killSelfAndProgeny(running_proc);
+        running_proc = NULL;
+        scheduleNext();
 
     } else {
-        //Terminate the process with the given pid and all his progeny
 
-        //Get the process with the given pid
+
+        //Search in pcb table process with the given pid
         pcb_t *process = NULL;
-
-        //search the process in the ready queue with headProcQ
-        struct list_head iterating_queue = ready_queue;
-        process = headProcQ(&ready_queue);
-        while (process != NULL) {
-            if (process->p_pid == pid) {
-
-                //Remove the process from the ready queue
-                //Iterate over the children of the passed process
-                pcb_t *child = NULL;
-                while ((child = removeChild(process)) != NULL) {
-                    //Terminate the child
-                    terminate_process(child->p_pid);
-                }
-
-                //Remove the process from the ready queue
-                removeFromReadyQueue(process);
-
-                //Decrement the process counter
-                process_count--;
-
-                //Free the process
-                freePcb(process);
-
+        int i;
+        for (i = 0; i < MAXPROC; i++) {
+            if (pcb_table[i].p_pid == pid) {
+                process = &pcb_table[i];
+                killSelfAndProgeny(process);
                 break;
             }
-            iterating_queue = iterating_queue.next;
-            process = headProcQ(&iterating_queue);
         }
     }
 }
@@ -234,6 +244,7 @@ void verhogen() {
     if (*sem == 1)
     {
         addToReadyQueue(running_proc);
+        PC_INCREMENT;
         scheduleNext();
         return;
     }
