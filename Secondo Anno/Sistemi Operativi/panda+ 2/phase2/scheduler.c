@@ -50,11 +50,13 @@ void removeFromReadyQueue(pcb_PTR proc){
     outProcQ(&ready_queue, proc);
 }
 
-//Increment the program counter of the running process
-// void incrementProgramCounter(){
-//     CPU_STATE->pc_epc += 90;
-// }
-
+//Returns the running time in cpu_t of the running process
+cpu_t running_proc_start; //This is set in scheduleNext() when a new process is dispatched
+cpu_t getRunningProcTime(){
+    cpu_t current_time;
+    STCK(current_time);
+    return running_proc->p_time + (current_time - running_proc_start);
+}
 
 inline void initScheduler(){
 
@@ -113,8 +115,6 @@ inline void initScheduler(){
 //DEBUG ONLY
 int pc = 0;
 
-cpu_t running_proc_start;
-cpu_t running_proc_stop;
 void scheduleNext(){
 
 
@@ -133,11 +133,8 @@ void scheduleNext(){
         //Save current state of the running process in its pcb
         copyState(CPU_STATE, &running_proc->p_s);
 
-        //Stop time of the running process
-        STCK(running_proc_stop);
-
         //Save the time the process has been running
-        running_proc->p_time = running_proc->p_time + (running_proc_stop - running_proc_start);
+        running_proc->p_time = getRunningProcTime();
 
     }
 

@@ -151,10 +151,12 @@ void uTLB_RefillHandler() {
 /*                                                                   */
 /*                 p1 -- the root process                            */
 /*                                                                   */
-
+/*********************************************************************/
 void test() {
 
-    z_test_breakpoint(); /* MURK ADDED */
+    if(SYSCALL(GETPROCESSID, 0, 0, 0) == 20){
+        adderrbuf("UGUALI");
+    }
 
     SYSCALL(VERHOGEN, (int)&sem_testsem, 0, 0); /* V(sem_testsem)   */
 
@@ -279,13 +281,13 @@ void test() {
 
     SYSCALL(VERHOGEN, (int)&sem_startp2, 0, 0); /* V(sem_startp2)   */
 
+
     SYSCALL(VERHOGEN, (int)&sem_endp2, 0, 0); /* V(sem_endp2) (blocking V!) */  
 
     /*NOTE P2 HAS BEEN EDITED !!!! */
     /*NOTE P2 HAS BEEN EDITED !!!! */
     /*NOTE P2 HAS BEEN EDITED !!!! */
 
-    
 
     /* make sure we really blocked (P2 WILL CHANGE THIS TO 1) */
     if (p1p2synch == 0) {
@@ -361,9 +363,9 @@ void p2() {
 
     //while (1)
    // {
-        p1p2synch = 1; /* MURK ADDED */
+    //    p1p2synch = 1; /* MURK ADDED */
     //}
-    SYSCALL(TERMPROCESS, 0, 0, 0); /* terminate p2 */
+    //SYSCALL(TERMPROCESS, 0, 0, 0); /* terminate p2 */
 
 
     int   i;              /* just to waste time  */
@@ -374,9 +376,11 @@ void p2() {
 
     int pid = SYSCALL(GETPROCESSID, 0, 0, 0);
     if (pid != p2pid) {
-        print("Inconsistent process id for p2!\n");
+        adderrbuf("Inconsistent process id for p2!\n");
         PANIC();
     }
+
+
     
     /* initialize all semaphores in the s[] array */
     for (i = 0; i <= MAXSEM; i++) {
@@ -390,6 +394,12 @@ void p2() {
        if (s[i] != 0)
             print("error: p2 bad v/p pairs\n");
     }
+
+
+    z_test_breakpoint(); /* MURK ADDED */
+
+
+
     print("p2 v's successfully\n");
 
     /* test of SYS6 */
@@ -407,9 +417,9 @@ void p2() {
         print("p2 is OK\n");
     } else {
         if ((now2 - now1) < (cpu_t2 - cpu_t1))
-            print("error: more cpu time than real time\n");
+            adderrbuf("error: more cpu time than real time\n");
         if ((cpu_t2 - cpu_t1) < (MINLOOPTIME / (*((cpu_t *)TIMESCALEADDR))))
-            print("error: not enough cpu time went by\n");
+            adderrbuf("error: not enough cpu time went by\n");
         print("p2 blew it!\n");
     }
 
@@ -420,7 +430,7 @@ void p2() {
     SYSCALL(TERMPROCESS, 0, 0, 0); /* terminate p2 */
 
     /* just did a SYS2, so should not get to this point */
-    print("error: p2 didn't terminate\n");
+    adderrbuf("error: p2 didn't terminate\n");
     PANIC(); /* PANIC!           */
 }
 

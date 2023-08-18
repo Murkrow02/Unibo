@@ -20,4 +20,7 @@ void blockRunningAndScheduleNext();
 //Increment the program counter of the running process
 void incrementProgramCounter();
 
+//Returns the running time in cpu_t of the running process
+cpu_t getRunningProcTime();
+
 #endif

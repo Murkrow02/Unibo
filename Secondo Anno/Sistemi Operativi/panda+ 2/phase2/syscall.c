@@ -29,14 +29,16 @@ void z_breakpoint_syscall() {}
 void z_breakpoint_verhogen() {}
 void z_breakpoint_passeren() {}
 void z_breakpoint_doio() {}
+void z_breakpoint_get_cpu_time() {}
 void z_breakpoint_create_process() {}
 void z_breakpoint_terminate() {}
+void z_breakpoint_get_process_id() {}
 
 void syscall_handler() {
 
+
     //DEBUG ONLY
     copied_syscall_code = REG_A0_SS;
-    z_breakpoint_syscall();
 
 
     switch (REG_A0_SS) {
@@ -45,6 +47,7 @@ void syscall_handler() {
             z_breakpoint_create_process();
             create_process();
             break;
+
         case TERMPROCESS:
             z_breakpoint_terminate();
             terminate_process();
@@ -54,6 +57,7 @@ void syscall_handler() {
             z_breakpoint_passeren();
             passeren();
             break;
+
         case VERHOGEN:
             z_breakpoint_verhogen();
             verhogen();
@@ -63,10 +67,26 @@ void syscall_handler() {
             z_breakpoint_doio();
             do_io();
             break;
+
+        case GETTIME:
+            z_breakpoint_get_cpu_time();
+            get_cpu_time();
+            break;
+
+        case GETPROCESSID:
+            z_breakpoint_get_process_id();
+            get_pid();
+            break;
+
         default:
             PANIC();
             break;
     }
+
+    
+    PC_INCREMENT;
+    LDST(CPU_STATE);
+    
 }
 
 
@@ -102,19 +122,8 @@ void killOne(pcb_PTR proc){
 }
 
 
-///SYS1 VALEX
-/// <summary>
-/// Creates a new process\n
-/// In order to call this function some operations must be done from the calling process:\n
-/// set the register a0 to 1
-/// set a pointer to the processor state in a1
-/// set a pointer to the support structure in a2
-/// set a pointer to the PID namespace of the new process in a3
-/// THEN YOU CAN CALL SYSCALL
-/// \param statep Pointer to the processor state
-/// \param supportp Pointer to the support structure
-/// \param ns Pointer to the namespace?
-/// </summary>
+
+//SYS1 VALEX
 int create_process()
 {
     //Collect the parameters
@@ -129,7 +138,7 @@ int create_process()
     {
         //If the process is null, the allocation failed
         //set error code -1 in v0 of the caller
-        return NOPROC;
+        CPU_STATE->reg_v0 = NOPROC;
     }
 
     // Copy the state of the process
@@ -153,19 +162,11 @@ int create_process()
 
 
     // Return the pid of the new process
-    return newProcess->p_pid;
+    CPU_STATE->reg_v0 = newProcess->p_pid;
 }
 
 
-///SYS2 VALEX
-/// <summary>
-/// Terminates the process with pid passed as parameter
-/// Called like SYSCALL(TERMINATEPROCESS, pid, 0, 0)
-/// If pid is 0, the current process and all his progeny is terminated
-/// otherwise the process with the given pid is terminated with all his progeny
-/// \param pid The pid of the process to terminate</param>
-/// </summary>
-///CI HO MESSO 2 MIN A FARLA NON FUNZIONERA MAI
+//SYS2 VALEX
 void terminate_process() {
 
     //Retrieve the pid of the process to kill
@@ -195,7 +196,7 @@ void terminate_process() {
     }
 }
 
-///SYS3 MURK
+//SYS3 MURK
 void passeren() {
 
     //Retrieve the semaphore
@@ -229,7 +230,7 @@ void passeren() {
     //TODO
 }
 
-///SYS4 MURK
+//SYS4 MURK
 void verhogen() {
 
     //Retrieve the semaphore
@@ -268,34 +269,35 @@ void verhogen() {
     (*sem)++;
 }
 
-
-///SYS5 MURK
+//SYS5 MURK
 int do_io() {
 
-    return 2; //RITORNA QUA
+    CPU_STATE->reg_v0 = 1;
 }
 
-///SYS8 VALEX
-/// \n\n
-/// <summary>
-///should be called before calling SYS1 to get the support structure
-///Returns the support structure of the running process,
-///if the running process has no support structure, NULL is returned
-/// \n\n
-///Called like SYSCALL(GETSUPPORTPTR, 0, 0, 0);
-/// </summary>
+//SYS6 MURK
+int get_cpu_time() {
+
+    return getRunningProcTime();
+}
+
+//SYS8 VALEX
 void get_support_data() {
     if (running_proc->p_supportStruct == NULL) {
         CPU_STATE->reg_v0 = NULL;
     } else {
-        CPU_STATE->reg_v0 = (unsigned int) running_proc->p_supportStruct;
+        CPU_STATE->reg_v0 = running_proc->p_supportStruct;
     }
 }
 
-///SYS9
-void get_pid(int parent) {
-    //TODO check namespaces
-    if (parent == 1) {
+//SYS9 MURK TODO: METTI I NAMESPACES
+
+void get_pid() {
+
+    //Get the parameter (parent or current process)
+    int parent = (int)(REG_A1_SS);
+
+    if (parent == true) {
         CPU_STATE->reg_v0 = (unsigned int) running_proc->p_parent->p_pid;
     } else {
         CPU_STATE->reg_v0 = (unsigned int) running_proc->p_pid;
