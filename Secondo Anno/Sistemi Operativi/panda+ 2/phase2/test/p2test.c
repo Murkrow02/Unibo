@@ -154,9 +154,9 @@ void uTLB_RefillHandler() {
 /*********************************************************************/
 void test() {
 
-    if(SYSCALL(GETPROCESSID, 0, 0, 0) == 20){
-        adderrbuf("UGUALI");
-    }
+    SYSCALL(CLOCKWAIT, 0, 0, 0);
+
+    adderrbuf("test\n");
 
     SYSCALL(VERHOGEN, (int)&sem_testsem, 0, 0); /* V(sem_testsem)   */
 
@@ -295,9 +295,6 @@ void test() {
         print("error: p1/p2 synchronization bad\n");
     }
 
-    adderrbuf("ASD\n"); /* MURK ADDED */
-
-
     
     p3pid = SYSCALL(CREATEPROCESS, (int)&p3state, (int)NULL, (int)NULL); /* start p3     */
 
@@ -361,12 +358,8 @@ void test() {
 /* p2 -- semaphore and cputime-SYS test process */
 void p2() {
 
-    //while (1)
-   // {
-    //    p1p2synch = 1; /* MURK ADDED */
-    //}
+    //p1p2synch = 1;
     //SYSCALL(TERMPROCESS, 0, 0, 0); /* terminate p2 */
-
 
     int   i;              /* just to waste time  */
     cpu_t now1, now2;     /* times of day        */
@@ -387,18 +380,17 @@ void p2() {
         s[i] = 0;
     }
 
+
     /* V, then P, all of the semaphores in the s[] array */
     for (i = 0; i <= MAXSEM; i++) {
         SYSCALL(VERHOGEN, (int)&s[i], 0, 0); /* V(S[I]) */ 
         SYSCALL(PASSEREN, (int)&s[i], 0, 0); /* P(S[I]) */ 
-       if (s[i] != 0)
-            print("error: p2 bad v/p pairs\n");
+       if (s[i] != 0){
+            //print("error: p2 bad v/p pairs\n");    
+            PANIC();
+       }
     }
-
-
-    z_test_breakpoint(); /* MURK ADDED */
-
-
+    
 
     print("p2 v's successfully\n");
 
@@ -406,9 +398,14 @@ void p2() {
     STCK(now1);                         /* time of day   */
     cpu_t1 = SYSCALL(GETTIME, 0, 0, 0); /* CPU time used */
     
+z_test_breakpoint(); /* MURK ADDED */
+
 	/* delay for several milliseconds */
     for (i = 1; i < LOOPNUM; i++)
-        ;
+       ;
+
+z_test_breakpoint(); /* MURK ADDED */
+
 
     cpu_t2 = SYSCALL(GETTIME, 0, 0, 0); /* CPU time used */
     STCK(now2);                         /* time of day  */
@@ -425,7 +422,10 @@ void p2() {
 
     p1p2synch = 1; /* p1 will check this */
 
+
+
     SYSCALL(PASSEREN, (int)&sem_endp2, 0, 0); /* P(sem_endp2)    unblocking P ! */
+
 
     SYSCALL(TERMPROCESS, 0, 0, 0); /* terminate p2 */
 

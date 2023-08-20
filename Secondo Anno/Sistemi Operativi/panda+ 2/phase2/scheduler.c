@@ -18,7 +18,8 @@ struct list_head ready_queue;
 pcb_t *running_proc;
 
 //Semaphore arrays
-int sem_interval_timer;
+int is_proc_waiting_for_it=0;
+int sem_interval_timer = 0;
 int sem_terminal_in[8];
 int sem_terminal_out[8];
 
@@ -118,17 +119,8 @@ int pc = 0;
 void scheduleNext(){
 
 
-    //Halt if there are no processes
-    if(process_count == 0){
-        adderrbuf("No processes to schedule \n");
-        //TODO: CHECK HOW TO HALT
-        //HALT();
-    }
-
     //Save running proc state in its pcb
     if(running_proc != NULL){
-
-        //PANIC();
 
         //Save current state of the running process in its pcb
         copyState(CPU_STATE, &running_proc->p_s);
@@ -138,12 +130,29 @@ void scheduleNext(){
 
     }
 
+    //No more ready processes
+    if(headProcQ(&ready_queue) == NULL){
+        
+        //All processes have terminated
+        if(process_count == 0)
+            HALT();
+
+        else if(soft_block_count > 0 && is_proc_waiting_for_it == false){
+            PANIC();
+        }
+
+        setSTATUS(IECON | IMON); // Enable interrupts 
+
+        WAIT();
+        adderrbuf("ADFOASHGIUSHVIU \n");
+    }
+
     //Take first available process from ready queue
     running_proc = removeProcQ(&ready_queue);
 
     //If there are no processes in the ready queue, panic
     if(running_proc == NULL){
-        adderrbuf("Cannot get root proc from ready queue \n");
+        adderrbuf("NO RUNNING PROC \n");
     }
 
     //Save the pid of the running process

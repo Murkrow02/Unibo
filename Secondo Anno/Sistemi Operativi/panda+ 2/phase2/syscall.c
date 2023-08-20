@@ -3,6 +3,7 @@
 #include <umps3/umps/libumps.h>
 #include "headers/syscall.h"
 #include <scheduler.h>
+#include <interrupt.h>
 #include <pcb.h>
 #include <types.h>
 #include <ash.h>
@@ -23,6 +24,10 @@ extern struct list_head ready_queue;
 //Running process
 extern pcb_t *running_proc;
 
+//Interval timer semaphore
+extern int sem_interval_timer;
+extern int is_proc_waiting_for_it; //Set to 1 if a process is waiting for the interval timer
+
 //DEBUG ONLY
 int copied_syscall_code;
 void z_breakpoint_syscall() {}
@@ -30,6 +35,7 @@ void z_breakpoint_verhogen() {}
 void z_breakpoint_passeren() {}
 void z_breakpoint_doio() {}
 void z_breakpoint_get_cpu_time() {}
+void z_breakpoint_wait_for_clock() {}
 void z_breakpoint_create_process() {}
 void z_breakpoint_terminate() {}
 void z_breakpoint_get_process_id() {}
@@ -55,7 +61,7 @@ void syscall_handler() {
 
         case PASSEREN:
             z_breakpoint_passeren();
-            passeren();
+            passeren(NULL);
             break;
 
         case VERHOGEN:
@@ -71,6 +77,11 @@ void syscall_handler() {
         case GETTIME:
             z_breakpoint_get_cpu_time();
             get_cpu_time();
+            break;
+
+        case CLOCKWAIT:
+            z_breakpoint_wait_for_clock();
+            wait_for_clock();
             break;
 
         case GETPROCESSID:
@@ -197,10 +208,10 @@ void terminate_process() {
 }
 
 //SYS3 MURK
-void passeren() {
+void passeren(int *sem) {
 
-    //Retrieve the semaphore
-    int *sem = (int *)(REG_A1_SS);
+    //Retrieve the semaphore (from syscall param or from function param)
+    *sem = sem != NULL ? *sem : (int *)(REG_A1_SS);
 
     //Check if the semaphore is valid
     if (sem == NULL)
@@ -219,10 +230,29 @@ void passeren() {
         soft_block_count++;
 
         //Schedule the next process
+        PC_INCREMENT; //NEED TO DO MANUALLY AS NOT DONE AT END OF SYSCALL HANDLER
         scheduleNext();
     }
-    else
+    else //Sem is more than 0
     {
+        //Check if there is a process to unblock (when the semaphore is more than 0 there should be no blocked processes)
+        //But a process could have been blocked by a verhogen() call when the semaphore was 1
+        pcb_t *unblocked = removeBlocked(sem);
+        if (unblocked != NULL)
+        {
+
+            // Decrement the soft block counter
+            soft_block_count--;
+
+            // Insert the process in the ready queue
+            addToReadyQueue(unblocked);
+
+            //Schedule the next process
+            PC_INCREMENT;  //NEED TO DO MANUALLY AS NOT DONE AT END OF SYSCALL HANDLER
+            scheduleNext();
+        }
+        
+
         //Decrement the semaphore
         (*sem)--;
     }
@@ -246,8 +276,9 @@ void verhogen() {
     //Check if the semaphore is already at its maximum value
     if (*sem == 1)
     {
-        addToReadyQueue(running_proc);
-        PC_INCREMENT;
+        soft_block_count++;
+        insertBlocked(sem, running_proc);
+        PC_INCREMENT; //NEED TO DO MANUALLY AS NOT DONE AT END OF SYSCALL HANDLER
         scheduleNext();
         return;
     }
@@ -277,8 +308,12 @@ int do_io() {
 
 //SYS6 MURK
 int get_cpu_time() {
+    CPU_STATE->reg_v0 = getRunningProcTime();
+}
 
-    return getRunningProcTime();
+void wait_for_clock(){
+    is_proc_waiting_for_it = 1;
+    passeren(&sem_interval_timer);
 }
 
 //SYS8 VALEX
