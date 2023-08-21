@@ -154,10 +154,6 @@ void uTLB_RefillHandler() {
 /*********************************************************************/
 void test() {
 
-    SYSCALL(CLOCKWAIT, 0, 0, 0);
-
-    adderrbuf("test\n");
-
     SYSCALL(VERHOGEN, (int)&sem_testsem, 0, 0); /* V(sem_testsem)   */
 
     print("p1 v(sem_testsem)\n");
@@ -295,7 +291,8 @@ void test() {
         print("error: p1/p2 synchronization bad\n");
     }
 
-    
+    adderrbuf("8 \n");
+
     p3pid = SYSCALL(CREATEPROCESS, (int)&p3state, (int)NULL, (int)NULL); /* start p3     */
 
     print("p3 is started\n");
@@ -398,13 +395,11 @@ void p2() {
     STCK(now1);                         /* time of day   */
     cpu_t1 = SYSCALL(GETTIME, 0, 0, 0); /* CPU time used */
     
-z_test_breakpoint(); /* MURK ADDED */
 
 	/* delay for several milliseconds */
     for (i = 1; i < LOOPNUM; i++)
        ;
 
-z_test_breakpoint(); /* MURK ADDED */
 
 
     cpu_t2 = SYSCALL(GETTIME, 0, 0, 0); /* CPU time used */

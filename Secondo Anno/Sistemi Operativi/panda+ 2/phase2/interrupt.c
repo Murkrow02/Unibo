@@ -22,6 +22,7 @@ void z_breakpoint_interrupt_panic(){}
 //Interval timer semaphore
 extern int sem_interval_timer;
 extern int is_proc_waiting_for_it; //Set to 0 if interval timer is called
+extern int soft_block_count;
 
 void plt_handler()
 {
@@ -33,18 +34,28 @@ void plt_handler()
 
 //This function is called when the interval timer interrupt occurs 
 //The interval timer interrupt occurs every 100ms and is used by the process to wait for this time
+int zzzzzz;
 void il_time_handler()
 {
+
     LDIT(100000); // Set interval timer to 100ms
-    pcb_PTR p;
-    while(p = removeBlocked(&sem_interval_timer) != NULL)
+    pcb_t *p;    
+
+    //Check whether a process is waiting for the interval timer and stuck in the wait_for_clock syscall
+    while((p = removeBlocked(&sem_interval_timer)) != NULL)
     {
         addToReadyQueue(p);
+        soft_block_count--;
         sem_interval_timer = 0;
     }
 
     is_proc_waiting_for_it = 0;
-    //scheduleNext();
+
+    //Dispatch next process if no ready processes are available
+    if(running_proc == NULL)
+        scheduleNext();
+    else
+        LDST(CPU_STATE);
 }
 
 void interrupt_handler(){

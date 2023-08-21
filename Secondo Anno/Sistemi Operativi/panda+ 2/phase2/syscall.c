@@ -211,7 +211,9 @@ void terminate_process() {
 void passeren(int *sem) {
 
     //Retrieve the semaphore (from syscall param or from function param)
-    *sem = sem != NULL ? *sem : (int *)(REG_A1_SS);
+    if(sem == NULL)
+        sem = (int *)(REG_A1_SS);
+
 
     //Check if the semaphore is valid
     if (sem == NULL)
@@ -235,6 +237,7 @@ void passeren(int *sem) {
     }
     else //Sem is more than 0
     {
+
         //Check if there is a process to unblock (when the semaphore is more than 0 there should be no blocked processes)
         //But a process could have been blocked by a verhogen() call when the semaphore was 1
         pcb_t *unblocked = removeBlocked(sem);

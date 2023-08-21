@@ -104,7 +104,6 @@ pcb_t* removeBlocked(int *semAdd) {
       
     }
     
-    //addokbuf("Non ritorno");
     return NULL;
 }
 

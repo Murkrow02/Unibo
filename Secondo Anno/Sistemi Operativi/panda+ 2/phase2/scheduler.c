@@ -137,14 +137,20 @@ void scheduleNext(){
         if(process_count == 0)
             HALT();
 
-        else if(soft_block_count > 0 && is_proc_waiting_for_it == false){
+        //If no process can be scheduled and no processes are waiting for the sys_wait_for_clock then deadlock
+        else if(soft_block_count > 0 && is_proc_waiting_for_it == false)
             PANIC();
-        }
+        
 
-        setSTATUS(IECON | IMON); // Enable interrupts 
+        //Set the plt timer to max to prevent plt interrupts
+        setTIMER(4294967295);
 
+        //Enable interrupts to allow the interval timer to interrupt
+        setSTATUS(getSTATUS() | IECON | IMON);
+
+        //Wait for an interrupt
+        running_proc = NULL;
         WAIT();
-        adderrbuf("ADFOASHGIUSHVIU \n");
     }
 
     //Take first available process from ready queue
