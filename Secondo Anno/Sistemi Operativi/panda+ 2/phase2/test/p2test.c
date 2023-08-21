@@ -270,38 +270,39 @@ void test() {
     ns2_b_state.pc_epc = ns2_b_state.reg_t9 = (memaddr)ns_p_new_ns;
     ns2_b_state.status                      = ns2_b_state.status | IEPBITON | CAUSEINTMASK | TEBITON;
 
-    /* create process p2 */
-    p2pid = SYSCALL(CREATEPROCESS, (int)&p2state, (int)NULL, (int)NULL); /* start p2     */
+    // /* create process p2 */
+    // p2pid = SYSCALL(CREATEPROCESS, (int)&p2state, (int)NULL, (int)NULL); /* start p2     */
 
-    print("p2 was started\n");
+    // print("p2 was started\n");
 
-    SYSCALL(VERHOGEN, (int)&sem_startp2, 0, 0); /* V(sem_startp2)   */
-
-
-    SYSCALL(VERHOGEN, (int)&sem_endp2, 0, 0); /* V(sem_endp2) (blocking V!) */  
-
-    /*NOTE P2 HAS BEEN EDITED !!!! */
-    /*NOTE P2 HAS BEEN EDITED !!!! */
-    /*NOTE P2 HAS BEEN EDITED !!!! */
+    // SYSCALL(VERHOGEN, (int)&sem_startp2, 0, 0); /* V(sem_startp2)   */
 
 
-    /* make sure we really blocked (P2 WILL CHANGE THIS TO 1) */
-    if (p1p2synch == 0) {
-        adderrbuf("error: p1/p2 synchronization bad\n"); /* MURK ADDED */
-        print("error: p1/p2 synchronization bad\n");
-    }
+    // SYSCALL(VERHOGEN, (int)&sem_endp2, 0, 0); /* V(sem_endp2) (blocking V!) */  
 
-    adderrbuf("8 \n");
+    // /*NOTE P2 HAS BEEN EDITED !!!! */
+    // /*NOTE P2 HAS BEEN EDITED !!!! */
+    // /*NOTE P2 HAS BEEN EDITED !!!! */
 
-    p3pid = SYSCALL(CREATEPROCESS, (int)&p3state, (int)NULL, (int)NULL); /* start p3     */
 
-    print("p3 is started\n");
+    // /* make sure we really blocked (P2 WILL CHANGE THIS TO 1) */
+    // if (p1p2synch == 0) {
+    //     adderrbuf("error: p1/p2 synchronization bad\n"); /* MURK ADDED */
+    //     print("error: p1/p2 synchronization bad\n");
+    // }
 
-    SYSCALL(PASSEREN, (int)&sem_endp3, 0, 0); /* P(sem_endp3)     */
+
+    // p3pid = SYSCALL(CREATEPROCESS, (int)&p3state, (int)NULL, (int)NULL); /* start p3     */
+
+    // print("p3 is started\n");
+
+    // SYSCALL(PASSEREN, (int)&sem_endp3, 0, 0); /* P(sem_endp3)     */
 
     SYSCALL(CREATEPROCESS, (int)&hp_p1state, (int)NULL, (int)NULL);
     
     SYSCALL(CREATEPROCESS, (int)&hp_p2state, (int)NULL, (int)NULL);
+
+
 
     p4pid = SYSCALL(CREATEPROCESS, (int)&p4state, (int)NULL, (int)NULL); /* start p4     */
 
@@ -312,6 +313,7 @@ void test() {
     pFiveSupport.sup_exceptContext[PGFAULTEXCEPT].status   = ALLOFF | IEPBITON | CAUSEINTMASK | TEBITON;
     pFiveSupport.sup_exceptContext[PGFAULTEXCEPT].pc       = (memaddr)p5mm;
 
+
     SYSCALL(CREATEPROCESS, (int)&p5state, (int)&(pFiveSupport), (int)NULL); /* start p5     */
 
     SYSCALL(CREATEPROCESS, (int)&p6state, (int)NULL, (int)NULL); /* start p6		*/
@@ -320,6 +322,7 @@ void test() {
 
     p9pid = SYSCALL(CREATEPROCESS, (int)&p9state, (int)NULL, (int)NULL); /* start p7		*/
 
+    //Wait for p5 to terminate
     SYSCALL(PASSEREN, (int)&sem_endp5, 0, 0); /* P(sem_endp5)		*/
 
     print("p1 knows p5 ended\n");
@@ -432,6 +435,8 @@ void p2() {
 
 /* p3 -- clock semaphore test process */
 void p3() {
+
+
     cpu_t time1, time2;
     cpu_t cpu_t1, cpu_t2; /* cpu time used       */
     int   i;
@@ -482,6 +487,11 @@ void p3() {
 
 /* p4 -- termination test process */
 void p4() {
+
+
+    adderrbuf("6 \n");
+
+
     switch (p4inc) {
         case 1:
             print("first incarnation of p4 starts\n");
@@ -504,6 +514,8 @@ void p4() {
 
     SYSCALL(PASSEREN, (int)&sem_synp4, 0, 0); /* P(sem_synp4)     */
 
+
+    
     /* start another incarnation of p4 running, and wait for  */
     /* a V(sem_synp4). the new process will block at the P(sem_blkp4),*/
     /* and eventually, the parent p4 will terminate, killing  */
@@ -793,6 +805,9 @@ void hp_p1() {
 
 
 void hp_p2() {
+    
+    adderrbuf("* \n");
+
     print("hp_p2 starts\n");
 
     for (int i = 0; i < 10; i++) {

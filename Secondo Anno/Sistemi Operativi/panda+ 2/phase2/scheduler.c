@@ -26,7 +26,7 @@ int sem_terminal_out[8];
 //Running process pid
 int running_proc_pid;
 
-void scheduler_breakpoint(){
+void z_scheduler_breakpoint(){
 
 }
 
@@ -119,6 +119,7 @@ int pc = 0;
 void scheduleNext(){
 
 
+
     //Save running proc state in its pcb
     if(running_proc != NULL){
 
@@ -153,8 +154,13 @@ void scheduleNext(){
         WAIT();
     }
 
+    if (running_proc->p_pid == 3)
+        adderrbuf("=\n");
+        
     //Take first available process from ready queue
     running_proc = removeProcQ(&ready_queue);
+
+
 
     //If there are no processes in the ready queue, panic
     if(running_proc == NULL){
@@ -174,5 +180,6 @@ void scheduleNext(){
     pc = running_proc->p_s.pc_epc;
 
     //Load process to CPU
+    z_scheduler_breakpoint();
     LDST(&running_proc->p_s);
 }

@@ -136,7 +136,6 @@ pcb_t *outProcQ(struct list_head *head, pcb_t *p)
     list_head *el;
     list_for_each(el, head)
     {
-
         // Check if currently pointed element is the same as p
         if (el == &p->p_list)
         {
@@ -147,9 +146,12 @@ pcb_t *outProcQ(struct list_head *head, pcb_t *p)
             // Remove element from list
             list_del(el);
 
+
             return target;
         }
     }
+
+    
 
     // If we landed here then no element was found in the list
     return NULL;

@@ -103,12 +103,15 @@ void syscall_handler() {
 
 void killSelfAndProgeny(pcb_PTR proc)
 {
+     
     //Iterate over the children of the current process and kill them
     pcb_PTR child;
     while (child = removeChild(proc) != NULL)
     {
+        
         killOne(child);
     }
+
     killOne(proc);
 }
 
@@ -126,9 +129,9 @@ void killOne(pcb_PTR proc){
     //Remove the process from semaphore queue
     outBlocked(proc);
 
-    //Remove the process from the ready queue
-    removeFromReadyQueue(proc);
-
+    //Remove the process from the ready queue (if not current process)
+    if(proc != running_proc)
+        removeFromReadyQueue(proc);
     process_count--;
 }
 
@@ -183,10 +186,11 @@ void terminate_process() {
     //Retrieve the pid of the process to kill
     int pid = (int)(REG_A1_SS);
 
+  
+
     //Calling process requested to kill itself and all his progeny
     if (pid == 0 || (running_proc != NULL && pid == running_proc->p_pid)) {
 
-        //killOne(running_proc);
         killSelfAndProgeny(running_proc);
         running_proc = NULL;
         scheduleNext();
