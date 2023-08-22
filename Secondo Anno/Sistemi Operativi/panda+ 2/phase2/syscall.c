@@ -345,3 +345,42 @@ void get_pid() {
         CPU_STATE->reg_v0 = (unsigned int) running_proc->p_pid;
     }
 }
+
+
+///SYS10 VALEX
+///<summary>
+///This service returns the pids of the calling process' children belonging to the same namespace
+///the sys10 call is made with the following parameters:
+///a1 is an array of integers, each of which is a pid of a child process
+///a2 is the size of the array
+///the return value is the number of children of the calling process that could have been
+///inserted in the array
+///</summary>
+void get_children() {
+    
+        //Get the parameters
+        int *pids = (int *)(REG_A1_SS);
+        int size = (int)(REG_A2_SS);
+    
+        //Check if the parameters are valid
+        if (pids == NULL || size <= 0) {
+            CPU_STATE->reg_v0 = -1;
+            return;
+        }
+    
+        //Iterate over the children of the current process and copy their pid in the array
+        pcb_PTR child;
+        //get the list of children
+        struct list_head *children = &(running_proc->p_child);
+        int i = 0;
+        while (headProcQ(children) != NULL && i < size)
+        {
+            pids[i] = child->p_pid;
+            i++;
+            //go to next child
+            children = children->next;
+        }
+    
+        //Return the number of children
+        CPU_STATE->reg_v0 = i;
+}
