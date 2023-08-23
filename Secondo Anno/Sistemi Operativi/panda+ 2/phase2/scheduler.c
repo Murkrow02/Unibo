@@ -4,7 +4,7 @@
 #include <utils.h>
 #include <scheduler.h>
 #include <umps3/umps/arch.h>
-
+#include <listx.h>
 //Running processes
 int process_count;
 
@@ -24,7 +24,7 @@ int sem_terminal_in[8];
 int sem_terminal_out[8];
 
 //Running process pid
-int running_proc_pid;
+int running_proc_pid = 0;
 
 void z_scheduler_breakpoint(){
 
@@ -118,6 +118,7 @@ int pc = 0;
 
 void scheduleNext(){
 
+    z_scheduler_breakpoint();
 
 
     //Save running proc state in its pcb
@@ -154,13 +155,24 @@ void scheduleNext(){
         WAIT();
     }
 
-    if (running_proc->p_pid == 3)
-        adderrbuf("=\n");
-        
-    //Take first available process from ready queue
-    running_proc = removeProcQ(&ready_queue);
+    // Take first available process from ready queue
+    if(running_proc_pid == 0){
+        running_proc = removeProcQ(&ready_queue);
+    }else{
 
+        //Context switch after root_proc running
+        // if(container_of(ready_queue.next, pcb_t, p_list)->p_pid ==2){
+        //                     adderrbuf("7\n");
+        // }
 
+        running_proc = removeProcQ(&ready_queue);
+
+         //Context switch after root_proc running
+        if(container_of(ready_queue.next, pcb_t, p_list)->p_pid ==2){
+                            adderrbuf("8\n");
+        }
+
+    }
 
     //If there are no processes in the ready queue, panic
     if(running_proc == NULL){
@@ -180,6 +192,5 @@ void scheduleNext(){
     pc = running_proc->p_s.pc_epc;
 
     //Load process to CPU
-    z_scheduler_breakpoint();
     LDST(&running_proc->p_s);
 }

@@ -133,6 +133,8 @@ void killOne(pcb_PTR proc){
     if(proc != running_proc)
         removeFromReadyQueue(proc);
     process_count--;
+
+    //initializePcb(proc);
 }
 
 
@@ -153,6 +155,7 @@ int create_process()
         //If the process is null, the allocation failed
         //set error code -1 in v0 of the caller
         CPU_STATE->reg_v0 = NOPROC;
+        adderrbuf("Cannot allocate new process\n");
     }
 
     // Copy the state of the process
@@ -255,8 +258,8 @@ void passeren(int *sem) {
             addToReadyQueue(unblocked);
 
             //Schedule the next process
-            PC_INCREMENT;  //NEED TO DO MANUALLY AS NOT DONE AT END OF SYSCALL HANDLER
-            scheduleNext();
+            //PC_INCREMENT;  //NEED TO DO MANUALLY AS NOT DONE AT END OF SYSCALL HANDLER
+            //scheduleNext();
         }
         
 

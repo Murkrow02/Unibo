@@ -111,13 +111,9 @@ extern void p5gen();
 extern void p5mm();
 
 
-void z_test_breakpoint() {} /* MURK added */
-
 /* a procedure to print on terminal 0 */
 void print(char *msg) {
-
     return;
-
     char     *s       = msg;
     devregtr *base    = (devregtr *)(TERM0ADDR);
     devregtr *command = base;
@@ -126,6 +122,7 @@ void print(char *msg) {
     SYSCALL(PASSEREN, (int)&sem_term_mut, 0, 0); /* P(sem_term_mut) */
     while (*s != EOS) {
         devregtr value[2] = {PRINTCHR | (((devregtr)*s) << 8), 0 };
+        status         = SYSCALL(DOIO, (int)command, (int)value, 0);
         if (status != 0 || (value[0] & TERMSTATMASK) != RECVD) {
             PANIC();
         }
@@ -147,128 +144,128 @@ void uTLB_RefillHandler() {
 }
 
 
+    int testsem = 1;
+
 /*********************************************************************/
 /*                                                                   */
 /*                 p1 -- the root process                            */
 /*                                                                   */
-/*********************************************************************/
 void test() {
-
     SYSCALL(VERHOGEN, (int)&sem_testsem, 0, 0); /* V(sem_testsem)   */
 
-    print("p1 v(sem_testsem)\n");
+    // print("p1 v(sem_testsem)\n");
 
-    /* set up states of the other processes */
+    // /* set up states of the other processes */
 
     STST(&hp_p1state);
     hp_p1state.reg_sp = hp_p1state.reg_sp - QPAGE;
     hp_p1state.pc_epc = hp_p1state.reg_t9 = (memaddr)hp_p1;
     hp_p1state.status                     = hp_p1state.status | IEPBITON | CAUSEINTMASK | TEBITON;
 
-    STST(&hp_p2state);
-    hp_p2state.reg_sp = hp_p1state.reg_sp - QPAGE;
-    hp_p2state.pc_epc = hp_p2state.reg_t9 = (memaddr)hp_p2;
-    hp_p2state.status                     = hp_p2state.status | IEPBITON | CAUSEINTMASK | TEBITON;
+    // STST(&hp_p2state);
+    // hp_p2state.reg_sp = hp_p1state.reg_sp - QPAGE;
+    // hp_p2state.pc_epc = hp_p2state.reg_t9 = (memaddr)hp_p2;
+    // hp_p2state.status                     = hp_p2state.status | IEPBITON | CAUSEINTMASK | TEBITON;
 
-    STST(&p2state);
-    p2state.reg_sp = hp_p2state.reg_sp - QPAGE;
-    p2state.pc_epc = p2state.reg_t9 = (memaddr)p2;
-    p2state.status                  = p2state.status | IEPBITON | CAUSEINTMASK | TEBITON;
+    // STST(&p2state);
+    // p2state.reg_sp = hp_p2state.reg_sp - QPAGE;
+    // p2state.pc_epc = p2state.reg_t9 = (memaddr)p2;
+    // p2state.status                  = p2state.status | IEPBITON | CAUSEINTMASK | TEBITON;
 
-    STST(&p3state);
-    p3state.reg_sp = p2state.reg_sp - QPAGE;
-    p3state.pc_epc = p3state.reg_t9 = (memaddr)p3;
-    p3state.status                  = p3state.status | IEPBITON | CAUSEINTMASK | TEBITON;
+    // STST(&p3state);
+    // p3state.reg_sp = p2state.reg_sp - QPAGE;
+    // p3state.pc_epc = p3state.reg_t9 = (memaddr)p3;
+    // p3state.status                  = p3state.status | IEPBITON | CAUSEINTMASK | TEBITON;
 
-    STST(&p4state);
-    p4state.reg_sp = p3state.reg_sp - QPAGE;
-    p4state.pc_epc = p4state.reg_t9 = (memaddr)p4;
-    p4state.status                  = p4state.status | IEPBITON | CAUSEINTMASK | TEBITON;
+    // STST(&p4state);
+    // p4state.reg_sp = p3state.reg_sp - QPAGE;
+    // p4state.pc_epc = p4state.reg_t9 = (memaddr)p4;
+    // p4state.status                  = p4state.status | IEPBITON | CAUSEINTMASK | TEBITON;
 
-    STST(&p5state);
-    p5Stack = p5state.reg_sp = p4state.reg_sp - (2 * QPAGE); /* because there will 2 p4 running*/
-    p5state.pc_epc = p5state.reg_t9 = (memaddr)p5;
-    p5state.status                  = p5state.status | IEPBITON | CAUSEINTMASK | TEBITON;
+    // STST(&p5state);
+    // p5Stack = p5state.reg_sp = p4state.reg_sp - (2 * QPAGE); /* because there will 2 p4 running*/
+    // p5state.pc_epc = p5state.reg_t9 = (memaddr)p5;
+    // p5state.status                  = p5state.status | IEPBITON | CAUSEINTMASK | TEBITON;
 
-    STST(&p6state);
-    p6state.reg_sp = p5state.reg_sp - (2 * QPAGE);
-    p6state.pc_epc = p6state.reg_t9 = (memaddr)p6;
-    p6state.status                  = p6state.status | IEPBITON | CAUSEINTMASK | TEBITON;
+    // STST(&p6state);
+    // p6state.reg_sp = p5state.reg_sp - (2 * QPAGE);
+    // p6state.pc_epc = p6state.reg_t9 = (memaddr)p6;
+    // p6state.status                  = p6state.status | IEPBITON | CAUSEINTMASK | TEBITON;
 
-    STST(&p7state);
-    p7state.reg_sp = p6state.reg_sp - QPAGE;
-    p7state.pc_epc = p7state.reg_t9 = (memaddr)p7;
-    p7state.status                  = p7state.status | IEPBITON | CAUSEINTMASK | TEBITON;
+    // STST(&p7state);
+    // p7state.reg_sp = p6state.reg_sp - QPAGE;
+    // p7state.pc_epc = p7state.reg_t9 = (memaddr)p7;
+    // p7state.status                  = p7state.status | IEPBITON | CAUSEINTMASK | TEBITON;
 
-    STST(&p8rootstate);
-    p8rootstate.reg_sp = p7state.reg_sp - QPAGE;
-    p8rootstate.pc_epc = p8rootstate.reg_t9 = (memaddr)p8root;
-    p8rootstate.status                      = p8rootstate.status | IEPBITON | CAUSEINTMASK | TEBITON;
+    // STST(&p8rootstate);
+    // p8rootstate.reg_sp = p7state.reg_sp - QPAGE;
+    // p8rootstate.pc_epc = p8rootstate.reg_t9 = (memaddr)p8root;
+    // p8rootstate.status                      = p8rootstate.status | IEPBITON | CAUSEINTMASK | TEBITON;
 
-    STST(&child1state);
-    child1state.reg_sp = p8rootstate.reg_sp - QPAGE;
-    child1state.pc_epc = child1state.reg_t9 = (memaddr)child1;
-    child1state.status                      = child1state.status | IEPBITON | CAUSEINTMASK | TEBITON;
+    // STST(&child1state);
+    // child1state.reg_sp = p8rootstate.reg_sp - QPAGE;
+    // child1state.pc_epc = child1state.reg_t9 = (memaddr)child1;
+    // child1state.status                      = child1state.status | IEPBITON | CAUSEINTMASK | TEBITON;
 
-    STST(&child2state);
-    child2state.reg_sp = child1state.reg_sp - QPAGE;
-    child2state.pc_epc = child2state.reg_t9 = (memaddr)child2;
-    child2state.status                      = child2state.status | IEPBITON | CAUSEINTMASK | TEBITON;
+    // STST(&child2state);
+    // child2state.reg_sp = child1state.reg_sp - QPAGE;
+    // child2state.pc_epc = child2state.reg_t9 = (memaddr)child2;
+    // child2state.status                      = child2state.status | IEPBITON | CAUSEINTMASK | TEBITON;
 
-    STST(&gchild1state);
-    gchild1state.reg_sp = child2state.reg_sp - QPAGE;
-    gchild1state.pc_epc = gchild1state.reg_t9 = (memaddr)p8leaf1;
-    gchild1state.status                       = gchild1state.status | IEPBITON | CAUSEINTMASK | TEBITON;
+    // STST(&gchild1state);
+    // gchild1state.reg_sp = child2state.reg_sp - QPAGE;
+    // gchild1state.pc_epc = gchild1state.reg_t9 = (memaddr)p8leaf1;
+    // gchild1state.status                       = gchild1state.status | IEPBITON | CAUSEINTMASK | TEBITON;
 
-    STST(&gchild2state);
-    gchild2state.reg_sp = gchild1state.reg_sp - QPAGE;
-    gchild2state.pc_epc = gchild2state.reg_t9 = (memaddr)p8leaf2;
-    gchild2state.status                       = gchild2state.status | IEPBITON | CAUSEINTMASK | TEBITON;
+    // STST(&gchild2state);
+    // gchild2state.reg_sp = gchild1state.reg_sp - QPAGE;
+    // gchild2state.pc_epc = gchild2state.reg_t9 = (memaddr)p8leaf2;
+    // gchild2state.status                       = gchild2state.status | IEPBITON | CAUSEINTMASK | TEBITON;
 
-    STST(&gchild3state);
-    gchild3state.reg_sp = gchild2state.reg_sp - QPAGE;
-    gchild3state.pc_epc = gchild3state.reg_t9 = (memaddr)p8leaf3;
-    gchild3state.status                       = gchild3state.status | IEPBITON | CAUSEINTMASK | TEBITON;
+    // STST(&gchild3state);
+    // gchild3state.reg_sp = gchild2state.reg_sp - QPAGE;
+    // gchild3state.pc_epc = gchild3state.reg_t9 = (memaddr)p8leaf3;
+    // gchild3state.status                       = gchild3state.status | IEPBITON | CAUSEINTMASK | TEBITON;
 
-    STST(&gchild4state);
-    gchild4state.reg_sp = gchild3state.reg_sp - QPAGE;
-    gchild4state.pc_epc = gchild4state.reg_t9 = (memaddr)p8leaf4;
-    gchild4state.status                       = gchild4state.status | IEPBITON | CAUSEINTMASK | TEBITON;
+    // STST(&gchild4state);
+    // gchild4state.reg_sp = gchild3state.reg_sp - QPAGE;
+    // gchild4state.pc_epc = gchild4state.reg_t9 = (memaddr)p8leaf4;
+    // gchild4state.status                       = gchild4state.status | IEPBITON | CAUSEINTMASK | TEBITON;
 
-    STST(&p9state);
-    p9state.reg_sp = gchild4state.reg_sp - QPAGE;
-    p9state.pc_epc = p9state.reg_t9 = (memaddr)p9;
-    p9state.status                  = p9state.status | IEPBITON | CAUSEINTMASK | TEBITON;
+    // STST(&p9state);
+    // p9state.reg_sp = gchild4state.reg_sp - QPAGE;
+    // p9state.pc_epc = p9state.reg_t9 = (memaddr)p9;
+    // p9state.status                  = p9state.status | IEPBITON | CAUSEINTMASK | TEBITON;
 
-    STST(&p10state);
-    p10state.reg_sp = p9state.reg_sp - QPAGE;
-    p10state.pc_epc = p10state.reg_t9 = (memaddr)p10;
-    p10state.status                   = p10state.status | IEPBITON | CAUSEINTMASK | TEBITON;
+    // STST(&p10state);
+    // p10state.reg_sp = p9state.reg_sp - QPAGE;
+    // p10state.pc_epc = p10state.reg_t9 = (memaddr)p10;
+    // p10state.status                   = p10state.status | IEPBITON | CAUSEINTMASK | TEBITON;
 
-    STST(&p11state);
-    p11state.reg_sp = p10state.reg_sp - QPAGE;
-    p11state.pc_epc = p11state.reg_t9 = (memaddr)p11;
-    p11state.status                      = p11state.status | IEPBITON | CAUSEINTMASK | TEBITON;
+    // STST(&p11state);
+    // p11state.reg_sp = p10state.reg_sp - QPAGE;
+    // p11state.pc_epc = p11state.reg_t9 = (memaddr)p11;
+    // p11state.status                      = p11state.status | IEPBITON | CAUSEINTMASK | TEBITON;
 
-    STST(&ns1_a_state);
-    ns1_a_state.reg_sp = p11state.reg_sp - QPAGE;
-    ns1_a_state.pc_epc = ns1_a_state.reg_t9 = (memaddr)ns_p_parent_ns;
-    ns1_a_state.status                      = ns1_a_state.status | IEPBITON | CAUSEINTMASK | TEBITON;
+    // STST(&ns1_a_state);
+    // ns1_a_state.reg_sp = p11state.reg_sp - QPAGE;
+    // ns1_a_state.pc_epc = ns1_a_state.reg_t9 = (memaddr)ns_p_parent_ns;
+    // ns1_a_state.status                      = ns1_a_state.status | IEPBITON | CAUSEINTMASK | TEBITON;
 
-    STST(&ns1_b_state);
-    ns1_b_state.reg_sp = ns1_a_state.reg_sp - QPAGE;
-    ns1_b_state.pc_epc = ns1_b_state.reg_t9 = (memaddr)ns_p_parent_ns;
-    ns1_b_state.status                      = ns1_b_state.status | IEPBITON | CAUSEINTMASK | TEBITON;
+    // STST(&ns1_b_state);
+    // ns1_b_state.reg_sp = ns1_a_state.reg_sp - QPAGE;
+    // ns1_b_state.pc_epc = ns1_b_state.reg_t9 = (memaddr)ns_p_parent_ns;
+    // ns1_b_state.status                      = ns1_b_state.status | IEPBITON | CAUSEINTMASK | TEBITON;
 
-    STST(&ns2_a_state);
-    ns2_a_state.reg_sp = ns1_b_state.reg_sp - QPAGE;
-    ns2_a_state.pc_epc = ns2_a_state.reg_t9 = (memaddr)ns_p_new_ns;
-    ns2_a_state.status                      = ns2_a_state.status | IEPBITON | CAUSEINTMASK | TEBITON;
+    // STST(&ns2_a_state);
+    // ns2_a_state.reg_sp = ns1_b_state.reg_sp - QPAGE;
+    // ns2_a_state.pc_epc = ns2_a_state.reg_t9 = (memaddr)ns_p_new_ns;
+    // ns2_a_state.status                      = ns2_a_state.status | IEPBITON | CAUSEINTMASK | TEBITON;
 
-    STST(&ns2_b_state);
-    ns2_b_state.reg_sp = ns2_a_state.reg_sp - QPAGE;
-    ns2_b_state.pc_epc = ns2_b_state.reg_t9 = (memaddr)ns_p_new_ns;
-    ns2_b_state.status                      = ns2_b_state.status | IEPBITON | CAUSEINTMASK | TEBITON;
+    // STST(&ns2_b_state);
+    // ns2_b_state.reg_sp = ns2_a_state.reg_sp - QPAGE;
+    // ns2_b_state.pc_epc = ns2_b_state.reg_t9 = (memaddr)ns_p_new_ns;
+    // ns2_b_state.status                      = ns2_b_state.status | IEPBITON | CAUSEINTMASK | TEBITON;
 
     // /* create process p2 */
     // p2pid = SYSCALL(CREATEPROCESS, (int)&p2state, (int)NULL, (int)NULL); /* start p2     */
@@ -276,35 +273,31 @@ void test() {
     // print("p2 was started\n");
 
     // SYSCALL(VERHOGEN, (int)&sem_startp2, 0, 0); /* V(sem_startp2)   */
-
-
-    // SYSCALL(VERHOGEN, (int)&sem_endp2, 0, 0); /* V(sem_endp2) (blocking V!) */  
-
-    // /*NOTE P2 HAS BEEN EDITED !!!! */
-    // /*NOTE P2 HAS BEEN EDITED !!!! */
-    // /*NOTE P2 HAS BEEN EDITED !!!! */
-
-
-    // /* make sure we really blocked (P2 WILL CHANGE THIS TO 1) */
+    
+    // SYSCALL(VERHOGEN, (int)&sem_endp2, 0, 0); /* V(sem_endp2) (blocking V!)     */
+    
+    // /* make sure we really blocked */
     // if (p1p2synch == 0) {
-    //     adderrbuf("error: p1/p2 synchronization bad\n"); /* MURK ADDED */
     //     print("error: p1/p2 synchronization bad\n");
     // }
-
-
+    
     // p3pid = SYSCALL(CREATEPROCESS, (int)&p3state, (int)NULL, (int)NULL); /* start p3     */
 
     // print("p3 is started\n");
 
     // SYSCALL(PASSEREN, (int)&sem_endp3, 0, 0); /* P(sem_endp3)     */
 
-    
+
+
+/* DA QUA NON VA */
 
     SYSCALL(CREATEPROCESS, (int)&hp_p1state, (int)NULL, (int)NULL);
     
     SYSCALL(CREATEPROCESS, (int)&hp_p2state, (int)NULL, (int)NULL);
 
-    
+
+    SYSCALL(VERHOGEN,&testsem,0,0);
+    adderrbuf("y\n"); /* ADDED !!!!!!!!!! */
 
     p4pid = SYSCALL(CREATEPROCESS, (int)&p4state, (int)NULL, (int)NULL); /* start p4     */
 
@@ -315,16 +308,21 @@ void test() {
     pFiveSupport.sup_exceptContext[PGFAULTEXCEPT].status   = ALLOFF | IEPBITON | CAUSEINTMASK | TEBITON;
     pFiveSupport.sup_exceptContext[PGFAULTEXCEPT].pc       = (memaddr)p5mm;
 
-    
+    adderrbuf("f\n"); /* ADDED !!!!!!!!!! */
+
     SYSCALL(CREATEPROCESS, (int)&p5state, (int)&(pFiveSupport), (int)NULL); /* start p5     */
+
 
     SYSCALL(CREATEPROCESS, (int)&p6state, (int)NULL, (int)NULL); /* start p6		*/
 
     SYSCALL(CREATEPROCESS, (int)&p7state, (int)NULL, (int)NULL); /* start p7		*/
 
+
+
+
+
     p9pid = SYSCALL(CREATEPROCESS, (int)&p9state, (int)NULL, (int)NULL); /* start p7		*/
 
-    //Wait for p5 to terminate
     SYSCALL(PASSEREN, (int)&sem_endp5, 0, 0); /* P(sem_endp5)		*/
 
     print("p1 knows p5 ended\n");
@@ -359,10 +357,6 @@ void test() {
 
 /* p2 -- semaphore and cputime-SYS test process */
 void p2() {
-
-    //p1p2synch = 1;
-    //SYSCALL(TERMPROCESS, 0, 0, 0); /* terminate p2 */
-
     int   i;              /* just to waste time  */
     cpu_t now1, now2;     /* times of day        */
     cpu_t cpu_t1, cpu_t2; /* cpu time used       */
@@ -371,41 +365,31 @@ void p2() {
 
     int pid = SYSCALL(GETPROCESSID, 0, 0, 0);
     if (pid != p2pid) {
-        adderrbuf("Inconsistent process id for p2!\n");
+        print("Inconsistent process id for p2!\n");
         PANIC();
     }
-
-
     
     /* initialize all semaphores in the s[] array */
     for (i = 0; i <= MAXSEM; i++) {
         s[i] = 0;
     }
 
-
     /* V, then P, all of the semaphores in the s[] array */
     for (i = 0; i <= MAXSEM; i++) {
         SYSCALL(VERHOGEN, (int)&s[i], 0, 0); /* V(S[I]) */ 
         SYSCALL(PASSEREN, (int)&s[i], 0, 0); /* P(S[I]) */ 
-       if (s[i] != 0){
-            //print("error: p2 bad v/p pairs\n");    
-            PANIC();
-       }
+       if (s[i] != 0)
+            print("error: p2 bad v/p pairs\n");
     }
-    
-
     print("p2 v's successfully\n");
 
     /* test of SYS6 */
     STCK(now1);                         /* time of day   */
     cpu_t1 = SYSCALL(GETTIME, 0, 0, 0); /* CPU time used */
     
-
 	/* delay for several milliseconds */
     for (i = 1; i < LOOPNUM; i++)
-       ;
-
-
+        ;
 
     cpu_t2 = SYSCALL(GETTIME, 0, 0, 0); /* CPU time used */
     STCK(now2);                         /* time of day  */
@@ -414,31 +398,28 @@ void p2() {
         print("p2 is OK\n");
     } else {
         if ((now2 - now1) < (cpu_t2 - cpu_t1))
-            adderrbuf("error: more cpu time than real time\n");
+            print("error: more cpu time than real time\n");
         if ((cpu_t2 - cpu_t1) < (MINLOOPTIME / (*((cpu_t *)TIMESCALEADDR))))
-            adderrbuf("error: not enough cpu time went by\n");
+            print("error: not enough cpu time went by\n");
         print("p2 blew it!\n");
     }
 
     p1p2synch = 1; /* p1 will check this */
 
 
-
     SYSCALL(PASSEREN, (int)&sem_endp2, 0, 0); /* P(sem_endp2)    unblocking P ! */
-
 
     SYSCALL(TERMPROCESS, 0, 0, 0); /* terminate p2 */
 
+
     /* just did a SYS2, so should not get to this point */
-    adderrbuf("error: p2 didn't terminate\n");
+    print("error: p2 didn't terminate\n");
     PANIC(); /* PANIC!           */
 }
 
 
 /* p3 -- clock semaphore test process */
 void p3() {
-
-
     cpu_t time1, time2;
     cpu_t cpu_t1, cpu_t2; /* cpu time used       */
     int   i;
@@ -489,11 +470,6 @@ void p3() {
 
 /* p4 -- termination test process */
 void p4() {
-
-
-    adderrbuf("6 \n");
-
-
     switch (p4inc) {
         case 1:
             print("first incarnation of p4 starts\n");
@@ -516,8 +492,6 @@ void p4() {
 
     SYSCALL(PASSEREN, (int)&sem_synp4, 0, 0); /* P(sem_synp4)     */
 
-
-    
     /* start another incarnation of p4 running, and wait for  */
     /* a V(sem_synp4). the new process will block at the P(sem_blkp4),*/
     /* and eventually, the parent p4 will terminate, killing  */
@@ -807,9 +781,6 @@ void hp_p1() {
 
 
 void hp_p2() {
-    
-    adderrbuf("* \n");
-
     print("hp_p2 starts\n");
 
     for (int i = 0; i < 10; i++) {

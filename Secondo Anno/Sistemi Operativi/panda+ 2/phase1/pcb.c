@@ -122,7 +122,7 @@ pcb_t *removeProcQ(struct list_head *head)
         return NULL;
 
     pcb_t *el = container_of(head->next, pcb_t, p_list);
-    list_del(head->next);
+    list_del(&(el->p_list));
     return el;
 }
 
