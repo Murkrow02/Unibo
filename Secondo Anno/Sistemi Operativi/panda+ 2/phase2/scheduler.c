@@ -156,24 +156,8 @@ void scheduleNext(){
     }
 
     // Take first available process from ready queue
-    if(running_proc_pid == 0){
-        running_proc = removeProcQ(&ready_queue);
-    }else{
-
-        //Context switch after root_proc running
-        // if(container_of(ready_queue.next, pcb_t, p_list)->p_pid ==2){
-        //                     adderrbuf("7\n");
-        // }
-
-        running_proc = removeProcQ(&ready_queue);
-
-         //Context switch after root_proc running
-        if(container_of(ready_queue.next, pcb_t, p_list)->p_pid ==2){
-                            adderrbuf("8\n");
-        }
-
-    }
-
+    running_proc = removeProcQ(&ready_queue);
+    
     //If there are no processes in the ready queue, panic
     if(running_proc == NULL){
         adderrbuf("NO RUNNING PROC \n");

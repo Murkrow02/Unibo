@@ -11,6 +11,43 @@
 struct list_head pcb_free;
 pcb_t pcb_table[MAXPROC];
 
+
+
+static inline const list_head *
+list_search(const list_head *element, const list_head *head,
+            int (*cmp)(const list_head *, const list_head *))
+{
+    const list_head *iter;
+
+    for (iter = head->next; iter != head; iter = iter->next)
+        if (!cmp(element, iter))
+            return iter;
+    return NULL;
+}
+static inline int exact_cmp(const list_head *first, const list_head *second)
+{
+    return first != second;
+}
+static inline bool list_contains(const list_head *element,
+                                 const list_head *head)
+{
+    return list_search(element, head, exact_cmp) != NULL;
+}
+#define LIST_HEAD_NULL(l) ((l)->prev = (l)->next = NULL)
+static inline int list_null(const list_head *head)
+{
+    return head->prev == NULL && head->next == NULL;
+}
+
+static inline void list_sdel(list_head *entry)
+{
+    if (!list_null(entry)) {
+        list_del(entry);
+        LIST_HEAD_NULL(entry);
+    }
+}
+
+
 // Used to assign a unique pid to each process
 int lastInsertedPcbPid = 1;
 
@@ -98,12 +135,10 @@ int emptyProcQ(struct list_head *head)
 void insertProcQ(struct list_head *head, pcb_t *p)
 {
 
-    if (head != NULL && p != NULL)
-    {
-
-        // Add in last position, like a queue
-        list_add_tail(&p->p_list, head);
-    }
+    if (p == NULL || head == NULL)
+        return;
+    list_sdel(&p->p_list);
+    list_add_tail(&p->p_list, head);
 }
 
 pcb_t *headProcQ(struct list_head *head)
@@ -118,43 +153,28 @@ pcb_t *headProcQ(struct list_head *head)
 pcb_t *removeProcQ(struct list_head *head)
 {
 
-    if (head == NULL || list_empty(head))
+     if (head == NULL || list_empty(head))
         return NULL;
 
-    pcb_t *el = container_of(head->next, pcb_t, p_list);
-    list_del(&(el->p_list));
-    return el;
+    /* get the first element of the list */
+    list_head *to_remove = list_next(head);
+    pcb_t *p = container_of(to_remove, pcb_t, p_list);
+
+    /* return the pcb pointed by the deleted element */
+    return outProcQ(head, p);
 }
+
 
 // Like function above but search for p in any position
 pcb_t *outProcQ(struct list_head *head, pcb_t *p)
 {
-
-    if (head == NULL || p == NULL || list_empty(head))
+     if (head == NULL || p == NULL || list_empty(head) ||
+        !list_contains(&p->p_list, head))
         return NULL;
 
-    list_head *el;
-    list_for_each(el, head)
-    {
-        // Check if currently pointed element is the same as p
-        if (el == &p->p_list)
-        {
-
-            // Get container element
-            pcb_t *target = container_of(el, pcb_t, p_list);
-
-            // Remove element from list
-            list_del(el);
-
-
-            return target;
-        }
-    }
-
-    
-
-    // If we landed here then no element was found in the list
-    return NULL;
+    /* Remove p element from list */
+    list_sdel(&p->p_list);
+    return p;
 }
 
 /*
