@@ -7,6 +7,7 @@
 #include <scheduler.h>
 #include <pcb.h>
 #include <ash.h>
+#include <syscall.h>    
 
 //Running process
 extern pcb_t *running_proc;
@@ -32,9 +33,12 @@ void plt_handler()
     return;
 }
 
+void terminal_handler(){
+    adderrbuf("Terminal handler called \n");
+}
+
 //This function is called when the interval timer interrupt occurs 
 //The interval timer interrupt occurs every 100ms and is used by the process to wait for this time
-int zzzzzz;
 void il_time_handler()
 {
 
@@ -60,6 +64,8 @@ void il_time_handler()
 
 void interrupt_handler(){
 
+    
+
     //DEBUG ONLY
     z_breakpoint_interrupt();
 
@@ -69,7 +75,6 @@ void interrupt_handler(){
     //Check the cause of the interrupt
     if CAUSE_IP_GET (cause, IL_CPUTIMER){
         z_breakpoint_plt_handler();
-
         //Process local timer interrupt (this indicates that the time slice of the current process has expired)
         plt_handler();
     }
@@ -87,8 +92,8 @@ void interrupt_handler(){
     //     device_handler(IL_ETHERNET, excState);
     // else if CAUSE_IP_GET (cause, IL_PRINTER)
     //     device_handler(IL_PRINTER, excState);
-    // else if CAUSE_IP_GET (cause, IL_TERMINAL)
-    //     device_handler(IL_TERMINAL, excState);
+    else if CAUSE_IP_GET (cause, IL_TERMINAL) // Terminal device raised an interrupt (I/O completed?)
+        terminal_handler();
 
 
     else{
@@ -96,6 +101,29 @@ void interrupt_handler(){
         //z_breakpoint_interrupt_panic();
         PANIC();
     }
+}
+
+//This is called when an unhandled exception occurs like a bad syscall number or a bad memory address
+void pass_up_or_die(int code){
+
+    //If no support struct is present, terminate the process
+    if(running_proc->p_supportStruct == NULL){
+
+        //REMOVE 
+        adderrbuf("Process terminated due to unhandled exception \n");
+
+        terminate_process(0); // 0: current process
+        //Scheduler has control here
+    }
+
+    //Copy cpu state into the support struct exception state
+    copyState(CPU_STATE, &running_proc->p_supportStruct->sup_exceptState[code]);
+
+    //Load new processor state
+    int stackPtr = running_proc->p_supportStruct->sup_exceptContext[code].stackPtr;
+    int status = running_proc->p_supportStruct->sup_exceptContext[code].status;
+    int pc = running_proc->p_supportStruct->sup_exceptContext[code].pc;
+    LDCXT(stackPtr, status, pc);
 }
 
 

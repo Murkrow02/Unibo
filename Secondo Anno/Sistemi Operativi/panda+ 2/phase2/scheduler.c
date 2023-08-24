@@ -140,8 +140,8 @@ void scheduleNext(){
             HALT();
 
         //If no process can be scheduled and no processes are waiting for the sys_wait_for_clock then deadlock
-        else if(soft_block_count > 0 && is_proc_waiting_for_it == false)
-            PANIC();
+        //else if(soft_block_count > 0 && is_proc_waiting_for_it == false)
+        //    PANIC();
         
 
         //Set the plt timer to max to prevent plt interrupts

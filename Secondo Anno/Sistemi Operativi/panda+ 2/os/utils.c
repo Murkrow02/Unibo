@@ -70,6 +70,11 @@ int list_search_el(list_head* searchElement, list_head* list){
 #define MAXPROC 20
 #define MAXSEM  MAXPROC
 #define MAXNS   MAXPROC
+#define TRANSMITTED 5
+#define ACK         1
+#define PRINTCHR    2
+#define CHAROFFSET  8
+#define STATUSMASK  0xFF
 
 char   okbuf[2048]; /* sequence of progress messages */
 char   errbuf[128]; /* contains reason for failing */
@@ -79,14 +84,6 @@ int    onesem;
 pcb_t *procp[MAXPROC], *p, *q, *firstproc, *lastproc, *midproc;
 nsd_t *pid_ns, *pid_ns2;
 char  *mp = okbuf;
-
-
-#define TRANSMITTED 5
-#define ACK         1
-#define PRINTCHR    2
-#define CHAROFFSET  8
-#define STATUSMASK  0xFF
-#define TERM0ADDR   0x10000254
 
 typedef unsigned int devreg;
 

@@ -8,6 +8,7 @@
 #include <types.h>
 #include <ash.h>
 
+typedef unsigned int devregtr;
 
 //PCB table (used to search for a process given its pid)
 extern pcb_t pcb_table[MAXPROC];
@@ -27,6 +28,10 @@ extern pcb_t *running_proc;
 //Interval timer semaphore
 extern int sem_interval_timer;
 extern int is_proc_waiting_for_it; //Set to 1 if a process is waiting for the interval timer
+
+//Terminal semaphores
+extern int sem_terminal_in[8];
+extern int sem_terminal_out[8];
 
 //DEBUG ONLY
 int copied_syscall_code;
@@ -56,11 +61,10 @@ void syscall_handler() {
 
         case TERMPROCESS:
             z_breakpoint_terminate();
-            terminate_process();
+            terminate_process(-1);
             break;
 
         case PASSEREN:
-            z_breakpoint_passeren();
             passeren(NULL);
             break;
 
@@ -90,7 +94,7 @@ void syscall_handler() {
             break;
 
         default:
-            PANIC();
+            pass_up_or_die(GENERALEXCEPT);
             break;
     }
 
@@ -184,11 +188,11 @@ int create_process()
 
 
 //SYS2 VALEX
-void terminate_process() {
+void terminate_process(int pid) {
 
-    //Retrieve the pid of the process to kill
-    int pid = (int)(REG_A1_SS);
-
+    //Retrieve the pid of the process to kill (from registry or from function param)
+    if(pid == -1)
+        pid = (int)(REG_A1_SS);
   
 
     //Calling process requested to kill itself and all his progeny
@@ -216,6 +220,7 @@ void terminate_process() {
 
 //SYS3 MURK
 void passeren(int *sem) {
+            z_breakpoint_passeren();
 
     //Retrieve the semaphore (from syscall param or from function param)
     if(sem == NULL)
@@ -311,9 +316,64 @@ void verhogen() {
 }
 
 //SYS5 MURK
+
+int iosem = 0;
+
 int do_io() {
 
-    CPU_STATE->reg_v0 = 1;
+    //Take the parameters
+    int * cmdAddr = (devregtr *)(REG_A1_SS);
+
+    //This is an array of 2 integers, the value of the command is placed inside the first one
+    devregtr * value = (devregtr *)(REG_A2_SS);
+
+    //Take the device RAM area
+    //devregarea_t *deviceRegs = (devregarea_t *)RAMBASEADDR;
+
+
+    //Detect if terminal device (by checking the address range of the command)
+    if((int)cmdAddr <= LAST_TERM_ADDR && (int)cmdAddr >= TERM0ADDR) //Targeting a terminal device
+    {
+        //Get terminal index (0-7)
+        int termIndex = ((int)cmdAddr-TERM0ADDR)/DEVREGSIZE;
+
+        //For now only output works, later detect how to handle input
+        passeren(&sem_terminal_out[termIndex]);
+    }
+
+    //This offset is copied from addokbuf function provided by tests
+    memaddr *commandp = (devregtr *)((int)cmdAddr + (TRANCOMMAND * DEVREGLEN)); 
+
+    //Execute command
+    *commandp = value[0];
+
+    // for (int i = 0; i < 1000000; i++)
+    // {
+    //     ;
+    // }
+    //adderrbuf("IO\n"   ) ;
+
+
+    // //Check which terminal (i) is requested (index 4 in the device register area)
+    // for(int i=0; i<MAX_TERM_DEV;i++){
+
+    //     if(deviceRegs->devreg[4][i].term.transm_command == command){
+          
+    //         break;
+    //     }
+
+    // }
+    //     { // Terminal Devices Writing
+    //         devSemaphore = &semTerminalDeviceWriting[i];
+    //         break;
+    //     }
+    //     else if (&(deviceRegs->devreg[4][i].term.recv_command) == (memaddr *)cmdAddr)
+    //     { // Terminal Devices Reading
+    //         devSemaphore = &semTerminalDeviceReading[i];
+    //         break;
+    //     }
+
+    CPU_STATE->reg_v0 = 0;
 }
 
 //SYS6 MURK

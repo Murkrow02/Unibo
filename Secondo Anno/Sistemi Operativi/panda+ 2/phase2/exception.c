@@ -27,8 +27,7 @@ void exception_hanlder()
         break;
     case 4 ... 7: // Trap
     case 9 ... 12:
-        adderrbuf("Trap exception \n");
-
+        pass_up_or_die(GENERALEXCEPT);
         break;
     case 8: // System Call
 

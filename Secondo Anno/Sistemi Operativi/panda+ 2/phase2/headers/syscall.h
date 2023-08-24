@@ -5,5 +5,5 @@
 #include <pandos_types.h>
 
 void syscall_handler();
-
+extern void terminate_process(int pid);
 #endif

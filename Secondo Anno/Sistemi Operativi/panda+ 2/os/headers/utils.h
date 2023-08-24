@@ -20,6 +20,10 @@
 #define REG_A3_SS CPU_STATE->reg_a3
 
 
+#define MAX_TERM_DEV 8 //Max number of terminal devices
+#define TERM0ADDR   0x10000254
+#define LAST_TERM_ADDR (TERM0ADDR + (MAX_TERM_DEV * DEVREGSIZE))-1
+
 #define PC_INC CPU_STATE->pc_epc += WORDLEN; CPU_STATE->reg_t9 += WORDLEN;
 
 #include <listx.h>

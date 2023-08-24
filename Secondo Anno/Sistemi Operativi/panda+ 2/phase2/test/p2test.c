@@ -112,7 +112,6 @@ extern void p5mm();
 
 /* a procedure to print on terminal 0 */
 void print(char *msg) {
-    return;
     char     *s       = msg;
     devregtr *base    = (devregtr *)(TERM0ADDR);
     devregtr *command = base;
@@ -148,6 +147,10 @@ void uTLB_RefillHandler() {
 /*                 p1 -- the root process                            */
 /*                                                                   */
 void test() {
+
+    print("x1 starts\n");
+    return;
+
     SYSCALL(VERHOGEN, (int)&sem_testsem, 0, 0); /* V(sem_testsem)   */
 
     print("p1 v(sem_testsem)\n");
@@ -264,25 +267,25 @@ void test() {
     ns2_b_state.pc_epc = ns2_b_state.reg_t9 = (memaddr)ns_p_new_ns;
     ns2_b_state.status                      = ns2_b_state.status | IEPBITON | CAUSEINTMASK | TEBITON;
 
-    // /* create process p2 */
-    // p2pid = SYSCALL(CREATEPROCESS, (int)&p2state, (int)NULL, (int)NULL); /* start p2     */
+    /* create process p2 */
+    p2pid = SYSCALL(CREATEPROCESS, (int)&p2state, (int)NULL, (int)NULL); /* start p2     */
 
-    // print("p2 was started\n");
+    print("p2 was started\n");
 
-    // SYSCALL(VERHOGEN, (int)&sem_startp2, 0, 0); /* V(sem_startp2)   */
+    SYSCALL(VERHOGEN, (int)&sem_startp2, 0, 0); /* V(sem_startp2)   */
     
-    // SYSCALL(VERHOGEN, (int)&sem_endp2, 0, 0); /* V(sem_endp2) (blocking V!)     */
+    SYSCALL(VERHOGEN, (int)&sem_endp2, 0, 0); /* V(sem_endp2) (blocking V!)     */
     
-    // /* make sure we really blocked */
-    // if (p1p2synch == 0) {
-    //     print("error: p1/p2 synchronization bad\n");
-    // }
+    /* make sure we really blocked */
+    if (p1p2synch == 0) {
+        print("error: p1/p2 synchronization bad\n");
+    }
     
-    // p3pid = SYSCALL(CREATEPROCESS, (int)&p3state, (int)NULL, (int)NULL); /* start p3     */
+    p3pid = SYSCALL(CREATEPROCESS, (int)&p3state, (int)NULL, (int)NULL); /* start p3     */
 
-    // print("p3 is started\n");
+    print("p3 is started\n");
 
-    // SYSCALL(PASSEREN, (int)&sem_endp3, 0, 0); /* P(sem_endp3)     */
+    SYSCALL(PASSEREN, (int)&sem_endp3, 0, 0); /* P(sem_endp3)     */
     
 
 
@@ -303,7 +306,7 @@ void test() {
 
     SYSCALL(CREATEPROCESS, (int)&p5state, (int)&(pFiveSupport), (int)NULL); /* start p5     */
 
-        adderrbuf("&\n");
+        //adderrbuf("&\n");
 
 
     SYSCALL(CREATEPROCESS, (int)&p6state, (int)NULL, (int)NULL); /* start p6		*/
