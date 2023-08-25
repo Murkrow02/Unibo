@@ -8,6 +8,8 @@
 #include <types.h>
 #include <ash.h>
 
+#define RECVD    5 //Terminal received a character
+
 typedef unsigned int devregtr;
 
 //PCB table (used to search for a process given its pid)
@@ -337,43 +339,15 @@ int do_io() {
         //Get terminal index (0-7)
         int termIndex = ((int)cmdAddr-TERM0ADDR)/DEVREGSIZE;
 
+        //This offset is copied from addokbuf function provided by tests
+        memaddr *commandp = (devregtr *)((int)cmdAddr + (TRANCOMMAND * DEVREGLEN));         
+
+        //Execute command
+        *commandp = value[0];
+
         //For now only output works, later detect how to handle input
         passeren(&sem_terminal_out[termIndex]);
     }
-
-    //This offset is copied from addokbuf function provided by tests
-    memaddr *commandp = (devregtr *)((int)cmdAddr + (TRANCOMMAND * DEVREGLEN)); 
-
-    //Execute command
-    *commandp = value[0];
-
-    // for (int i = 0; i < 1000000; i++)
-    // {
-    //     ;
-    // }
-    //adderrbuf("IO\n"   ) ;
-
-
-    // //Check which terminal (i) is requested (index 4 in the device register area)
-    // for(int i=0; i<MAX_TERM_DEV;i++){
-
-    //     if(deviceRegs->devreg[4][i].term.transm_command == command){
-          
-    //         break;
-    //     }
-
-    // }
-    //     { // Terminal Devices Writing
-    //         devSemaphore = &semTerminalDeviceWriting[i];
-    //         break;
-    //     }
-    //     else if (&(deviceRegs->devreg[4][i].term.recv_command) == (memaddr *)cmdAddr)
-    //     { // Terminal Devices Reading
-    //         devSemaphore = &semTerminalDeviceReading[i];
-    //         break;
-    //     }
-
-    CPU_STATE->reg_v0 = 0;
 }
 
 //SYS6 MURK

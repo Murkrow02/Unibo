@@ -121,7 +121,8 @@ void print(char *msg) {
     while (*s != EOS) {
         devregtr value[2] = {PRINTCHR | (((devregtr)*s) << 8), 0 };
         status         = SYSCALL(DOIO, (int)command, (int)value, 0);
-        if (status != 0 || (value[0] & TERMSTATMASK) != RECVD) {
+        if (status != 0) {
+            adderrbuf("Printer error!\n");
             PANIC();
         }
         s++;
@@ -147,9 +148,6 @@ void uTLB_RefillHandler() {
 /*                 p1 -- the root process                            */
 /*                                                                   */
 void test() {
-
-    print("x1 starts\n");
-    return;
 
     SYSCALL(VERHOGEN, (int)&sem_testsem, 0, 0); /* V(sem_testsem)   */
 

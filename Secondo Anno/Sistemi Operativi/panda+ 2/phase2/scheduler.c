@@ -5,6 +5,8 @@
 #include <scheduler.h>
 #include <umps3/umps/arch.h>
 #include <listx.h>
+
+
 //Running processes
 int process_count;
 
@@ -152,6 +154,7 @@ void scheduleNext(){
 
         //Wait for an interrupt
         running_proc = NULL;
+        z_scheduler_breakpoint();
         WAIT();
     }
 
