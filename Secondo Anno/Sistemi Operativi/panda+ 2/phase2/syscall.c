@@ -222,7 +222,9 @@ void terminate_process(int pid) {
 
 //SYS3 MURK
 void passeren(int *sem) {
-            z_breakpoint_passeren();
+
+
+    z_breakpoint_passeren();
 
     //Retrieve the semaphore (from syscall param or from function param)
     if(sem == NULL)
@@ -239,11 +241,11 @@ void passeren(int *sem) {
     //Check if need to block the process
     if (*sem <= 0)
     {
-        //Insert the process in the semaphore queue
-        insertBlocked(sem, running_proc);
-
         //Increment the soft block counter
         soft_block_count++;
+
+        //Insert the process in the semaphore queue
+        insertBlocked(sem, running_proc);
 
         //Schedule the next process
         PC_INCREMENT; //NEED TO DO MANUALLY AS NOT DONE AT END OF SYSCALL HANDLER
@@ -307,10 +309,12 @@ void verhogen() {
         pcb_t *unblocked = removeBlocked(sem);
 
         //Decrement the soft block counter
-        soft_block_count--;
-
-        //Insert the process in the ready queue
-        insertProcQ(&(ready_queue), unblocked);
+        if (unblocked != NULL)
+        {
+            // Insert the process in the ready queue
+            insertProcQ(&(ready_queue), unblocked);
+            soft_block_count--;
+        }
     }
 
     //Increment the semaphore
@@ -343,6 +347,7 @@ int do_io() {
         memaddr *commandp = (devregtr *)((int)cmdAddr + (TRANCOMMAND * DEVREGLEN));         
 
         //Execute command
+        //setSTATUS(getSTATUS() & DISABLEINTS);
         *commandp = value[0];
 
         //For now only output works, later detect how to handle input

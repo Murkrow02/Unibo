@@ -13,6 +13,7 @@
 
 //Running process
 extern pcb_t *running_proc;
+extern int process_count;
 
 //Processes ready to be executed
 extern struct list_head ready_queue;
@@ -61,7 +62,6 @@ void plt_handler()
     return;
 }
 
-int zzzzz_device_n;
 void terminal_handler(){
 
     z_breakpoint_terminal_handler();
@@ -76,16 +76,24 @@ void terminal_handler(){
     pcb_PTR blockedP = removeBlocked(&sem_terminal_out[deviceNumber]);
 
     //BlockedP could be NULL if waiting process has been killed
-    if(blockedP != NULL){
-        addToReadyQueue(blockedP);
+    if(blockedP == NULL){
+        return;
     }
+
+    //Restore the process into ready queue
+    addToReadyQueue(blockedP);
 
     //Acknowledge the interrupt
     termAddr->transm_command = ACK;
 
     //Save return status into PCB
-    running_proc->p_s.reg_v0 = 0;
-    ((int*)running_proc->p_s.reg_a2)[1] = RECVD;
+    blockedP->p_s.reg_v0 = 0;
+    ((int*)blockedP->p_s.reg_a2)[1] = RECVD;
+
+    //  if(process_count == 2){
+    //     adderrbuf("Process count is 2 \n");
+    // }
+    
 
     if(running_proc == NULL)
         scheduleNext();

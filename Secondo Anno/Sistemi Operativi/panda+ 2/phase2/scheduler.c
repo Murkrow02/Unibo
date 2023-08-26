@@ -28,9 +28,9 @@ int sem_terminal_out[8];
 //Running process pid
 int running_proc_pid = 0;
 
-void z_scheduler_breakpoint(){
+void z_scheduler_breakpoint(){}
+void z_scheduler_breakpoint2(){}
 
-}
 
 int watch = 1;
 void testfunc()
@@ -122,7 +122,6 @@ void scheduleNext(){
 
     z_scheduler_breakpoint();
 
-
     //Save running proc state in its pcb
     if(running_proc != NULL){
 
@@ -141,21 +140,22 @@ void scheduleNext(){
         if(process_count == 0)
             HALT();
 
-        //If no process can be scheduled and no processes are waiting for the sys_wait_for_clock then deadlock
-        //else if(soft_block_count > 0 && is_proc_waiting_for_it == false)
-        //    PANIC();
-        
+        if (process_count > 0 && soft_block_count > 0)
+        {
+            // Enable interrupts
+            running_proc = NULL;
 
-        //Set the plt timer to max to prevent plt interrupts
-        setTIMER(4294967295);
+            //Set the plt timer to max to prevent plt interrupts
+            setTIMER(4294967295); 
+            setSTATUS(IECON | IMON);
 
-        //Enable interrupts to allow the interval timer to interrupt
-        setSTATUS(getSTATUS() | IECON | IMON);
+            WAIT(); 
+        }
 
-        //Wait for an interrupt
-        running_proc = NULL;
-        z_scheduler_breakpoint();
-        WAIT();
+        z_scheduler_breakpoint2();
+
+        if (process_count > 0 && soft_block_count == 0)
+            adderrbuf("DEADLOCK \n");
     }
 
     // Take first available process from ready queue
