@@ -109,6 +109,7 @@ void p5sys(), p8root(), child1(), child2(), p8leaf1(), p8leaf2(), p8leaf3(),
 extern void p5gen();
 extern void p5mm();
 
+extern int running_proc_pid;
 
 /* a procedure to print on terminal 0 */
 void print(char *msg) {
@@ -127,7 +128,17 @@ void print(char *msg) {
         }
         s++;
     }
+
+    // if(running_proc_pid == 5){
+    //     adderrbuf("XXXX\n");
+    // }
+
     SYSCALL(VERHOGEN, (int)&sem_term_mut, 0, 0); /* V(sem_term_mut) */
+
+    if (running_proc_pid == 5)
+    {
+        adderrbuf("YYY\n");
+    }
 }
 
 
@@ -766,8 +777,10 @@ void hp_p1() {
 
 
 void hp_p2() {
+
     print("hp_p2 starts\n");
 
+    adderrbuf("hp_p2 starts\n");
     for (int i = 0; i < 10; i++) {
         SYSCALL(CLOCKWAIT, 0, 0, 0);
     }

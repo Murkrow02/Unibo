@@ -26,6 +26,7 @@ extern struct list_head ready_queue;
 
 //Running process
 extern pcb_t *running_proc;
+extern int running_proc_pid;
 
 //Interval timer semaphore
 extern int sem_interval_timer;
@@ -241,6 +242,7 @@ void passeren(int *sem) {
     //Check if need to block the process
     if (*sem <= 0)
     {
+
         //Increment the soft block counter
         soft_block_count++;
 
@@ -315,10 +317,14 @@ void verhogen() {
             insertProcQ(&(ready_queue), unblocked);
             soft_block_count--;
         }
-    }
 
-    //Increment the semaphore
-    (*sem)++;
+        //Check if there are other waiting
+        if(headBlocked(sem) == NULL)
+        {
+            //Increment the semaphore if no other processes are waiting
+            (*sem)++;
+        }
+    }
 }
 
 //SYS5 MURK

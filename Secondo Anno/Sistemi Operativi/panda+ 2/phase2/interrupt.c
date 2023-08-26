@@ -80,6 +80,8 @@ void terminal_handler(){
         return;
     }
 
+    soft_block_count--;
+
     //Restore the process into ready queue
     addToReadyQueue(blockedP);
 

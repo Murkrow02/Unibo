@@ -9,6 +9,8 @@ void z_breakpoint_exception_panic() {}
 
 void exception_hanlder()
 {
+    // Disable interrupts
+    setSTATUS(getSTATUS() & DISABLEINTS);
 
     // Stop execution
     z_breakpoint_exception();
