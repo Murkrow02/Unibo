@@ -288,6 +288,9 @@ void test() {
     SYSCALL(PASSEREN, (int)&sem_endp3, 0, 0); /* P(sem_endp3)     */
 
 
+
+
+
     SYSCALL(CREATEPROCESS, (int)&hp_p1state, (int)NULL, (int)NULL);
     
     SYSCALL(CREATEPROCESS, (int)&hp_p2state, (int)NULL, (int)NULL);

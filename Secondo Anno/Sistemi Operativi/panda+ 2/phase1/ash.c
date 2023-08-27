@@ -78,38 +78,61 @@ int insertBlocked(int *semAdd, pcb_t *p) {
 // Altrimenti, restituisce l’elemento rimosso. Se la coda dei processi bloccati per il semaforo diventa vuota, rimuove il descrittore
 // corrispondente dalla ASH e lo inserisce nella coda dei descrittori liberi (semdFree_h).
 pcb_t* removeBlocked(int *semAdd) {
-
+ 
     struct semd_t* ASSSEM;
     hash_for_each_possible(semd_h, ASSSEM, s_link, semAdd){
-      
+ 
       //Controlla se il semd_t e' quello che cerchiamo
       if(ASSSEM != NULL && *ASSSEM->s_key == *semAdd){
-      
+ 
         //PCB da ritornare
-        pcb_t* returnPCB = list_first_entry(&ASSSEM->s_procq, pcb_t, p_list);
-        list_del(&ASSSEM->s_procq.next); //Rimuovi dalla coda dei processi
-        
-        //Controllo se la lista dei processi bloccati è vuota
-        if (ASSSEM->s_procq.next == ASSSEM->s_procq.prev) { //list_empty not working
-        
+        pcb_t* tmp = list_first_entry(&ASSSEM->s_procq, pcb_t, p_list);
+ 
+        //Rimuovo il processo dalla lista dei processi bloccati
+        list_del(&tmp->p_list);
+ 
+        //Conntrollo se la lista dei processi bloccati è ora vuota
+        if (list_empty(&ASSSEM->s_procq) == TRUE) {
             //Rimuovo l'hash del semaforo dagli hash attivi
             hash_del(&ASSSEM->s_link);
-
+ 
             //Aggiungo il semaforo tra i semafori liberi
             list_add(&ASSSEM->s_freelink, &semdFree_h);
-
+ 
             //TODO secondo te qua bisogna eliminare la lista dei processi bloccati e la chiave?
         }
-        
-        //addokbuf("Ritorno");
-        if(returnPCB != NULL)
-          returnPCB->p_semAdd = NULL;
-        return returnPCB;
+        return tmp;
       }
-      
+ 
     }
-    
+ 
     return NULL;
+ 
+ 
+}
+ 
+ 
+ 
+int countBlocked(int *semAdd) {
+ 
+    struct semd_t* ASSSEM;
+    hash_for_each_possible(semd_h, ASSSEM, s_link, semAdd){
+ 
+      //Controlla se il semd_t e' quello che cerchiamo
+      if(ASSSEM != NULL && *ASSSEM->s_key == *semAdd){
+ 
+        pcb_t* tmp = NULL;
+        int count = 0;
+        list_for_each_entry(tmp, &ASSSEM->s_procq, p_list)
+        {
+            count++;
+        }
+        return count;
+      }
+ 
+    }
+ 
+    return 0;
 }
 
 // 16. Rimuove il PCB puntato da p dalla coda del semaforo su cui è bloccato (indicato da p->p_semAdd).

@@ -5,10 +5,8 @@
 #include <pandos_types.h>
 
 
-/* ASL's functions */
-
-
-semd_PTR findASL(int *semAdd);
+/* Helper function to count how many blocked on this sem */
+int countBlocked(int *semAdd);
 
 
 pcb_PTR isPcbBlocked(int pid);
