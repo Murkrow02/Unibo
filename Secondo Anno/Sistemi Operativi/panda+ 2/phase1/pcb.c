@@ -189,22 +189,12 @@ int emptyChild(pcb_t *p)
 void insertChild(pcb_t *prnt, pcb_t *p)
 {
 
-    // Check that neither prnt nor p  is null
-    if (prnt == NULL || p == NULL)
-    {
+    if (prnt == NULL || p == NULL || p->p_parent != NULL ||
+        list_contains(&p->p_sib, &prnt->p_child))
         return;
-    }
 
-    // Copy namespaces from parent (MAYBE NOT REQUIRED)
-    //    for(int i = 0; i < MAXPROC; i++){
-    //        p->namespaces[i] =
-    //    }
-
-    // Add child to parent list
-    list_add(&p->p_list, &prnt->p_child);
-
-    // Update child pointer to parent
     p->p_parent = prnt;
+    list_add_tail(&p->p_sib, &prnt->p_child);
 }
 
 pcb_t *removeChild(pcb_t *p)
@@ -231,22 +221,11 @@ pcb_t *removeChild(pcb_t *p)
 // Like function above but search for p in parent's child list
 pcb_t *outChild(pcb_t *p)
 {
+    if (p == NULL || p->p_parent == NULL || list_empty(&p->p_parent->p_child) ||
+        !list_contains(&p->p_sib, &p->p_parent->p_child))
+        return NULL;
 
-    // Se il processo non ha padri la funzione termina subito
-	if (p->p_parent == NULL)
-		return NULL;
-	// Lista dei processi attivi, da scorrere
-	struct list_head *figlidelpadre = &(p->p_parent->p_child);
-	pcb_PTR tmp = NULL;
-	list_for_each_entry(tmp, figlidelpadre, p_sib)
-	{
-		if (p == tmp)
-		{
-			list_del(&(tmp->p_sib));
-			tmp->p_parent = NULL;
-			return p;
-		}
-	}
-	return NULL;
-    
+    list_sdel(&p->p_sib);
+    p->p_parent = NULL;
+    return p;
 }

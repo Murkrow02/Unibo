@@ -127,11 +127,7 @@ void killOne(pcb_PTR proc){
 
 
     //Remove the current process from the children of his parent (if any)
-    //outChild(proc); //TODO:
-
-
-    //TODO: remove the process from the semaphore queue (if any)
-
+    outChild(proc); //TODO:
 
     //Remove the process from semaphore queue
     outBlocked(proc);
@@ -202,10 +198,14 @@ void terminate_process(int pid) {
     if (pid == 0 || (running_proc != NULL && pid == running_proc->p_pid)) {
 
         killSelfAndProgeny(running_proc);
+        //killOne(running_proc);
         running_proc = NULL;
         scheduleNext();
 
     } else {
+
+
+        adderrbuf("Vedi dopo: ");
 
 
         //Search in pcb table process with the given pid
@@ -245,15 +245,14 @@ void passeren(int *sem) {
     }
 
     //Check if need to block the process
-    if (*sem <= 0)
+    if (*sem == 0)
     {
-
         //Increment the soft block counter
         soft_block_count++;
 
         //Insert the process in the semaphore queue
         int result = insertBlocked(sem, running_proc);
-        if(result == TRUE){
+        if(result == 1){
             adderrbuf("Cannot insert process in semaphore queue\n");
         }
 
@@ -261,7 +260,7 @@ void passeren(int *sem) {
         PC_INCREMENT; //NEED TO DO MANUALLY AS NOT DONE AT END OF SYSCALL HANDLER
         scheduleNext();
     }
-    else //Sem is more than 0
+    else if (*sem > 0) //Sem is more than 0
     {
 
 
@@ -285,6 +284,8 @@ void passeren(int *sem) {
 
         //Decrement the semaphore
         (*sem)--;
+    }else{
+        adderrbuf("Invalid semaphore value\n");
     }
 
     //TODO
@@ -305,6 +306,10 @@ void verhogen() {
         return;
     }
 
+    //Check if process is blocked on this semaphore
+    pcb_PTR blocked = headBlocked(sem);
+
+
     //Check if the semaphore is already at its maximum value
     if (*sem == 1)
     {
@@ -321,16 +326,13 @@ void verhogen() {
     if (*sem <= 0)
     {
       
-
-        //Remove the first process from the semaphore queue
-        pcb_t *unblocked = removeBlocked(sem);
-
-        //Decrement the soft block counter
-        if (unblocked != NULL)
+        //Check if there are blocked process on this semaphore
+        if (blocked != NULL)
         {
+            removeBlocked(sem); 
 
             // Insert the process in the ready queue
-            addToReadyQueue(unblocked);
+            addToReadyQueue(blocked);
             soft_block_count--;
         }
         else

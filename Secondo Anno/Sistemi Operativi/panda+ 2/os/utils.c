@@ -67,24 +67,14 @@ int list_search_el(list_head* searchElement, list_head* list){
 
 //TODO REMOVE THESE LINES
 
-#define MAXPROC 20
 #define MAXSEM  MAXPROC
-#define MAXNS   MAXPROC
 #define TRANSMITTED 5
-#define ACK         1
 #define PRINTCHR    2
 #define CHAROFFSET  8
 #define STATUSMASK  0xFF
-
 char   okbuf[2048]; /* sequence of progress messages */
 char   errbuf[128]; /* contains reason for failing */
-char   msgbuf[128]; /* nonrecoverable error message before shut down */
-int    sem[MAXSEM];
-int    onesem;
-pcb_t *procp[MAXPROC], *p, *q, *firstproc, *lastproc, *midproc;
-nsd_t *pid_ns, *pid_ns2;
 char  *mp = okbuf;
-
 typedef unsigned int devreg;
 
 /* This function returns the terminal transmitter status value given its address */
@@ -92,19 +82,19 @@ devreg termstat(memaddr *stataddr) {
     return ((*stataddr) & STATUSMASK);
 }
 
-/* This function prints a string on specified terminal and returns TRUE if
+/* This function prints a string on the specified terminal and returns TRUE if
  * print was successful, FALSE if not   */
 unsigned int termprint(char *str, unsigned int term) {
-    memaddr     *statusp;
-    memaddr     *commandp;
-    devreg       stat;
-    devreg       cmd;
+    memaddr *statusp;
+    memaddr *commandp;
+    devreg stat;
+    devreg cmd;
     unsigned int error = FALSE;
 
     if (term < DEVPERINT) {
         /* terminal is correct */
         /* compute device register field addresses */
-        statusp  = (devreg *)(TERM0ADDR + (term * DEVREGSIZE) + (TRANSTATUS * DEVREGLEN));
+        statusp = (devreg *)(TERM0ADDR + (term * DEVREGSIZE) + (TRANSTATUS * DEVREGLEN));
         commandp = (devreg *)(TERM0ADDR + (term * DEVREGSIZE) + (TRANCOMMAND * DEVREGLEN));
 
         /* test device status */
@@ -114,7 +104,7 @@ unsigned int termprint(char *str, unsigned int term) {
 
             /* print cycle */
             while (*str != EOS && !error) {
-                cmd       = (*str << CHAROFFSET) | PRINTCHR;
+                cmd = (*str << CHAROFFSET) | PRINTCHR;
                 *commandp = cmd;
 
                 /* busy waiting */
@@ -126,7 +116,7 @@ unsigned int termprint(char *str, unsigned int term) {
                 if (stat != TRANSMITTED)
                     error = TRUE;
                 else
-                    /* move to next char */
+                    /* move to the next char */
                     str++;
             }
         } else
@@ -139,9 +129,8 @@ unsigned int termprint(char *str, unsigned int term) {
     return (!error);
 }
 
-
-/* This function placess the specified character string in okbuf and
- *	causes the string to be written out to terminal0 */
+/* This function places the specified character string in okbuf and
+ * causes the string to be written out to terminal0 */
 void addokbuf(char *strp) {
     char *tstrp = strp;
     while ((*mp++ = *strp++) != '\0')
@@ -150,12 +139,11 @@ void addokbuf(char *strp) {
     termprint(tstrp, 0);
 }
 
-
-/* This function placess the specified character string in errbuf and
- *	causes the string to be written out to terminal0.  After this is done
- *	the system shuts down with a panic message */
+/* This function places the specified character string in errbuf and
+ * causes the string to be written out to terminal0. After this is done,
+ * the system shuts down with a panic message */
 void adderrbuf(char *strp) {
-    char *ep    = errbuf;
+    char *ep = errbuf;
     char *tstrp = strp;
 
     while ((*ep++ = *strp++) != '\0')
@@ -165,6 +153,7 @@ void adderrbuf(char *strp) {
 
     PANIC();
 }
+
 
 
 // Function to set a 32-bit integer value at index i as a bitmask
