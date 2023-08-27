@@ -129,16 +129,7 @@ void print(char *msg) {
         s++;
     }
 
-    // if(running_proc_pid == 5){
-    //     adderrbuf("XXXX\n");
-    // }
-
     SYSCALL(VERHOGEN, (int)&sem_term_mut, 0, 0); /* V(sem_term_mut) */
-
-    if (running_proc_pid == 5)
-    {
-        adderrbuf("YYY\n");
-    }
 }
 
 
@@ -162,7 +153,7 @@ void test() {
 
     SYSCALL(VERHOGEN, (int)&sem_testsem, 0, 0); /* V(sem_testsem)   */
 
-    print("p1 v(sem_testsem)\n");
+    //print("p1 v(sem_testsem)\n");
 
     /* set up states of the other processes */
 
@@ -276,25 +267,25 @@ void test() {
     ns2_b_state.pc_epc = ns2_b_state.reg_t9 = (memaddr)ns_p_new_ns;
     ns2_b_state.status                      = ns2_b_state.status | IEPBITON | CAUSEINTMASK | TEBITON;
 
-    /* create process p2 */
-    p2pid = SYSCALL(CREATEPROCESS, (int)&p2state, (int)NULL, (int)NULL); /* start p2     */
+    // /* create process p2 */
+    // p2pid = SYSCALL(CREATEPROCESS, (int)&p2state, (int)NULL, (int)NULL); /* start p2     */
 
-    print("p2 was started\n");
+    // print("p2 was started\n");
 
-    SYSCALL(VERHOGEN, (int)&sem_startp2, 0, 0); /* V(sem_startp2)   */
+    // SYSCALL(VERHOGEN, (int)&sem_startp2, 0, 0); /* V(sem_startp2)   */
     
-    SYSCALL(VERHOGEN, (int)&sem_endp2, 0, 0); /* V(sem_endp2) (blocking V!)     */
+    // SYSCALL(VERHOGEN, (int)&sem_endp2, 0, 0); /* V(sem_endp2) (blocking V!)     */
     
-    /* make sure we really blocked */
-    if (p1p2synch == 0) {
-        print("error: p1/p2 synchronization bad\n");
-    }
+    // /* make sure we really blocked */
+    // if (p1p2synch == 0) {
+    //     print("error: p1/p2 synchronization bad\n");
+    // }
     
-    p3pid = SYSCALL(CREATEPROCESS, (int)&p3state, (int)NULL, (int)NULL); /* start p3     */
+    // p3pid = SYSCALL(CREATEPROCESS, (int)&p3state, (int)NULL, (int)NULL); /* start p3     */
 
-    print("p3 is started\n");
+    // print("p3 is started\n");
 
-    SYSCALL(PASSEREN, (int)&sem_endp3, 0, 0); /* P(sem_endp3)     */
+    // SYSCALL(PASSEREN, (int)&sem_endp3, 0, 0); /* P(sem_endp3)     */
 
 
     SYSCALL(CREATEPROCESS, (int)&hp_p1state, (int)NULL, (int)NULL);
@@ -311,9 +302,6 @@ void test() {
     pFiveSupport.sup_exceptContext[PGFAULTEXCEPT].pc       = (memaddr)p5mm;
 
     SYSCALL(CREATEPROCESS, (int)&p5state, (int)&(pFiveSupport), (int)NULL); /* start p5     */
-
-        //adderrbuf("&\n");
-
 
     SYSCALL(CREATEPROCESS, (int)&p6state, (int)NULL, (int)NULL); /* start p6		*/
 
@@ -466,6 +454,7 @@ void p3() {
 
 /* p4 -- termination test process */
 void p4() {
+
     switch (p4inc) {
         case 1:
             print("first incarnation of p4 starts\n");
@@ -778,15 +767,16 @@ void hp_p1() {
 
 void hp_p2() {
 
-    print("hp_p2 starts\n");
 
-    adderrbuf("hp_p2 starts\n");
+    print("hp_p2 starts\n");
+    
+
     for (int i = 0; i < 10; i++) {
         SYSCALL(CLOCKWAIT, 0, 0, 0);
     }
 
     SYSCALL(TERMPROCESS, 0, 0, 0);
-    print("Error: hp_p2 didn't die!\n");
+    print("Error: hp_p2     idn't die!\n");
     PANIC();
 }
 

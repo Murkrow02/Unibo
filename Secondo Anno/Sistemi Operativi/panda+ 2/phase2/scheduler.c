@@ -122,6 +122,8 @@ void scheduleNext(){
 
     z_scheduler_breakpoint();
 
+
+
     //Save running proc state in its pcb
     if(running_proc != NULL){
 
@@ -171,6 +173,7 @@ void scheduleNext(){
     
     // PLT (Process Local Timer) 5ms (this will give the process a maximum of 5ms to run before being preempted)
     setTIMER(TIMESLICE * (*((cpu_t *)TIMESCALEADDR))); 
+    //setTIMER(999999999 * (*((cpu_t *)TIMESCALEADDR))); 
 
     //Save start time of the new process
     STCK(running_proc_start); 

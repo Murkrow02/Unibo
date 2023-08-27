@@ -221,9 +221,14 @@ void terminate_process(int pid) {
     }
 }
 
+//Debug 
+int blocked_on_terminal = 0;
+extern int sem_term_mut;
+
 //SYS3 MURK
 void passeren(int *sem) {
 
+    
 
     z_breakpoint_passeren();
 
@@ -247,7 +252,10 @@ void passeren(int *sem) {
         soft_block_count++;
 
         //Insert the process in the semaphore queue
-        insertBlocked(sem, running_proc);
+        int result = insertBlocked(sem, running_proc);
+        if(result == TRUE){
+            adderrbuf("Cannot insert process in semaphore queue\n");
+        }
 
         //Schedule the next process
         PC_INCREMENT; //NEED TO DO MANUALLY AS NOT DONE AT END OF SYSCALL HANDLER
@@ -255,6 +263,7 @@ void passeren(int *sem) {
     }
     else //Sem is more than 0
     {
+
 
         //Check if there is a process to unblock (when the semaphore is more than 0 there should be no blocked processes)
         //But a process could have been blocked by a verhogen() call when the semaphore was 1
@@ -281,11 +290,13 @@ void passeren(int *sem) {
     //TODO
 }
 
+
 //SYS4 MURK
 void verhogen() {
 
     //Retrieve the semaphore
     int *sem = (int *)(REG_A1_SS);
+
 
     //Check if the semaphore is valid
     if (sem == NULL)
@@ -297,6 +308,8 @@ void verhogen() {
     //Check if the semaphore is already at its maximum value
     if (*sem == 1)
     {
+
+
         soft_block_count++;
         insertBlocked(sem, running_proc);
         PC_INCREMENT; //NEED TO DO MANUALLY AS NOT DONE AT END OF SYSCALL HANDLER
@@ -304,24 +317,26 @@ void verhogen() {
         return;
     }
 
-    //Check if there are blocked processes
+    //Semaphore indicates no resource is available
     if (*sem <= 0)
     {
+      
+
         //Remove the first process from the semaphore queue
         pcb_t *unblocked = removeBlocked(sem);
 
         //Decrement the soft block counter
         if (unblocked != NULL)
         {
+
             // Insert the process in the ready queue
-            insertProcQ(&(ready_queue), unblocked);
+            addToReadyQueue(unblocked);
             soft_block_count--;
         }
-
-        //Check if there are other waiting
-        if(headBlocked(sem) == NULL)
+        else
         {
-            //Increment the semaphore if no other processes are waiting
+             
+            // Increment the semaphore if no other processes are waiting
             (*sem)++;
         }
     }

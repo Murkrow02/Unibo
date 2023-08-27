@@ -49,6 +49,9 @@ int insertBlocked(int *semAdd, pcb_t *p) {
     
     //Prendi il primo semaforo libero
     semd_t* firstFreeSem = container_of(semdFree_h.next, semd_t, s_freelink);
+    if(firstFreeSem == NULL){
+      return TRUE; //Non ce ne sono
+    }
     
     //Aggiungo al processo il suo semaforo dove e bloccato
     p->p_semAdd = semAdd;
