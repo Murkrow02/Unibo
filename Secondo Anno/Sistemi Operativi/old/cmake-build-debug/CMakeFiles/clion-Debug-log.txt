@@ -1,4 +1,0 @@
-Cannot generate into /Users/valeriopiodenicola/Desktop/scuola/Unibo/Secondo Anno/Sistemi Operativi/panda+
-It is already used for project /media/psf/Unibo/Secondo Anno/Sistemi Operativi/panda+
-
-Please either delete it manually or select another generation directory

@@ -1,2 +1,0 @@
-/usr/bin/ar cr liblibumps.a CMakeFiles/libumps.dir/usr/share/umps3/libumps.S.o 
-/usr/bin/ranlib liblibumps.a

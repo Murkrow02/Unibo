@@ -1,2 +1,0 @@
-/usr/bin/mipsel-linux-gnu-ar cr libcrtso.a CMakeFiles/crtso.dir/usr/share/umps3/crtso.S.o 
-/usr/bin/mipsel-linux-gnu-ranlib libcrtso.a
