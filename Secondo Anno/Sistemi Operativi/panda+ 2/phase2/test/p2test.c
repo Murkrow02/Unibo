@@ -724,7 +724,7 @@ void p8leaf4() {
     SYSCALL(PASSEREN, (int)&sem_blkp8, 0, 0);
 }
 
-extern int running_proc_pid;
+
 void p9() {
     print("p9 starts\n");
 
@@ -740,11 +740,6 @@ void p10() {
 
     if (ppid != p9pid) {
         print("Inconsistent process id for p9!\n");
-        PANIC();
-    }
-
-     if(ppid != 10){
-        print("UA\n");
         PANIC();
     }
 
