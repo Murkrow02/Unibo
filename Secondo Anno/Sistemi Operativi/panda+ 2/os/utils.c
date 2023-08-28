@@ -63,6 +63,21 @@ int list_search_el(list_head* searchElement, list_head* list){
     return 0;
 }
 
+extern int sem_terminal_in[8];
+extern int sem_terminal_out[8];
+bool isDeviceSem(int *sem)
+{
+    for (int i = 0; i < DEVPERINT; i++)
+    {
+        if (sem == &sem_terminal_in[i] || sem == &sem_terminal_out[i])
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 
 
 

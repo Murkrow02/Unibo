@@ -43,7 +43,7 @@ void strcopy(char *dest, char *src, int len);
 //Check if given list element pointer is inside list
 int list_search_el(list_head* searchElement, list_head* list);
 
-
+int isDeviceSem(int *sem);
 
 
 void addokbuf(char *strp);

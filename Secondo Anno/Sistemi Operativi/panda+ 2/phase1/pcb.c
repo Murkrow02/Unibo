@@ -200,22 +200,15 @@ void insertChild(pcb_t *prnt, pcb_t *p)
 pcb_t *removeChild(pcb_t *p)
 {
 
-    // Check that p is not pointing to NULL
-    if (p == NULL)
+    if(list_empty(&p->p_child))
         return NULL;
+    pcb_t *firstChild = container_of(p->p_child.next, pcb_t, p_sib);
 
-    // Check that list is not empty
-    if (list_empty(&p->p_child))
-        return NULL;
+    list_del(p->p_child.next);          /* Remove p's first child from p_child list and p_sib list */
+    INIT_LIST_HEAD(&firstChild->p_sib); /* Initialize firstChild p_sib list as a empty list        */
+    firstChild->p_parent = NULL;        /* FirstChild as no parent anymore                         */
 
-    // List not empty, retreive first child of p
-    pcb_t *target = container_of(p->p_child.next, pcb_t, p_child);
-
-    // Remove first child of p
-    list_del(p->p_child.next);
-
-    // List not empty, actually return item
-    return target;
+    return firstChild;
 }
 
 // Like function above but search for p in parent's child list

@@ -73,7 +73,7 @@ void syscall_handler() {
 
         case VERHOGEN:
             z_breakpoint_verhogen();
-            verhogen();
+            verhogen(NULL);
             break;
 
         case DOIO:
@@ -107,15 +107,19 @@ void syscall_handler() {
     
 }
 
-
+int zzzzzzzzchildpid=0;
 void killSelfAndProgeny(pcb_PTR proc)
 {
-     
+  
     //Iterate over the children of the current process and kill them
     pcb_PTR child;
-    while (child = removeChild(proc) != NULL)
+    while ((child = removeChild(proc)) != NULL)
     {
-        
+        //   if(proc->p_pid == 10 && child->p_pid == 12){
+        //     zzzzzzzzchildpid = child->p_pid;
+        //     adderrbuf("FIGLI\n");
+        // }
+
         killOne(child);
     }
 
@@ -123,21 +127,37 @@ void killSelfAndProgeny(pcb_PTR proc)
 }
 
 //Internal function used to kill a process
+extern int sem_term_mut;
 void killOne(pcb_PTR proc){
 
 
+
+
     //Remove the current process from the children of his parent (if any)
-    outChild(proc); //TODO:
+    outChild(proc); 
+     
 
     //Remove the process from semaphore queue
+    if(proc->p_semAdd != NULL){
+
+        if(isDeviceSem(proc->p_semAdd) == false && headBlocked(proc->p_semAdd) == NULL){
+            *(proc->p_semAdd) = 1;
+        }
+    }
+        
+
+        //adderrbuf("Process is not blocked on semaphore\n");
+
     outBlocked(proc);
+
+    
 
     //Remove the process from the ready queue (if not current process)
     if(proc != running_proc)
         removeFromReadyQueue(proc);
     process_count--;
 
-    //initializePcb(proc);
+    freePcb(proc);
 }
 
 
@@ -158,6 +178,10 @@ int create_process()
 
     // Allocate a new process
     pcb_t *newProcess = allocPcb();
+
+    // if(newProcess->p_pid == 11){
+    //     adderrbuf("Process 11 allocated\n");
+    // }
 
     if (newProcess == NULL)
     {
@@ -193,6 +217,7 @@ int create_process()
 
 
 //SYS2 VALEX
+int invoked_process_pid = 0;
 void terminate_process(int pid) {
 
     //Retrieve the pid of the process to kill (from registry or from function param)
@@ -215,9 +240,11 @@ void terminate_process(int pid) {
         int i;
         for (i = 0; i < MAXPROC; i++) {
             if (pcb_table[i].p_pid == pid) {
+                invoked_process_pid = pid;
                 process = &pcb_table[i];
                 killSelfAndProgeny(process);
-                break;
+                running_proc = NULL;
+                scheduleNext();
             }
         }
     }
@@ -293,12 +320,13 @@ void passeren(int *sem) {
     //TODO
 }
 
-
+int zzzzzz_blockedOnSem = 0;
 //SYS4 MURK
-void verhogen() {
+void verhogen(int *sem) {
 
-    //Retrieve the semaphore
-    int *sem = (int *)(REG_A1_SS);
+    //Retrieve the semaphore (from syscall param or from function param)
+    if(sem == NULL)
+        sem = (int *)(REG_A1_SS);
 
 
     //Check if the semaphore is valid
@@ -315,8 +343,6 @@ void verhogen() {
     //Check if the semaphore is already at its maximum value
     if (*sem == 1)
     {
-
-
         soft_block_count++;
         insertBlocked(sem, running_proc);
         PC_INCREMENT; //NEED TO DO MANUALLY AS NOT DONE AT END OF SYSCALL HANDLER
@@ -332,6 +358,7 @@ void verhogen() {
         if (blocked != NULL)
         {
             removeBlocked(sem); 
+            zzzzzz_blockedOnSem = blocked->p_pid;
 
             // Insert the process in the ready queue
             addToReadyQueue(blocked);

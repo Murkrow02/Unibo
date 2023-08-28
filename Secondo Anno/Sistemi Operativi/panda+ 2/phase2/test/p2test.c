@@ -133,9 +133,11 @@ void print(char *msg) {
 /* TLB-Refill Handler */
 /* One can place debug calls here, but not calls to print */
 void uTLB_RefillHandler() {
+
     setENTRYHI(0x80000000);
     setENTRYLO(0x00000000);
     TLBWR();
+
     LDST((state_t *)0x0FFFF000);
 }
 
@@ -575,8 +577,8 @@ void p5() {
 }
 
 void p5a() {
-
     /* generage a TLB exception after a TLB-Refill event */
+
     p5MemLocation  = (memaddr *)0x80000000;
     *p5MemLocation = 42;
     
@@ -607,8 +609,6 @@ void p5b() {
     /* should cause a termination       */
     /* since this has already been      */
     /* done for PROGTRAPs               */
-
-    print("p5 is OK\n");
 
     SYSCALL(TERMPROCESS, 0, 0, 0);
 
@@ -724,7 +724,7 @@ void p8leaf4() {
     SYSCALL(PASSEREN, (int)&sem_blkp8, 0, 0);
 }
 
-
+extern int running_proc_pid;
 void p9() {
     print("p9 starts\n");
 
@@ -740,6 +740,11 @@ void p10() {
 
     if (ppid != p9pid) {
         print("Inconsistent process id for p9!\n");
+        PANIC();
+    }
+
+     if(ppid != 10){
+        print("UA\n");
         PANIC();
     }
 
