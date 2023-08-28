@@ -171,9 +171,6 @@ void interrupt_handler(){
 //This is called when an unhandled exception occurs like a bad syscall number or a bad memory address
 void pass_up_or_die(int code){
 
-    if(code == PGFAULTEXCEPT){
-        adderrbuf("Page fault exception \n");
-    }
     //If no support struct is present, terminate the process
     if(running_proc->p_supportStruct == NULL){
 

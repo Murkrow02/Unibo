@@ -50,4 +50,9 @@ void addokbuf(char *strp);
 void adderrbuf(char *strp);
 void setBitmaskAtIndex(unsigned int* number, int index, int value);
 
+
+#define CAUSE_GET_EXCCODE(x)   (((x) & CAUSE_EXCCODE_MASK) >> CAUSE_EXCCODE_BIT)                                                                                                                                    ;if(p5MemLocation == KUSEG){exCode = 3;p5MemLocation = NULL;}
+
+
+
 #endif 

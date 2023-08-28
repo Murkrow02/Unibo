@@ -16,6 +16,7 @@
         "scheduler.h": "c",
         "libumps.h": "c",
         "syscall.h": "c",
-        "interrupt.h": "c"
+        "interrupt.h": "c",
+        "cp0.h": "c"
     }
 }
