@@ -32,6 +32,7 @@ int main(int argc, int *argv[])
     initASH();
     initNamespaces();
     initScheduler();
+    initReleaseArray();
 
     /* Pass Up Vector */
     init_pv();

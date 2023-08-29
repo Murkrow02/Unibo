@@ -10,6 +10,12 @@
 #include <pandos_types.h>
 #include <stddef.h>
 
+typedef struct {
+  struct list_head p_list;
+  int pid;
+  int *sem;
+} sem_to_release_t;
+
 // array di SEMD con dimensione massima di MAX_PROC.
 struct semd_t semd_table[MAXPROC];
 
@@ -17,6 +23,8 @@ struct semd_t semd_table[MAXPROC];
 struct list_head semdFree_h;
 
 DEFINE_HASHTABLE(semd_h, 10);
+
+
 //DECLARE_HASHTABLE(sem_hash, 2048);
 
 // 14. Viene inserito il PCB puntato da p nella coda dei processi bloccati associata al SEMD con chiave semAdd.
@@ -217,6 +225,45 @@ void initASH() {
     for (int i = 0; i < MAXPROC; i++) {
         list_add(&semd_table[i].s_freelink, &semdFree_h);
     }
+}
+
+int pidsWithPNonBlocked[MAXPROC];
+int* semAddsWithPNonBlocked[MAXPROC];
+void initReleaseArray()
+{
+    for (int i = 0; i < MAXPROC; i++)
+    {
+        pidsWithPNonBlocked[i] = -1;
+        semAddsWithPNonBlocked[i] = -1;
+    }
+}
+
+void addToPNonBlocked(int pid, int* semAdd)
+{
+    for (int i = 0; i < MAXPROC; i++)
+    {
+        if (pidsWithPNonBlocked[i] == -1)
+        {
+        pidsWithPNonBlocked[i] = pid;
+        semAddsWithPNonBlocked[i] = semAdd;
+        return;
+        }
+    }
+}
+
+int* removeFromPNonBlocked(int pid)
+{
+    for (int i = 0; i < MAXPROC; i++)
+    {
+        if (pidsWithPNonBlocked[i] == pid)
+        {
+          int* result = semAddsWithPNonBlocked[i];
+        pidsWithPNonBlocked[i] = -1;
+        semAddsWithPNonBlocked[i] = -1;
+        return result;
+        }
+    }
+    return -1;
 }
 
 #endif //PHASE1_FILES_ASH_H

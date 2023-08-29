@@ -62,14 +62,11 @@ pcb_t* outBlocked(pcb_t *p);
 pcb_t* headBlocked(int *semAdd);
 
 
-/*
-    Inizializza la lista dei semdFree in 
-    modo da contenere tutti gli elementi 
-    della semdTable. Questo metodo 
-    viene invocato una volta sola durante 
-    l’inizializzazione della struttura dati.
-*/
-void initASL();
 
+void initReleaseArray();
+
+void addToPNonBlocked(int pid, int* semAdd);
+
+int* removeFromPNonBlocked(int pid);
 
 #endif

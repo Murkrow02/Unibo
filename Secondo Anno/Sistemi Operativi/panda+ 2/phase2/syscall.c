@@ -96,6 +96,10 @@ void syscall_handler() {
             get_pid();
             break;
 
+        case GETSUPPORTPTR:
+            get_support_data();
+            break;
+
         default:
             pass_up_or_die(GENERALEXCEPT);
             break;
@@ -120,7 +124,7 @@ void killSelfAndProgeny(pcb_PTR proc)
         //     adderrbuf("FIGLI\n");
         // }
 
-        killOne(child);
+        killSelfAndProgeny(child);
     }
 
     killOne(proc);
@@ -130,17 +134,27 @@ void killSelfAndProgeny(pcb_PTR proc)
 extern int sem_term_mut;
 void killOne(pcb_PTR proc){
 
-
-
-
     //Remove the current process from the children of his parent (if any)
     outChild(proc); 
-     
+
+    //Check if this proc forgot to release a resource (and release it manually)
+    int forgottenSemaphore = removeFromPNonBlocked(proc->p_pid);
+    if(forgottenSemaphore != -1){
+        verhogen(forgottenSemaphore);
+    }
 
     //Remove the process from semaphore queue
     if(proc->p_semAdd != NULL){
 
+        // if (proc->p_pid == 7)
+        // {
+        //     adderrbuf("Process 7 is blocked on a semaphore\n");
+        // }
+
         if(isDeviceSem(proc->p_semAdd) == false && headBlocked(proc->p_semAdd) == NULL){
+
+            
+
             *(proc->p_semAdd) = 1;
         }
     }
@@ -273,6 +287,8 @@ void passeren(int *sem) {
         return;
     }
 
+
+
     //Check if need to block the process
     if (*sem == 0)
     {
@@ -311,8 +327,11 @@ void passeren(int *sem) {
         }
         
 
-        //Decrement the semaphore
+        //Decrement the semaphore   
         (*sem)--;
+
+        //Log that this process requested for a resource (and eventually release it manually if terminate without releasing)
+        addToPNonBlocked(running_proc->p_pid, sem);
     }else{
         adderrbuf("Invalid semaphore value\n");
     }
@@ -338,6 +357,9 @@ void verhogen(int *sem) {
 
     //Check if process is blocked on this semaphore
     pcb_PTR blocked = headBlocked(sem);
+
+    //Remove from unreleased resources
+    removeFromPNonBlocked(running_proc->p_pid);
 
 
     //Check if the semaphore is already at its maximum value
@@ -376,7 +398,6 @@ void verhogen(int *sem) {
 //SYS5 MURK
 
 int iosem = 0;
-
 int do_io() {
 
     //Take the parameters
@@ -390,17 +411,24 @@ int do_io() {
 
 
     //Detect if terminal device (by checking the address range of the command)
+    devregtr *base = (devregtr *)TERM0ADDR;
     if((int)cmdAddr <= LAST_TERM_ADDR && (int)cmdAddr >= TERM0ADDR) //Targeting a terminal device
     {
         //Get terminal index (0-7)
-        int termIndex = ((int)cmdAddr-TERM0ADDR)/DEVREGSIZE;
+        int offset = (devregtr *)cmdAddr-base;
+        int termIndex = offset/DEVREGSIZE;
+        if(termIndex != 0)
+            adderrbuf("Terminal index is not 0\n");
+
+        //Round to nearest terminal index (per difetto)
+        cmdAddr = TERM0ADDR + termIndex*DEVREGSIZE;
 
         //This offset is copied from addokbuf function provided by tests
         memaddr *commandp = (devregtr *)((int)cmdAddr + (TRANCOMMAND * DEVREGLEN));         
 
         //Execute command
         //setSTATUS(getSTATUS() & DISABLEINTS);
-        *commandp = value[0];
+        *commandp = value[0] != 0 ? value[0] : value[1];
 
         //For now only output works, later detect how to handle input
         passeren(&sem_terminal_out[termIndex]);

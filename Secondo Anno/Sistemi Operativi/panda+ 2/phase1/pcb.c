@@ -101,7 +101,6 @@ pcb_t *initializePcb(pcb_t *pcb)
 
 pcb_t *allocPcb()
 {
-
     if (list_empty(&pcb_free))
         return NULL;
 
