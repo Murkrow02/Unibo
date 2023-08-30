@@ -19,7 +19,6 @@ void copyState(state_t *original, state_t *dest)
     {
         dest->gpr[i] = original->gpr[i];
     }
-    
 }
 
 int extractBits(int num, int start, int end) {

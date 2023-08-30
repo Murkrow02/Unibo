@@ -240,6 +240,9 @@ void initReleaseArray()
 
 void addToPNonBlocked(int pid, int* semAdd)
 {
+  if(isDeviceSem(semAdd))
+    return;
+
     for (int i = 0; i < MAXPROC; i++)
     {
         if (pidsWithPNonBlocked[i] == -1)
@@ -251,19 +254,50 @@ void addToPNonBlocked(int pid, int* semAdd)
     }
 }
 
-int* removeFromPNonBlocked(int pid)
-{
-    for (int i = 0; i < MAXPROC; i++)
-    {
-        if (pidsWithPNonBlocked[i] == pid)
-        {
-          int* result = semAddsWithPNonBlocked[i];
-        pidsWithPNonBlocked[i] = -1;
-        semAddsWithPNonBlocked[i] = -1;
-        return result;
-        }
-    }
-    return -1;
-}
+// int *removeFromPNonBlocked(int pid, int *semAdd)
+// {
+//     if(isDeviceSem(semAdd))
+//     return NULL;
+
+//     for (int i = 0; i < MAXPROC; i++)
+//     {
+//         if (pidsWithPNonBlocked[i] == pid && semAddsWithPNonBlocked[i] == semAdd)
+//         {
+//         int *result = semAddsWithPNonBlocked[i];
+//         pidsWithPNonBlocked[i] = -1;
+//         semAddsWithPNonBlocked[i] = -1;
+//         return result;
+//         }
+//     }
+//     return NULL;
+// }
+
+// int *removeFirstPNonBlockedForPid(int pid)
+// {
+  
+//     for (int i = 0; i < MAXPROC; i++)
+//     {
+//         if (pidsWithPNonBlocked[i] == pid)
+//         {
+//         int *result = semAddsWithPNonBlocked[i];
+//         pidsWithPNonBlocked[i] = -1;
+//         semAddsWithPNonBlocked[i] = -1;
+//         return result;
+//         }
+//     }
+//     return NULL;
+// }
+
+// bool checkIfPNonBlocked(int pid)
+// {
+//     for (int i = 0; i < MAXPROC; i++)
+//     {
+//         if (pidsWithPNonBlocked[i] == pid)
+//         {
+//         return true;
+//         }
+//     }
+//     return false;
+// }
 
 #endif //PHASE1_FILES_ASH_H

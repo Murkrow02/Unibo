@@ -1,4 +1,4 @@
-/* File: $Id: p2test.c,v 1.1 1998/01/20 09:28:08 morsiani Exp morsiani $ */
+/* THIS IS 2 File: $Id: p2test.c,v 1.1 1998/01/20 09:28:08 morsiani Exp morsiani $ */
 
 /*********************************P2TEST.C*******************************
  *
@@ -20,6 +20,7 @@
 #include <pandos_types.h>
 #include <ns.h>
 #include <umps/libumps.h>
+#include <utils.h>
 
 typedef unsigned int devregtr;
 
@@ -64,8 +65,6 @@ typedef unsigned int devregtr;
 #define MAXSEM   20
 
 #define NS_MAXCHILDREN 5
-
-#define USERSYSCALL 11
 
 
 int sem_term_mut = 1,              /* for mutual exclusion on terminal */
@@ -126,7 +125,7 @@ extern void p5mm();
 void print(char *msg) {
     char     *s       = msg;
     devregtr *base    = (devregtr *)(TERM0ADDR);
-    devregtr *command = base + 2;
+    devregtr *command = base + 8;
     devregtr  status;
 
     SYSCALL(PASSEREN, (int)&sem_term_mut, 0, 0); /* P(sem_term_mut) */
@@ -159,9 +158,9 @@ void uTLB_RefillHandler() {
 /*                 p1 -- the root process                            */
 /*                                                                   */
 void test() {
-    SYSCALL(VERHOGEN, (int)&sem_testsem, 0, 0); /* V(sem_testsem)   */
 
-    //print("p1 v(sem_testsem)\n");
+    SYSCALL(VERHOGEN, (int)&sem_testsem, 0, 0); /* V(sem_testsem)   */
+    print("p1 v(sem_testsem)\n");
 
     /* set up states of the other processes */
 
@@ -275,66 +274,70 @@ void test() {
     ns2_b_state.pc_epc = ns2_b_state.reg_t9 = (memaddr)ns_p_new_ns;
     ns2_b_state.status                      = ns2_b_state.status | IEPBITON | CAUSEINTMASK | TEBITON;
 
-    // /* create process p2 */
-    // p2pid = SYSCALL(CREATEPROCESS, (int)&p2state, (int)NULL, (int)NULL); /* start p2     */
+    /* create process p2 */
+    p2pid = SYSCALL(CREATEPROCESS, (int)&p2state, (int)NULL, (int)NULL); /* start p2     */
 
-    // print("p2 was started\n");
+    print("p2 was started\n");
 
-    // SYSCALL(VERHOGEN, (int)&sem_startp2, 0, 0); /* V(sem_startp2)   */
+    SYSCALL(VERHOGEN, (int)&sem_startp2, 0, 0); /* V(sem_startp2)   */
     
-    // SYSCALL(VERHOGEN, (int)&sem_endp2, 0, 0); /* V(sem_endp2) (blocking V!)     */
+    SYSCALL(VERHOGEN, (int)&sem_endp2, 0, 0); /* V(sem_endp2) (blocking V!)     */
     
-    // /* make sure we really blocked */
-    // if (p1p2synch == 0) {
-    //     print("error: p1/p2 synchronization bad\n");
-    // }
+    /* make sure we really blocked */
+    if (p1p2synch == 0) {
+        print("error: p1/p2 synchronization bad\n");
+    }
     
-    // p3pid = SYSCALL(CREATEPROCESS, (int)&p3state, (int)NULL, (int)NULL); /* start p3     */
+    p3pid = SYSCALL(CREATEPROCESS, (int)&p3state, (int)NULL, (int)NULL); /* start p3     */
 
-    // print("p3 is started\n");
+    print("p3 is started\n");
 
-    // SYSCALL(PASSEREN, (int)&sem_endp3, 0, 0); /* P(sem_endp3)     */
+    SYSCALL(PASSEREN, (int)&sem_endp3, 0, 0); /* P(sem_endp3)     */
 
-    // SYSCALL(CREATEPROCESS, (int)&hp_p1state, (int)NULL, (int)NULL);
+    SYSCALL(CREATEPROCESS, (int)&hp_p1state, (int)NULL, (int)NULL);
     
-    // SYSCALL(CREATEPROCESS, (int)&hp_p2state, (int)NULL, (int)NULL);
+    SYSCALL(CREATEPROCESS, (int)&hp_p2state, (int)NULL, (int)NULL);
 
-    // p4pid = SYSCALL(CREATEPROCESS, (int)&p4state, (int)NULL, (int)NULL); /* start p4     */
+    p4pid = SYSCALL(CREATEPROCESS, (int)&p4state, (int)NULL, (int)NULL); /* start p4     */
 
-    // pFiveSupport.sup_exceptContext[GENERALEXCEPT].stackPtr = (int)p5Stack;
-    // pFiveSupport.sup_exceptContext[GENERALEXCEPT].status   = ALLOFF | IEPBITON | CAUSEINTMASK | TEBITON;
-    // pFiveSupport.sup_exceptContext[GENERALEXCEPT].pc       = (memaddr)p5gen;
-    // pFiveSupport.sup_exceptContext[PGFAULTEXCEPT].stackPtr = p5Stack;
-    // pFiveSupport.sup_exceptContext[PGFAULTEXCEPT].status   = ALLOFF | IEPBITON | CAUSEINTMASK | TEBITON;
-    // pFiveSupport.sup_exceptContext[PGFAULTEXCEPT].pc       = (memaddr)p5mm;
+    pFiveSupport.sup_exceptContext[GENERALEXCEPT].stackPtr = (int)p5Stack;
+    pFiveSupport.sup_exceptContext[GENERALEXCEPT].status   = ALLOFF | IEPBITON | CAUSEINTMASK | TEBITON;
+    pFiveSupport.sup_exceptContext[GENERALEXCEPT].pc       = (memaddr)p5gen;
+    pFiveSupport.sup_exceptContext[PGFAULTEXCEPT].stackPtr = p5Stack;
+    pFiveSupport.sup_exceptContext[PGFAULTEXCEPT].status   = ALLOFF | IEPBITON | CAUSEINTMASK | TEBITON;
+    pFiveSupport.sup_exceptContext[PGFAULTEXCEPT].pc       = (memaddr)p5mm;
 
-    // SYSCALL(CREATEPROCESS, (int)&p5state, (int)&(pFiveSupport), (int)NULL); /* start p5     */
+    SYSCALL(CREATEPROCESS, (int)&p5state, (int)&(pFiveSupport), (int)NULL); /* start p5     */
 
-    // SYSCALL(CREATEPROCESS, (int)&p6state, (int)NULL, (int)NULL); /* start p6		*/
+    SYSCALL(CREATEPROCESS, (int)&p6state, (int)NULL, (int)NULL); /* start p6		*/
 
-    // SYSCALL(CREATEPROCESS, (int)&p7state, (int)NULL, (int)NULL); /* start p7		*/
+    SYSCALL(CREATEPROCESS, (int)&p7state, (int)NULL, (int)NULL); /* start p7		*/
 
-    // p9pid = SYSCALL(CREATEPROCESS, (int)&p9state, (int)NULL, (int)NULL); /* start p7		*/
+    p9pid = SYSCALL(CREATEPROCESS, (int)&p9state, (int)NULL, (int)NULL); /* start p7		*/
 
-    // SYSCALL(PASSEREN, (int)&sem_endp5, 0, 0); /* P(sem_endp5)		*/
+    SYSCALL(PASSEREN, (int)&sem_endp5, 0, 0); /* P(sem_endp5)		*/
 
-    // print("p1 knows p5 ended\n");
+    print("p1 knows p5 ended\n");
 
-    // SYSCALL(PASSEREN, (int)&sem_blkp4, 0, 0); /* P(sem_blkp4)		*/
+    SYSCALL(PASSEREN, (int)&sem_blkp4, 0, 0); /* P(sem_blkp4)		*/
 
-    // /* now for a more rigorous check of process termination */
-    // for (p8inc = 0; p8inc < 4; p8inc++) {
-    //     /* Reset semaphores */ 
-    //     sem_blkp8 = 0;
-    //     sem_endp8 = 0;
-    //     for (int i = 0; i < NOLEAVES; i++) {
-    //         sem_endcreate[i] = 0;
-    //     }
+    print("asd\n");
 
-    //     p8pid = SYSCALL(CREATEPROCESS, (int)&p8rootstate, (int)NULL, (int)NULL);
+    /* now for a more rigorous check of process termination */
+    for (p8inc = 0; p8inc < 4; p8inc++) {
+        /* Reset semaphores */ 
+        sem_blkp8 = 0;
+        sem_endp8 = 0;
+        for (int i = 0; i < NOLEAVES; i++) {
+            sem_endcreate[i] = 0;
+        }
 
-    //     SYSCALL(PASSEREN, (int)&sem_endp8, 0, 0);
-    // }
+        p8pid = SYSCALL(CREATEPROCESS, (int)&p8rootstate, (int)NULL, (int)NULL);
+
+        SYSCALL(PASSEREN, (int)&sem_endp8, 0, 0);
+    }
+
+    SYSCALL(PASSEREN, (int)&sem_endp4, 0, 0);
 
     SYSCALL(CREATEPROCESS, (int)&p11state, (int)NULL, (int)NULL); /* start p7		*/
     SYSCALL(PASSEREN, (int)&sem_p11, 0, 0);
@@ -345,85 +348,6 @@ void test() {
     /* should not reach this point, since p1 just got a program trap */
     print("error: p1 still alive after progtrap & no trap vector\n");
     PANIC(); /* PANIC !!!     */
-}
-
-void p11() {
-    int i;
-    int children_number = 0;
-    int children_pids[NS_MAXCHILDREN];
-    nsd_t *ns2 = NULL;
-    int found[2] = {};
-
-    print("p11 starts\n");
-
-    ns2 = allocNamespace(NS_PID);
-    if (ns2 == NULL) {
-        print("failed namespace management\n");
-        PANIC();
-    }
-
-    /* Create two process in the same PID space of this one */
-    ns1_a_pid = SYSCALL(CREATEPROCESS, (int)&ns1_a_state, (int)NULL, (int)NULL);
-    ns1_b_pid = SYSCALL(CREATEPROCESS, (int)&ns1_b_state, (int)NULL, (int)NULL);
-
-    
-
-    /* Create two process in the a different PID space of this one */
-    ns2_a_pid = SYSCALL(CREATEPROCESS, (int)&ns2_a_state, (int)NULL, (int)ns2);
-    ns2_b_pid = SYSCALL(CREATEPROCESS, (int)&ns2_b_state, (int)NULL, (int)ns2);
-
-    /* Get children should return only the number of children in our namespace */
-    children_number = SYSCALL(GETCHILDREN, (int)NULL, 0, 0);
-    if (children_number != 2) {
-        print("Inconsistent GETCHILDREN namespace management 1\n");
-        PANIC();
-    }
-
-    /* Get children should return only the number of children in our namespace */
-    children_number = SYSCALL(GETCHILDREN, (memaddr)&children_pids, NS_MAXCHILDREN, 0);
-    if (children_number != 2) {
-        print("Inconsistent GETCHILDREN namespace management 2\n");
-        PANIC();
-    }
-
-    for (i = 0 ; i < children_number ; ++i) {
-        if (children_pids[i] == ns1_a_pid) {
-            found[0] = 1;
-        } else if (children_pids[i] == ns1_b_pid) {
-            found[1] = 1;
-        } else {
-            print("Inconsistent GETCHILDREN namespace management (pid return 1)\n");
-            PANIC();
-        }
-    }
-
-    for (i = 0 ; i < children_number ; ++i) {
-        if (found[i] != 1) {
-            print("Inconsistent GETCHILDREN namespace management (pid return 2)\n");
-            PANIC();
-        }
-    }
-
-    print("p11, waiting for children\n");
-    /* Unlock all childrens */
-    SYSCALL(VERHOGEN, (int)&sem_l_ns1_a, 0, 0);
-    SYSCALL(VERHOGEN, (int)&sem_l_ns1_b, 0, 0);
-    SYSCALL(VERHOGEN, (int)&sem_l_ns2_a, 0, 0);
-    SYSCALL(VERHOGEN, (int)&sem_l_ns2_b, 0, 0);
-
-    /* Lock on all children to wait for termination */
-    SYSCALL(PASSEREN, (int)&sem_r_ns1_a, 0, 0);
-    SYSCALL(PASSEREN, (int)&sem_r_ns1_b, 0, 0);
-    SYSCALL(PASSEREN, (int)&sem_r_ns2_a, 0, 0);
-    SYSCALL(PASSEREN, (int)&sem_r_ns2_b, 0, 0);
-
-    SYSCALL(VERHOGEN, (int)&sem_p11, 0, 0);
-
-    /* Terminate all process */
-    SYSCALL(TERMPROCESS, 0, 0, 0);
-
-    print("Error: p11 didn't die!\n");
-    PANIC();
 }
 
 
@@ -674,10 +598,11 @@ void p5a() {
 
 /* second part of p5 - should be entered in user mode first time through */
 /* should generate a program trap (Address error) */
+extern int running_proc_pid;
 void p5b() {
     cpu_t time1, time2;
 
-    SYSCALL(USERSYSCALL, 0, 0, 0);
+    SYSCALL(1, 0, 0, 0);
     SYSCALL(PASSEREN, (int)&sem_endp4, 0, 0); /* P(sem_endp4)*/
 
     /* do some delay to be reasonably sure p4 and its offspring are dead */
@@ -697,7 +622,9 @@ void p5b() {
     /* should cause a termination       */
     /* since this has already been      */
     /* done for PROGTRAPs               */
-
+    print("p5 morto\n");
+    
+    //sem_endp4 = 1;
     SYSCALL(TERMPROCESS, 0, 0, 0);
 
     /* should have terminated, so should not get to this point */
@@ -710,7 +637,7 @@ void p5b() {
 void p6() {
     print("p6 starts\n");
 
-    SYSCALL(USERSYSCALL, 0, 0, 0); /* should cause termination because p6 has no
+    SYSCALL(11, 0, 0, 0); /* should cause termination because p6 has no
            trap vector */
 
     print("error: p6 alive after SYS9() with no trap vector\n");
@@ -771,7 +698,7 @@ void child2() {
 
     int ppid = SYSCALL(GETPROCESSID, 1, 0, 0);
     if (ppid != p8pid) {
-        print("Inconsistent (parent) process id for p8's second child\n");
+        print("Inconsistent (parent) process id for p8's first child\n");
         PANIC();
     }
 
@@ -931,3 +858,81 @@ void ns_p_new_ns() {
     PANIC();
 }
 
+void p11() {
+    int i;
+    int children_number = 0;
+    int children_pids[NS_MAXCHILDREN];
+    nsd_t *ns2 = NULL;
+    int found[2] = {};
+
+    print("p11 starts\n");
+
+    ns2 = allocNamespace(NS_PID);
+    if (ns2 == NULL) {
+        print("failed namespace management\n");
+        PANIC();
+    }
+
+
+
+    /* Create two process in the same PID space of this one */
+    ns1_a_pid = SYSCALL(CREATEPROCESS, (int)&ns1_a_state, (int)NULL, (int)NULL);
+    ns1_b_pid = SYSCALL(CREATEPROCESS, (int)&ns1_b_state, (int)NULL, (int)NULL);
+
+    /* Create two process in the a different PID space of this one */
+    ns2_a_pid = SYSCALL(CREATEPROCESS, (int)&ns2_a_state, (int)NULL, (int)ns2);
+    ns2_b_pid = SYSCALL(CREATEPROCESS, (int)&ns2_b_state, (int)NULL, (int)ns2);
+
+    /* Get children should return only the number of children in our namespace */
+    children_number = SYSCALL(GETCHILDREN, (int)NULL, 0, 0);
+    if (children_number != 2) {
+        print("Inconsistent GETCHILDREN namespace management 1\n");
+        PANIC();
+    }
+
+    /* Get children should return only the number of children in our namespace */
+    children_number = SYSCALL(GETCHILDREN, (memaddr)&children_pids, NS_MAXCHILDREN, 0);
+    if (children_number != 2) {
+        print("Inconsistent GETCHILDREN namespace management 2\n");
+        PANIC();
+    }
+
+    for (i = 0 ; i < children_number ; ++i) {
+        if (children_pids[i] == ns1_a_pid) {
+            found[0] = 1;
+        } else if (children_pids[i] == ns1_b_pid) {
+            found[1] = 1;
+        } else {
+            print("Inconsistent GETCHILDREN namespace management (pid return 1)\n");
+            PANIC();
+        }
+    }
+
+    for (i = 0 ; i < children_number ; ++i) {
+        if (found[i] != 1) {
+            print("Inconsistent GETCHILDREN namespace management (pid return 2)\n");
+            PANIC();
+        }
+    }
+
+    print("p11, waiting for children\n");
+    /* Unlock all childrens */
+    SYSCALL(VERHOGEN, (int)&sem_l_ns1_a, 0, 0);
+    SYSCALL(VERHOGEN, (int)&sem_l_ns1_b, 0, 0);
+    SYSCALL(VERHOGEN, (int)&sem_l_ns2_a, 0, 0);
+    SYSCALL(VERHOGEN, (int)&sem_l_ns2_b, 0, 0);
+
+    /* Lock on all children to wait for termination */
+    SYSCALL(PASSEREN, (int)&sem_r_ns1_a, 0, 0);
+    SYSCALL(PASSEREN, (int)&sem_r_ns1_b, 0, 0);
+    SYSCALL(PASSEREN, (int)&sem_r_ns2_a, 0, 0);
+    SYSCALL(PASSEREN, (int)&sem_r_ns2_b, 0, 0);
+
+    SYSCALL(VERHOGEN, (int)&sem_p11, 0, 0);
+
+    /* Terminate all process */
+    SYSCALL(TERMPROCESS, 0, 0, 0);
+
+    print("Error: p11 didn't die!\n");
+    PANIC();
+}

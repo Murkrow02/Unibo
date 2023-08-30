@@ -63,10 +63,14 @@ pcb_t* headBlocked(int *semAdd);
 
 
 
-void initReleaseArray();
+// void initReleaseArray();
 
-void addToPNonBlocked(int pid, int* semAdd);
+// void addToPNonBlocked(int pid, int* semAdd);
 
-int* removeFromPNonBlocked(int pid);
+// int* removeFromPNonBlocked(int pid, int *semAdd);
+// int *removeFirstPNonBlockedForPid(int pid);
+
+// bool checkIfPNonBlocked(int pid);
+
 
 #endif

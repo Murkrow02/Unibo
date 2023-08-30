@@ -137,19 +137,8 @@ void killOne(pcb_PTR proc){
     //Remove the current process from the children of his parent (if any)
     outChild(proc); 
 
-    //Check if this proc forgot to release a resource (and release it manually)
-    int forgottenSemaphore = removeFromPNonBlocked(proc->p_pid);
-    if(forgottenSemaphore != -1){
-        verhogen(forgottenSemaphore);
-    }
-
     //Remove the process from semaphore queue
     if(proc->p_semAdd != NULL){
-
-        // if (proc->p_pid == 7)
-        // {
-        //     adderrbuf("Process 7 is blocked on a semaphore\n");
-        // }
 
         if(isDeviceSem(proc->p_semAdd) == false && headBlocked(proc->p_semAdd) == NULL){
 
@@ -329,9 +318,6 @@ void passeren(int *sem) {
 
         //Decrement the semaphore   
         (*sem)--;
-
-        //Log that this process requested for a resource (and eventually release it manually if terminate without releasing)
-        addToPNonBlocked(running_proc->p_pid, sem);
     }else{
         adderrbuf("Invalid semaphore value\n");
     }
@@ -357,10 +343,6 @@ void verhogen(int *sem) {
 
     //Check if process is blocked on this semaphore
     pcb_PTR blocked = headBlocked(sem);
-
-    //Remove from unreleased resources
-    removeFromPNonBlocked(running_proc->p_pid);
-
 
     //Check if the semaphore is already at its maximum value
     if (*sem == 1)
