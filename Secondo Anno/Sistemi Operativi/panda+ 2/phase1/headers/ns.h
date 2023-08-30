@@ -24,6 +24,8 @@ nsd_t *allocNamespace(int type);
 // 23. Libera il namespace ns ri-inserendolo nella lista di namespace corretta.
 void freeNamespace(nsd_t *ns);
 
+//Checks if the process p is in the default namespace (no namespace)
+bool isInDefaultNamespace(pcb_PTR p);
 
 //Sets the namespace ns to the process p, both are expected as non-null
 void set_namespace(pcb_t *p, nsd_t *ns);

@@ -7,6 +7,8 @@
 #include <pcb.h>
 #include <types.h>
 #include <ash.h>
+#include <ns.h>
+#include <listx.h>
 
 #define RECVD    5 //Terminal received a character
 
@@ -91,16 +93,22 @@ void syscall_handler() {
             wait_for_clock();
             break;
 
-        case GETPROCESSID:
-            z_breakpoint_get_process_id();
-            get_pid();
-            break;
+      
 
         case GETSUPPORTPTR:
             get_support_data();
             break;
 
-        default:
+  case GETPROCESSID:
+            z_breakpoint_get_process_id();
+            get_pid();
+            break;
+
+  case GETCHILDREN:
+            get_children();
+            break;
+
+  default:
             pass_up_or_die(GENERALEXCEPT);
             break;
     }
@@ -171,7 +179,7 @@ int create_process()
     //Collect the parameters
     state_t *statep = (state_t *)(REG_A1_SS);
     support_t *supportp = (int)(REG_A2_SS);
-    struct nsd_t *ns = (support_t *)(REG_A3_SS);
+    nsd_t *ns = (nsd_t *)(REG_A3_SS);
 
     //Check for legal parameters
     if (statep == NULL)
@@ -208,6 +216,20 @@ int create_process()
 
     //make a child of the current process
     insertChild(running_proc, newProcess);
+
+    //Check if need to add namespace
+    if (ns != NULL)
+    {
+        addNamespace(newProcess, ns);
+        if (getNamespace(newProcess, ns->n_type) != ns)
+        {
+            adderrbuf("COULD NOT ADD PROCESS TO NAMEPSACE \n");
+        }
+    }
+    else
+    {
+        //  addNamespace(newProcess, getNamespace(running_proc, NS_PID));
+    }
 
     //Insert the new process in the ready queue
     addToReadyQueue(newProcess);
@@ -444,47 +466,41 @@ void get_pid() {
     int parent = (int)(REG_A1_SS);
 
     if (parent == true) {
+
+        //  From slides:
+        //  "Se il parent non e’ nello stesso PID namespace del processo
+        //  figlio, questa funzione ritorna 0 (se richiesto il pid del padre)!"
+        if(running_proc->p_parent == NULL || running_proc->p_parent->namespaces[0] != running_proc->namespaces[0])
+            CPU_STATE->reg_v0 = 0;
+        else
         CPU_STATE->reg_v0 = (unsigned int) running_proc->p_parent->p_pid;
     } else {
         CPU_STATE->reg_v0 = (unsigned int) running_proc->p_pid;
     }
 }
 
-
-///SYS10 VALEX
-///<summary>
-///This service returns the pids of the calling process' children belonging to the same namespace
-///the sys10 call is made with the following parameters:
-///a1 is an array of integers, each of which is a pid of a child process
-///a2 is the size of the array
-///the return value is the number of children of the calling process that could have been
-///inserted in the array
+/// SYS10 VALEX
+///< summary>
+/// This service returns the pids of the calling process' children belonging to the same namespace
+/// the sys10 call is made with the following parameters:
+/// a1 is an array of integers, each of which is a pid of a child process
+/// a2 is the size of the array
+/// the return value is the number of children of the calling process that could have been
+/// inserted in the array
 ///</summary>
-void get_children() {
-    
-        //Get the parameters
-        int *pids = (int *)(REG_A1_SS);
-        int size = (int)(REG_A2_SS);
-    
-        //Check if the parameters are valid
-        if (pids == NULL || size <= 0) {
-            CPU_STATE->reg_v0 = -1;
-            return;
-        }
-    
-        //Iterate over the children of the current process and copy their pid in the array
-        pcb_PTR child;
-        //get the list of children
-        struct list_head *children = &(running_proc->p_child);
-        int i = 0;
-        while (headProcQ(children) != NULL && i < size)
-        {
-            pids[i] = child->p_pid;
-            i++;
-            //go to next child
-            children = children->next;
-        }
-    
-        //Return the number of children
-        CPU_STATE->reg_v0 = i;
+void get_children()
+{
+    // Get the parameters
+    int *pids = (int *)(REG_A1_SS);
+    int size = (int)(REG_A2_SS);
+
+    // Check if the parameters are valid
+    if (pids == NULL || size <= 0)
+    {
+        CPU_STATE->reg_v0 = getChildrenCount(running_proc, NULL, NULL);
+        return;
+    }
+
+    // Return the number of children and fill the children array
+    CPU_STATE->reg_v0 = getChildrenCount(running_proc, running_proc->namespaces[0], pids);
 }

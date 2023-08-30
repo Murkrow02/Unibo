@@ -7,6 +7,7 @@
 #include <pandos_types.h>
 #include <stddef.h>
 #include <utils.h>
+#include <ns.h>
 
 struct list_head pcb_free;
 pcb_t pcb_table[MAXPROC];
@@ -96,6 +97,14 @@ pcb_t *initializePcb(pcb_t *pcb)
     pcb->p_semAdd = NULL;
     pcb->p_pid = lastInsertedPcbPid++;
     pcb->p_supportStruct = NULL;
+
+
+    //Init namespaces
+    for (int i = 0; i < NS_TYPE_MAX; i++)
+    {
+        pcb->namespaces[i] = NULL;
+    }
+
     return pcb;
 }
 
@@ -220,4 +229,42 @@ pcb_t *outChild(pcb_t *p)
     list_sdel(&p->p_sib);
     p->p_parent = NULL;
     return p;
+}
+
+void zzzzz_pcb_break(){}
+int zzzzpidchild=0;
+extern pcb_PTR running_proc;
+//Returns the size of the children list of same namespace of given process
+//Adds the found matching processes into pids array
+int getChildrenCount(pcb_t *p, nsd_t *ns, int *pids)
+{
+    if (p == NULL)
+        return -1;
+
+    //Save here the number of children found (of same ns)
+    int childrenCount = 0;
+
+    // Cycle through all children of process p
+    list_head *iterEl;
+    list_for_each(iterEl, &p->p_child)
+    {
+        pcb_t *currentChild = container_of(iterEl, pcb_t, p_sib);
+            
+        //Requested to check children in default namespace (no namespace)
+        if (ns == NULL && isInDefaultNamespace(currentChild))
+        {
+            //Found children in default namespace
+
+            //Add pid to array if requested
+            if (pids != NULL)
+                pids[childrenCount] = currentChild->p_pid;
+            childrenCount++;
+        }
+        else
+        {
+            
+        }
+    }
+
+    return childrenCount;
 }

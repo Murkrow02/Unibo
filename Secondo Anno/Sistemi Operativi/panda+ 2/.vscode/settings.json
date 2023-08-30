@@ -18,6 +18,7 @@
         "syscall.h": "c",
         "interrupt.h": "c",
         "cp0.h": "c",
-        "*.no": "c"
+        "*.no": "c",
+        "algorithm": "c"
     }
 }

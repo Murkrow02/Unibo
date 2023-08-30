@@ -32,52 +32,42 @@ void initNamespaces(){
     }
 }
 
-nsd_t* getNamespace(pcb_t *p, int type){
+nsd_t *getNamespace(pcb_t *p, int type)
+{
 
-    switch (type) {
+    // Cycle through all the namespaces of the process
+    for (int i = 0; i < NS_TYPE_MAX; i++)
+    {
 
-        //TODO: generalize when more namespaces are added
-        case NS_PID:
+        //Empty namespace
+        if (p->namespaces[i] == NULL)
+            continue;
 
-            //Cycle through all the namespaces of the process
-            for(int i = 0; i < NS_TYPE_MAX; i++){
-
-                //Assume that the array is always full, but when a cell is empty (without namespace), a NULL pointer is placed instead
-                if(p->namespaces[i] == NULL)
-                    continue; //Check the next one, this one is free
-
-                //namespaces[i] is not null, check if is the same type as requested
-                if(p->namespaces[i]->n_type == type){
-
-                    //addokbuf("addNamespace test #1 started\n");
-                    //Namespace of the process is as the same type as requested, check if the namespace is active
-                   // int activeNamespace = list_search_el(&pid_nsList_h, &p->namespaces[i]->n_link);
-
-                    //The namespace linked to the process is still valid
-                    //if(activeNamespace){
-                        return p->namespaces[i];
-                   // }else{
-
-                        //The namespace linked to the process is no longer valid
-                   //     p->namespaces[i] = NULL; //We can safely
-                    //}
-
-                }
-
-                //If we landed here then the namespace found is not as the same type as requested
-            }
-            break;
-
-        default:
-
-            //Namespace type not recognized
-            return NULL;
+        // namespaces[i] is not null, check if is the same type as requested
+        if (p->namespaces[i]->n_type == type)
+        {
+            return p->namespaces[i];
+        }
     }
-
-    //If we landed here, no namespace of requested type was found
     return NULL;
 }
 
+bool isInDefaultNamespace(pcb_PTR p){
+
+    // Cycle through all the namespaces of the process
+    for (int i = 0; i < NS_TYPE_MAX; i++)
+    {
+
+        //Empty namespace
+        if (p->namespaces[i] == NULL)
+            continue;
+
+        //If found namespace != null then the process is not in the default namespace
+        return false;
+    }
+
+    return true;
+}
 int addNamespace(pcb_t *p, nsd_t *ns){
 
     //Check if params are null
@@ -104,12 +94,6 @@ int addNamespace(pcb_t *p, nsd_t *ns){
                     set_namespace(currentChild,ns);
                 }
             }
-
-            //Set namespace to parent
-            if(p->p_parent != NULL){
-                set_namespace(p->p_parent,ns);
-            }
-            
             return true;
         break;
 
@@ -167,6 +151,7 @@ void set_namespace(pcb_t *p, nsd_t *ns){
         //If a blank space is found, insert the namespace there
         if(p->namespaces[i] == NULL){
             p->namespaces[i] = ns;
+            return;
         }
     }
 }

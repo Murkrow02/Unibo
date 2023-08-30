@@ -10,11 +10,6 @@
 #include <pandos_types.h>
 #include <stddef.h>
 
-typedef struct {
-  struct list_head p_list;
-  int pid;
-  int *sem;
-} sem_to_release_t;
 
 // array di SEMD con dimensione massima di MAX_PROC.
 struct semd_t semd_table[MAXPROC];
@@ -224,33 +219,6 @@ void initASH() {
     //Move elements from semd table to list
     for (int i = 0; i < MAXPROC; i++) {
         list_add(&semd_table[i].s_freelink, &semdFree_h);
-    }
-}
-
-int pidsWithPNonBlocked[MAXPROC];
-int* semAddsWithPNonBlocked[MAXPROC];
-void initReleaseArray()
-{
-    for (int i = 0; i < MAXPROC; i++)
-    {
-        pidsWithPNonBlocked[i] = -1;
-        semAddsWithPNonBlocked[i] = -1;
-    }
-}
-
-void addToPNonBlocked(int pid, int* semAdd)
-{
-  if(isDeviceSem(semAdd))
-    return;
-
-    for (int i = 0; i < MAXPROC; i++)
-    {
-        if (pidsWithPNonBlocked[i] == -1)
-        {
-        pidsWithPNonBlocked[i] = pid;
-        semAddsWithPNonBlocked[i] = semAdd;
-        return;
-        }
     }
 }
 

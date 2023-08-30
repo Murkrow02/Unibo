@@ -120,4 +120,8 @@ int isPcbFree(int pid);
 //Initialize pcb by cleaning its parameters
 pcb_t* initializePcb(pcb_t* pcb);
 
+
+//Return number of children of given proc
+int getChildrenCount(pcb_t *p, nsd_t *ns, int *pids);
+
 #endif
