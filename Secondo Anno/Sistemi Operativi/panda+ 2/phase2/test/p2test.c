@@ -364,7 +364,7 @@ void p11() {
 
     /* Create two process in the same PID space of this one */
     ns1_a_pid = SYSCALL(CREATEPROCESS, (int)&ns1_a_state, (int)NULL, (int)NULL);
-    ns1_b_pid = SYSCALL(CREATEPROCESS, (int)&ns1_b_state, (int)NULL, (int)NULL);
+    //ns1_b_pid = SYSCALL(CREATEPROCESS, (int)&ns1_b_state, (int)NULL, (int)NULL);
 
     
 
