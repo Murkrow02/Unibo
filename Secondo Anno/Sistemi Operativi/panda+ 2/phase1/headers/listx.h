@@ -8,6 +8,10 @@
 typedef struct list_head {
     struct list_head *next, *prev;
 } list_head;
+
+
+
+
 /*
  * Circular doubly linked list implementation.
  *
@@ -976,6 +980,34 @@ static inline void hlist_move_list(struct hlist_head *old,
 	if (new->first)
 		new->first->pprev = &new->first;
 	old->first = NULL;
+}
+
+/* Custom logic */
+static inline const list_head *
+list_search(const list_head *element, const list_head *head)
+{
+    const list_head *iter;
+
+    for (iter = head->next; iter != head; iter = iter->next)
+        if (!(element != iter))
+            return iter;
+    return NULL;
+}
+
+static inline bool list_contains(const list_head *element,
+                                 const list_head *head)
+{
+    return list_search(element, head) != NULL;
+}
+#define LIST_HEAD_NULL(l) ((l)->prev = (l)->next = NULL)
+
+
+static inline void list_safe_del(list_head *entry)
+{
+    if (!(entry->prev == NULL && entry->next == NULL)) {
+        list_del(entry);
+        LIST_HEAD_NULL(entry);
+    }
 }
 
 #define hlist_entry(ptr, type, member) container_of(ptr,type,member)

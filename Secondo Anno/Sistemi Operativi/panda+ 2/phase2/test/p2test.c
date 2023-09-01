@@ -825,7 +825,7 @@ void ns_p_new_ns() {
     pid = SYSCALL(GETPROCESSID, 0, 0, 0);
 
     if (ppid != 0) {
-        print("xxInconsistent (parent) namespace management\n");
+        print("Inconsistent (parent) namespace management\n");
         PANIC();
     }
 
@@ -908,7 +908,6 @@ void p11() {
     }
 
     print("p11, waiting for children\n");
-
     /* Unlock all childrens */
     SYSCALL(VERHOGEN, (int)&sem_l_ns1_a, 0, 0);
     SYSCALL(VERHOGEN, (int)&sem_l_ns1_b, 0, 0);

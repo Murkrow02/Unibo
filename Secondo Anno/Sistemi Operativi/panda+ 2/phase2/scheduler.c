@@ -66,11 +66,7 @@ inline void initScheduler(){
     //Initialize counters
     process_count = 0;
     soft_block_count = 0;
-    running_proc = NULL;
-
-
-    //Initialize the semaphore array TODO:
-    
+    running_proc = NULL;    
 
     //Load the pseudo-clock interval in the interval timer
     LDIT(100000);
@@ -121,8 +117,6 @@ int pc = 0;
 void scheduleNext(){
 
     z_scheduler_breakpoint();
-
-
 
     //Save running proc state in its pcb
     if(running_proc != NULL){

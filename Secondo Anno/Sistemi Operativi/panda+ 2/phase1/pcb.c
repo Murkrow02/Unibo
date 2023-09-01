@@ -12,49 +12,11 @@
 struct list_head pcb_free;
 pcb_t pcb_table[MAXPROC];
 
-
-
-static inline const list_head *
-list_search(const list_head *element, const list_head *head,
-            int (*cmp)(const list_head *, const list_head *))
-{
-    const list_head *iter;
-
-    for (iter = head->next; iter != head; iter = iter->next)
-        if (!cmp(element, iter))
-            return iter;
-    return NULL;
-}
-static inline int exact_cmp(const list_head *first, const list_head *second)
-{
-    return first != second;
-}
-static inline bool list_contains(const list_head *element,
-                                 const list_head *head)
-{
-    return list_search(element, head, exact_cmp) != NULL;
-}
-#define LIST_HEAD_NULL(l) ((l)->prev = (l)->next = NULL)
-static inline int list_null(const list_head *head)
-{
-    return head->prev == NULL && head->next == NULL;
-}
-
-static inline void list_sdel(list_head *entry)
-{
-    if (!list_null(entry)) {
-        list_del(entry);
-        LIST_HEAD_NULL(entry);
-    }
-}
-
-
 // Used to assign a unique pid to each process
 int lastInsertedPcbPid = 1;
 
 void initPcbs()
 {
-
     // Initialize the list of free PCBs
     INIT_LIST_HEAD(&pcb_free);
 
@@ -67,9 +29,8 @@ void initPcbs()
 
 void freePcb(pcb_t *p)
 {
-
     // Check if pcb points to null
-    if (p == NULL) // TODO: check if already in list
+    if (p == NULL) 
         return;
 
     // Add element in list of free pcbs
@@ -145,7 +106,11 @@ void insertProcQ(struct list_head *head, pcb_t *p)
 
     if (p == NULL || head == NULL)
         return;
-    list_sdel(&p->p_list);
+
+    //Prevent duplicates adding
+    list_safe_del(&p->p_list);
+
+    //Add element to the tail of the list
     list_add_tail(&p->p_list, head);
 }
 
@@ -181,7 +146,7 @@ pcb_t *outProcQ(struct list_head *head, pcb_t *p)
         return NULL;
 
     /* Remove p element from list */
-    list_sdel(&p->p_list);
+    list_safe_del(&p->p_list);
     return p;
 }
 
@@ -196,11 +161,12 @@ int emptyChild(pcb_t *p)
 
 void insertChild(pcb_t *prnt, pcb_t *p)
 {
-
+    // Check if prnt or p are null or if already in child list
     if (prnt == NULL || p == NULL || p->p_parent != NULL ||
         list_contains(&p->p_sib, &prnt->p_child))
         return;
 
+    // Add element to the tail of the list and set parent
     p->p_parent = prnt;
     list_add_tail(&p->p_sib, &prnt->p_child);
 }
@@ -226,18 +192,16 @@ pcb_t *outChild(pcb_t *p)
         !list_contains(&p->p_sib, &p->p_parent->p_child))
         return NULL;
 
-    list_sdel(&p->p_sib);
+    list_safe_del(&p->p_sib);
     p->p_parent = NULL;
     return p;
 }
 
-void zzzzz_pcb_break(){}
-int zzzzpidchild=0;
-extern pcb_PTR running_proc;
 //Returns the size of the children list of same namespace of given process
 //Adds the found matching processes into pids array
 int getChildrenCount(pcb_t *p, nsd_t *ns, int *pids)
 {
+    //Check if p is null
     if (p == NULL)
         return -1;
 
@@ -262,7 +226,15 @@ int getChildrenCount(pcb_t *p, nsd_t *ns, int *pids)
         }
         else
         {
-            
+            //Requested to check children in a specific namespace
+            if(getNamespace(currentChild, ns->n_type) == NULL)
+                continue; //Not the namespace we interested in
+ 
+
+            //Add pid to array if requested
+            if (pids != NULL)
+                pids[childrenCount] = currentChild->p_pid;
+            childrenCount++;
         }
     }
 

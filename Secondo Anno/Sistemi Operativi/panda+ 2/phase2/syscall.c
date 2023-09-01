@@ -10,35 +10,35 @@
 #include <ns.h>
 #include <listx.h>
 
-#define RECVD    5 //Terminal received a character
+#define RECVD 5 // Terminal received a character
 
 typedef unsigned int devregtr;
 
-//PCB table (used to search for a process given its pid)
+// PCB table (used to search for a process given its pid)
 extern pcb_t pcb_table[MAXPROC];
 
-//Running processes
+// Running processes
 extern int process_count;
 
-//Blocked processes (waiting for a semaphore)
+// Blocked processes (waiting for a semaphore)
 extern int soft_block_count;
 
-//Processes ready to be executed
+// Processes ready to be executed
 extern struct list_head ready_queue;
 
-//Running process
+// Running process
 extern pcb_t *running_proc;
 extern int running_proc_pid;
 
-//Interval timer semaphore
+// Interval timer semaphore
 extern int sem_interval_timer;
-extern int is_proc_waiting_for_it; //Set to 1 if a process is waiting for the interval timer
+extern int is_proc_waiting_for_it; // Set to 1 if a process is waiting for the interval timer
 
-//Terminal semaphores
+// Terminal semaphores
 extern int sem_terminal_in[8];
 extern int sem_terminal_out[8];
 
-//DEBUG ONLY
+// DEBUG ONLY
 int copied_syscall_code;
 void z_breakpoint_syscall() {}
 void z_breakpoint_verhogen() {}
@@ -50,138 +50,122 @@ void z_breakpoint_create_process() {}
 void z_breakpoint_terminate() {}
 void z_breakpoint_get_process_id() {}
 
-void syscall_handler() {
+void syscall_handler()
+{
 
-
-    //DEBUG ONLY
+    // DEBUG ONLY
     copied_syscall_code = REG_A0_SS;
 
+    switch (REG_A0_SS)
+    {
 
-    switch (REG_A0_SS) {
+    case CREATEPROCESS:
+        z_breakpoint_create_process();
+        create_process();
+        break;
 
-        case CREATEPROCESS:
-            z_breakpoint_create_process();
-            create_process();
-            break;
+    case TERMPROCESS:
+        z_breakpoint_terminate();
+        terminate_process(-1);
+        break;
 
-        case TERMPROCESS:
-            z_breakpoint_terminate();
-            terminate_process(-1);
-            break;
+    case PASSEREN:
+        passeren(NULL);
+        break;
 
-        case PASSEREN:
-            passeren(NULL);
-            break;
+    case VERHOGEN:
+        z_breakpoint_verhogen();
+        verhogen(NULL);
+        break;
 
-        case VERHOGEN:
-            z_breakpoint_verhogen();
-            verhogen(NULL);
-            break;
+    case DOIO:
+        z_breakpoint_doio();
+        do_io();
+        break;
 
-        case DOIO:
-            z_breakpoint_doio();
-            do_io();
-            break;
+    case GETTIME:
+        z_breakpoint_get_cpu_time();
+        get_cpu_time();
+        break;
 
-        case GETTIME:
-            z_breakpoint_get_cpu_time();
-            get_cpu_time();
-            break;
+    case CLOCKWAIT:
+        z_breakpoint_wait_for_clock();
+        wait_for_clock();
+        break;
 
-        case CLOCKWAIT:
-            z_breakpoint_wait_for_clock();
-            wait_for_clock();
-            break;
+    case GETSUPPORTPTR:
+        get_support_data();
+        break;
 
-      
+    case GETPROCESSID:
+        z_breakpoint_get_process_id();
+        get_pid();
+        break;
 
-        case GETSUPPORTPTR:
-            get_support_data();
-            break;
+    case GETCHILDREN:
+        get_children();
+        break;
 
-  case GETPROCESSID:
-            z_breakpoint_get_process_id();
-            get_pid();
-            break;
-
-  case GETCHILDREN:
-            get_children();
-            break;
-
-  default:
-            pass_up_or_die(GENERALEXCEPT);
-            break;
+    default:
+        pass_up_or_die(GENERALEXCEPT);
+        break;
     }
 
-    
     PC_INCREMENT;
     LDST(CPU_STATE);
-    
 }
 
-int zzzzzzzzchildpid=0;
+int zzzzzzzzchildpid = 0;
 void killSelfAndProgeny(pcb_PTR proc)
 {
-  
-    //Iterate over the children of the current process and kill them
+    // Iterate over the children of the current process and kill them
     pcb_PTR child;
     while ((child = removeChild(proc)) != NULL)
     {
-        //   if(proc->p_pid == 10 && child->p_pid == 12){
-        //     zzzzzzzzchildpid = child->p_pid;
-        //     adderrbuf("FIGLI\n");
-        // }
-
         killSelfAndProgeny(child);
     }
 
     killOne(proc);
 }
 
-//Internal function used to kill a process
+// Internal function used to kill a process
 extern int sem_term_mut;
-void killOne(pcb_PTR proc){
+void killOne(pcb_PTR proc)
+{
 
-    //Remove the current process from the children of his parent (if any)
-    outChild(proc); 
+    // Remove the current process from the children of his parent (if any)
+    outChild(proc);
 
-    //Remove the process from semaphore queue
-    if(proc->p_semAdd != NULL){
+    // Remove the process from semaphore queue
+    if (proc->p_semAdd != NULL)
+    {
 
-        if(isDeviceSem(proc->p_semAdd) == false && headBlocked(proc->p_semAdd) == NULL){
-
-            
-
+        if (isDeviceSem(proc->p_semAdd) == false && headBlocked(proc->p_semAdd) == NULL)
+        {
             *(proc->p_semAdd) = 1;
         }
     }
-        
-
-        //adderrbuf("Process is not blocked on semaphore\n");
+    // adderrbuf("Process is not blocked on semaphore\n");
 
     outBlocked(proc);
 
-    
-
-    //Remove the process from the ready queue (if not current process)
-    if(proc != running_proc)
+    // Remove the process from the ready queue (if not current process)
+    if (proc != running_proc)
         removeFromReadyQueue(proc);
     process_count--;
 
     freePcb(proc);
 }
 
-
-
-//SYS1 VALEX
+// SYS1 VALEX
 int create_process()
 {
-    //Collect the parameters
+    // Collect the parameters
     state_t *statep = (state_t *)(REG_A1_SS);
     support_t *supportp = (int)(REG_A2_SS);
     nsd_t *ns = (nsd_t *)(REG_A3_SS);
 
-    //Check for legal parameters
+    // Check for legal parameters
     if (statep == NULL)
     {
         pass_up_or_die(GENERALEXCEPT);
@@ -196,8 +180,8 @@ int create_process()
 
     if (newProcess == NULL)
     {
-        //If the process is null, the allocation failed
-        //set error code -1 in v0 of the caller
+        // If the process is null, the allocation failed
+        // set error code -1 in v0 of the caller
         CPU_STATE->reg_v0 = NOPROC;
         adderrbuf("Cannot allocate new process\n");
     }
@@ -205,19 +189,22 @@ int create_process()
     // Copy the state of the process
     copyState(statep, &(newProcess->p_s));
 
-    //copy the support structure
-    if (supportp == NULL) {
+    // copy the support structure
+    if (supportp == NULL)
+    {
         newProcess->p_supportStruct = NULL;
-    } else {
+    }
+    else
+    {
         newProcess->p_supportStruct = supportp;
     }
 
-    //THE PID IS ALREADY SETTED BY ALLOCPCB()
+    // THE PID IS ALREADY SETTED BY ALLOCPCB()
 
-    //make a child of the current process
+    // make a child of the current process
     insertChild(running_proc, newProcess);
 
-    //Check if need to add namespace
+    // Check if need to add namespace
     if (ns != NULL)
     {
         addNamespace(newProcess, ns);
@@ -226,45 +213,52 @@ int create_process()
             adderrbuf("COULD NOT ADD PROCESS TO NAMEPSACE \n");
         }
     }
+
+    // Inherit the namespace of the parent (if any)
     else
     {
-        //  addNamespace(newProcess, getNamespace(running_proc, NS_PID));
+        if (newProcess->p_parent != NULL && getNamespace(newProcess->p_parent, NS_PID) != NULL)
+        {
+            addNamespace(newProcess, NS_PID);
+        }
     }
 
-    //Insert the new process in the ready queue
+    // Insert the new process in the ready queue
     addToReadyQueue(newProcess);
     process_count++;
-
 
     // Return the pid of the new process
     CPU_STATE->reg_v0 = newProcess->p_pid;
 }
 
-
-//SYS2 VALEX
+// SYS2 VALEX
 int invoked_process_pid = 0;
-void terminate_process(int pid) {
+void terminate_process(int pid)
+{
 
-    //Retrieve the pid of the process to kill (from registry or from function param)
-    if(pid == -1)
+    // Retrieve the pid of the process to kill (from registry or from function param)
+    if (pid == -1)
         pid = (int)(REG_A1_SS);
-  
 
-    //Calling process requested to kill itself and all his progeny
-    if (pid == 0 || (running_proc != NULL && pid == running_proc->p_pid)) {
+    // Calling process requested to kill itself and all his progeny
+    if (pid == 0 || (running_proc != NULL && pid == running_proc->p_pid))
+    {
 
         killSelfAndProgeny(running_proc);
-        //killOne(running_proc);
+        // killOne(running_proc);
         running_proc = NULL;
         scheduleNext();
+    }
+    else
+    {
 
-    } else {
-
-        //Search in pcb table process with the given pid
+        // Search in pcb table process with the given pid
         pcb_t *process = NULL;
         int i;
-        for (i = 0; i < MAXPROC; i++) {
-            if (pcb_table[i].p_pid == pid) {
+        for (i = 0; i < MAXPROC; i++)
+        {
+            if (pcb_table[i].p_pid == pid)
+            {
                 invoked_process_pid = pid;
                 process = &pcb_table[i];
                 killSelfAndProgeny(process);
@@ -275,53 +269,44 @@ void terminate_process(int pid) {
     }
 }
 
-//Debug 
-int blocked_on_terminal = 0;
-extern int sem_term_mut;
-
-//SYS3 MURK
-void passeren(int *sem) {
-
-    
+// SYS3 MURK
+void passeren(int *sem)
+{
 
     z_breakpoint_passeren();
 
-    //Retrieve the semaphore (from syscall param or from function param)
-    if(sem == NULL)
+    // Retrieve the semaphore (from syscall param or from function param)
+    if (sem == NULL)
         sem = (int *)(REG_A1_SS);
 
-
-    //Check if the semaphore is valid
+    // Check if the semaphore is valid
     if (sem == NULL)
     {
         adderrbuf("Invalid semaphore pointer\n");
         return;
     }
 
-
-
-    //Check if need to block the process
+    // Check if need to block the process
     if (*sem == 0)
     {
-        //Increment the soft block counter
+        // Increment the soft block counter
         soft_block_count++;
 
-        //Insert the process in the semaphore queue
+        // Insert the process in the semaphore queue
         int result = insertBlocked(sem, running_proc);
-        if(result == 1){
+        if (result == 1)
+        {
             adderrbuf("Cannot insert process in semaphore queue\n");
         }
 
-        //Schedule the next process
-        PC_INCREMENT; //NEED TO DO MANUALLY AS NOT DONE AT END OF SYSCALL HANDLER
+        // Schedule the next process
+        PC_INCREMENT; // NEED TO DO MANUALLY AS NOT DONE AT END OF SYSCALL HANDLER
         scheduleNext();
     }
-    else if (*sem > 0) //Sem is more than 0
+    else if (*sem > 0) // Sem is more than 0
     {
-
-
-        //Check if there is a process to unblock (when the semaphore is more than 0 there should be no blocked processes)
-        //But a process could have been blocked by a verhogen() call when the semaphore was 1
+        // Check if there is a process to unblock (when the semaphore is more than 0 there should be no blocked processes)
+        // But a process could have been blocked by a verhogen() call when the semaphore was 1
         pcb_t *unblocked = removeBlocked(sem);
         if (unblocked != NULL)
         {
@@ -332,59 +317,59 @@ void passeren(int *sem) {
             // Insert the process in the ready queue
             addToReadyQueue(unblocked);
 
-            //Schedule the next process
-            //PC_INCREMENT;  //NEED TO DO MANUALLY AS NOT DONE AT END OF SYSCALL HANDLER
-            //scheduleNext();
+            // Schedule the next process
+            // PC_INCREMENT;  //NEED TO DO MANUALLY AS NOT DONE AT END OF SYSCALL HANDLER
+            // scheduleNext();
         }
-        
 
-        //Decrement the semaphore   
+        // Decrement the semaphore
         (*sem)--;
-    }else{
+    }
+    else
+    {
         adderrbuf("Invalid semaphore value\n");
     }
 
-    //TODO
+    // TODO
 }
 
 int zzzzzz_blockedOnSem = 0;
-//SYS4 MURK
-void verhogen(int *sem) {
+// SYS4 MURK
+void verhogen(int *sem)
+{
 
-    //Retrieve the semaphore (from syscall param or from function param)
-    if(sem == NULL)
+    // Retrieve the semaphore (from syscall param or from function param)
+    if (sem == NULL)
         sem = (int *)(REG_A1_SS);
 
-
-    //Check if the semaphore is valid
+    // Check if the semaphore is valid
     if (sem == NULL)
     {
         adderrbuf("Invalid semaphore pointer\n");
         return;
     }
 
-    //Check if process is blocked on this semaphore
+    // Check if process is blocked on this semaphore
     pcb_PTR blocked = headBlocked(sem);
 
-    //Check if the semaphore is already at its maximum value
+    // Check if the semaphore is already at its maximum value
     if (*sem == 1)
     {
         soft_block_count++;
         insertBlocked(sem, running_proc);
-        PC_INCREMENT; //NEED TO DO MANUALLY AS NOT DONE AT END OF SYSCALL HANDLER
+        PC_INCREMENT; // NEED TO DO MANUALLY AS NOT DONE AT END OF SYSCALL HANDLER
         scheduleNext();
         return;
     }
 
-    //Semaphore indicates no resource is available
+    // Semaphore indicates no resource is available
     if (*sem <= 0)
     {
-      
-        //Check if there are blocked process on this semaphore
+
+        // Check if there are blocked process on this semaphore
         if (blocked != NULL)
         {
-            removeBlocked(sem); 
-            zzzzzz_blockedOnSem = blocked->p_pid;
+            removeBlocked(sem);
 
             // Insert the process in the ready queue
             addToReadyQueue(blocked);
@@ -392,90 +377,107 @@ void verhogen(int *sem) {
         }
         else
         {
-             
+
             // Increment the semaphore if no other processes are waiting
             (*sem)++;
         }
     }
 }
 
-//SYS5 MURK
+// SYS5 MURK
 
 int iosem = 0;
-int do_io() {
+int do_io()
+{
 
-    //Take the parameters
-    int * cmdAddr = (devregtr *)(REG_A1_SS);
+    // Take the parameters
+    int *cmdAddr = (devregtr *)(REG_A1_SS);
 
-    //This is an array of 2 integers, the value of the command is placed inside the first one
-    devregtr * value = (devregtr *)(REG_A2_SS);
+    // This is an array of 2 integers, the value of the command is placed inside the first one
+    devregtr *value = (devregtr *)(REG_A2_SS);
 
-    //Take the device RAM area
-    //devregarea_t *deviceRegs = (devregarea_t *)RAMBASEADDR;
+    // Take the device RAM area
+    // devregarea_t *deviceRegs = (devregarea_t *)RAMBASEADDR;
 
-
-    //Detect if terminal device (by checking the address range of the command)
+    // Detect if terminal device (by checking the address range of the command)
     devregtr *base = (devregtr *)TERM0ADDR;
-    if((int)cmdAddr <= LAST_TERM_ADDR && (int)cmdAddr >= TERM0ADDR) //Targeting a terminal device
+    if ((int)cmdAddr <= LAST_TERM_ADDR && (int)cmdAddr >= TERM0ADDR) // Targeting a terminal device
     {
-        //Get terminal index (0-7)
-        int offset = (devregtr *)cmdAddr-base;
-        int termIndex = offset/DEVREGSIZE;
-        if(termIndex != 0)
+        // Get terminal index (0-7)
+        int offset = (devregtr *)cmdAddr - base;
+        int termIndex = offset / DEVREGSIZE;
+        if (termIndex != 0)
             adderrbuf("Terminal index is not 0\n");
 
-        //Round to nearest terminal index (per difetto)
-        cmdAddr = TERM0ADDR + termIndex*DEVREGSIZE;
+        // Round to nearest terminal index (per difetto)
+        cmdAddr = TERM0ADDR + termIndex * DEVREGSIZE;
 
-        //This offset is copied from addokbuf function provided by tests
-        memaddr *commandp = (devregtr *)((int)cmdAddr + (TRANCOMMAND * DEVREGLEN));         
+        // This offset is copied from addokbuf function provided by tests
+        memaddr *commandp = (devregtr *)((int)cmdAddr + (TRANCOMMAND * DEVREGLEN));
 
-        //Execute command
-        //setSTATUS(getSTATUS() & DISABLEINTS);
+        // Execute command
+        // setSTATUS(getSTATUS() & DISABLEINTS);
         *commandp = value[0] != 0 ? value[0] : value[1];
 
-        //For now only output works, later detect how to handle input
+        // For now only output works, later detect how to handle input
         passeren(&sem_terminal_out[termIndex]);
     }
 }
 
-//SYS6 MURK
-int get_cpu_time() {
+// SYS6 MURK
+int get_cpu_time()
+{
     CPU_STATE->reg_v0 = getRunningProcTime();
 }
 
-void wait_for_clock(){
+void wait_for_clock()
+{
     is_proc_waiting_for_it = 1;
     passeren(&sem_interval_timer);
 }
 
-//SYS8 VALEX
-void get_support_data() {
-    if (running_proc->p_supportStruct == NULL) {
+// SYS8 VALEX
+void get_support_data()
+{
+    if (running_proc->p_supportStruct == NULL)
+    {
         CPU_STATE->reg_v0 = NULL;
-    } else {
+    }
+    else
+    {
         CPU_STATE->reg_v0 = running_proc->p_supportStruct;
     }
 }
 
-//SYS9 MURK TODO: METTI I NAMESPACES
+// SYS9 MURK TODO: METTI I NAMESPACES
 
-void get_pid() {
+void get_pid()
+{
 
-    //Get the parameter (parent or current process)
+    // Get the parameter (parent or current process)
     int parent = (int)(REG_A1_SS);
 
-    if (parent == true) {
+    if (parent == true)
+    {
 
-        //  From slides:
-        //  "Se il parent non e’ nello stesso PID namespace del processo
-        //  figlio, questa funzione ritorna 0 (se richiesto il pid del padre)!"
-        if(running_proc->p_parent == NULL || running_proc->p_parent->namespaces[0] != running_proc->namespaces[0])
-            CPU_STATE->reg_v0 = 0;
+        // Check if both processes are in the default namespace
+        if (isInDefaultNamespace(running_proc) == true && isInDefaultNamespace(running_proc->p_parent) == true)
+            CPU_STATE->reg_v0 = (unsigned int)running_proc->p_parent->p_pid;
+
+        // Check if both in PID namespace
+        else if (getNamespace(running_proc, NS_PID) != NULL && getNamespace(running_proc->p_parent, NS_PID) != NULL)
+            CPU_STATE->reg_v0 = (unsigned int)running_proc->p_parent->p_pid;
+
+        // They are in different namepsaces
+        //   From slides:
+        //   "Se il parent non e’ nello stesso PID namespace del processo
+        //   figlio, questa funzione ritorna 0 (se richiesto il pid del padre)!"
         else
-        CPU_STATE->reg_v0 = (unsigned int) running_proc->p_parent->p_pid;
-    } else {
-        CPU_STATE->reg_v0 = (unsigned int) running_proc->p_pid;
+            CPU_STATE->reg_v0 = 0;
+    }
+    else
+    {
+        CPU_STATE->reg_v0 = (unsigned int)running_proc->p_pid;
     }
 }
 

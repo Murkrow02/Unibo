@@ -52,6 +52,7 @@ nsd_t *getNamespace(pcb_t *p, int type)
     return NULL;
 }
 
+//Check if all namespaces of a process are null ( == default namespace)
 bool isInDefaultNamespace(pcb_PTR p){
 
     // Cycle through all the namespaces of the process
@@ -68,6 +69,7 @@ bool isInDefaultNamespace(pcb_PTR p){
 
     return true;
 }
+
 int addNamespace(pcb_t *p, nsd_t *ns){
 
     //Check if params are null
@@ -158,5 +160,5 @@ void set_namespace(pcb_t *p, nsd_t *ns){
 
 
 void freeNamespace(nsd_t *ns){
-    //TODO: implement this function even if not called by the phase1 test
+    
 }

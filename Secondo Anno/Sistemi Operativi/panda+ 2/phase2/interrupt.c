@@ -56,7 +56,6 @@ int getDeviceNumber(int line){
 
 void plt_handler()
 {
-    setTIMER(-2); // ACK (WTF?)
     addToReadyQueue(running_proc);
     scheduleNext();
     return;

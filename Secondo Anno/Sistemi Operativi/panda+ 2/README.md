@@ -1,20 +1,17 @@
-## Operating systems project UniBo 2021/2022
+## OS project 2022/2023
 
-A simple operating system for the MIPS architecture
 
+## Test Phase 1
+- Insert a p1test.c file inside folder ~/phase1
+
+--- 
+## Test Phase 2
+- Insert a p2test.c file inside folder ~/phase2/test
 ---
-
-
 ## Makefile:
 
 In the makefile directory run:
 
 - `make` to compile the code
-- `make clean` to delete the compiled object files  
+- `make clean` to delete the compiled object files
 --- 
-## How to run Test
-- Run `make` in the makefile directory
-- Open `umps3` software
-- Create a new machine configuration
-- Power on the machine and then click "continue"
-- Look in the terminal of the machine the tests results
