@@ -91,11 +91,6 @@ void terminal_handler(){
     blockedP->p_s.reg_v0 = 0;
     ((int*)blockedP->p_s.reg_a2)[0] = RECVD;
 
-    //  if(process_count == 2){
-    //     adderrbuf("Process count is 2 \n");
-    // }
-    
-
     if(running_proc == NULL)
         scheduleNext();
     else

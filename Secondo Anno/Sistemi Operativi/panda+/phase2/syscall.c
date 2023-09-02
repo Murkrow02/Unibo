@@ -115,7 +115,6 @@ void syscall_handler()
     LDST(CPU_STATE);
 }
 
-int zzzzzzzzchildpid = 0;
 void killSelfAndProgeny(pcb_PTR proc)
 {
     // Iterate over the children of the current process and kill them
@@ -333,7 +332,6 @@ void passeren(int *sem)
     // TODO
 }
 
-int zzzzzz_blockedOnSem = 0;
 // SYS4 MURK
 void verhogen(int *sem)
 {
@@ -385,7 +383,6 @@ void verhogen(int *sem)
 }
 
 // SYS5 MURK
-
 int iosem = 0;
 int do_io()
 {
@@ -449,8 +446,7 @@ void get_support_data()
     }
 }
 
-// SYS9 MURK TODO: METTI I NAMESPACES
-
+// SYS9 MURK
 void get_pid()
 {
 
@@ -481,15 +477,7 @@ void get_pid()
     }
 }
 
-/// SYS10 VALEX
-///< summary>
-/// This service returns the pids of the calling process' children belonging to the same namespace
-/// the sys10 call is made with the following parameters:
-/// a1 is an array of integers, each of which is a pid of a child process
-/// a2 is the size of the array
-/// the return value is the number of children of the calling process that could have been
-/// inserted in the array
-///</summary>
+// SYS10 VALEX
 void get_children()
 {
     // Get the parameters

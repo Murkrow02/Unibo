@@ -83,16 +83,7 @@ inline void initScheduler(){
         adderrbuf("Cannot alloc root process \n");
     }
 
-    //Clean pcb fields
-    //initializePcb(root_p);
-
     //Initialize the root process with necessary fields (enable interrupts etc.)
-     /**
-     * ALLOFF = serie di 0
-     * IEPON = Interrupt Enable Previous ON
-     * IMON = Interrupt Mask ON
-     * TEBITON = Time Enable BIT ON
-     */
     root_p->p_s.status = ALLOFF | IEPON | IMON | TEBITON;
 
     //Init program counter to test function
