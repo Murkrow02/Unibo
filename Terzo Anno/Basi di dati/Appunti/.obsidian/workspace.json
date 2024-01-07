@@ -13,13 +13,38 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "SQL/Basic SQL.md",
+                "file": "SQL/SQL Schema Operations.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "67eb927213d57f3e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "SQL/Esercizi Esame.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "0f278f2346304cae",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Algebra relazionale/Esercizi esame.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "SQL/Basic SQL.md",
+                "file": "SQL/Esercizi Esame.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "SQL/Basic SQL.md",
+                "file": "SQL/Esercizi Esame.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "SQL/Basic SQL.md"
+                "file": "SQL/Esercizi Esame.md"
               }
             }
           }
@@ -146,15 +171,20 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "3af0ac032ad95c48",
+  "active": "67eb927213d57f3e",
   "lastOpenFiles": [
-    "Algebra relazionale/Operators.md",
-    "SQL/Basic SQL.md",
-    "Algebra relazionale/Examples.md",
     "Algebra relazionale/Esercizi esame.md",
-    "SCR-20240103-mlxc.png",
+    "SQL/SQL Data Operations.md",
+    "SQL/Esercizi Esame.md",
     "SCR-20240103-mfeh.jpeg",
+    "SQL/SQL Schema Operations.md",
+    "SQL/Database Security.md",
+    "Algebra relazionale/Operators.md",
+    "Algebra relazionale/Examples.md",
+    "SQL/SQL Examples.md",
     "SQL/SQL Data Types.md",
+    "SCR-20240106-lrmw.png",
+    "SCR-20240103-mlxc.png",
     "Untitled 1.md",
     "Algebra relazionale",
     "SQL"
