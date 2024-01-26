@@ -1,59 +1,64 @@
 {
   "main": {
-    "id": "e240c5776d93be4f",
+    "id": "b3c7f949a242d8a3",
     "type": "split",
     "children": [
       {
-        "id": "8ddaaa7bce753476",
+        "id": "8e0d845c16f85635",
         "type": "tabs",
         "children": [
           {
-            "id": "3af0ac032ad95c48",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "SCR-20240106-lrmw.png"
-              }
-            }
-          },
-          {
-            "id": "67eb927213d57f3e",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "SCR-20240107-mnfm.png"
-              }
-            }
-          },
-          {
-            "id": "0f278f2346304cae",
+            "id": "7777f07d83f37dd3",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Algebra relazionale/Esercizi esame.md",
+                "file": "Network security.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "870e1488b42e140f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Network security.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "93e8241c8c312e47",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Wireless.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
   },
   "left": {
-    "id": "05f32937b63fda0f",
+    "id": "00a897ca2b5d776e",
     "type": "split",
     "children": [
       {
-        "id": "1ebc358e45dbee68",
+        "id": "07a59094345c3702",
         "type": "tabs",
         "children": [
           {
-            "id": "948ef7c9d6a6e312",
+            "id": "8bba72c7940ad621",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -63,7 +68,7 @@
             }
           },
           {
-            "id": "e08a14b62108a5c1",
+            "id": "93b6b1ac38fd475d",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -78,7 +83,7 @@
             }
           },
           {
-            "id": "53b6ef7c24ac3c0d",
+            "id": "f9e68a19a30140cd",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -89,23 +94,23 @@
       }
     ],
     "direction": "horizontal",
-    "width": 272.5
+    "width": 300
   },
   "right": {
-    "id": "570f1e17e3d36738",
+    "id": "78cc47ed4c4ab10b",
     "type": "split",
     "children": [
       {
-        "id": "a038e46408e7e90f",
+        "id": "dd129abdeeeb9823",
         "type": "tabs",
         "children": [
           {
-            "id": "c0a6a28e61cecaed",
+            "id": "d3cfc3b6b78c115d",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "SCR-20240106-lrmw.png",
+                "file": "Network security.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -117,19 +122,19 @@
             }
           },
           {
-            "id": "de9ec973ae1dbcee",
+            "id": "d17590f4af070e5a",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "SCR-20240106-lrmw.png",
+                "file": "Network security.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
             }
           },
           {
-            "id": "2253658225dace21",
+            "id": "f10b035605686aba",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -140,12 +145,12 @@
             }
           },
           {
-            "id": "ca7852c090bec9a0",
+            "id": "082e6ab4aa5e0221",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-                "file": "SCR-20240106-lrmw.png"
+                "file": "Network security.md"
               }
             }
           }
@@ -166,29 +171,22 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "3af0ac032ad95c48",
+  "active": "870e1488b42e140f",
   "lastOpenFiles": [
-    "SCR-20240103-mlxc.png",
-    "Algebra relazionale/Operators.md",
-    "Algebra relazionale/Examples.md",
-    "SQL/SQL Schema Operations.md",
-    "SCR-20240107-mnfm.png",
-    "SCR-20240106-lrmw 1.png",
-    "SCR-20240107-mnot.png",
-    "SCR-20240106-lrmw.png",
-    "SCR-20240103-mfeh.jpeg",
-    "Untitled.canvas",
-    "SQL/SQL Data Operations.md",
-    "SQL/Database Security.md",
-    "SQL/Esercizi Esame.md",
-    "SQL/SQL Examples.md",
-    "SQL/SQL Data Types.md",
-    "ER Modeling/Untitled.md",
-    "SCR-20240107-nygr.png",
-    "ER Modeling",
-    "Algebra relazionale/Esercizi esame.md",
-    "Untitled 1.md",
-    "Algebra relazionale",
-    "SQL"
+    "Formule utili.md",
+    "SCR-20240124-qycp.png",
+    "SCR-20240124-qxzg.png",
+    "Network security.md",
+    "Wireless.md",
+    "Introduzione alle reti di calcolatori.md",
+    "SCR-20240119-octo.png",
+    "SCR-20240119-ntcw.png",
+    "SCR-20240119-nryy.png",
+    "SCR-20240119-nnnf.png",
+    "SCR-20240119-mkza.png",
+    "SCR-20240119-mdig.png",
+    "SCR-20240118-mqio.png",
+    "Images",
+    "SCR-20240118-ovll.png"
   ]
 }
