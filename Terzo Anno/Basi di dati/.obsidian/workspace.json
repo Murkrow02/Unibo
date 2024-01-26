@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Appunti/Da sapere/Indici.md",
+                "file": "Appunti/Da sapere/Transazioni.md",
                 "mode": "source",
                 "source": false
               }
@@ -69,8 +69,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "9799d44ab6a9b7ff",
@@ -86,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Appunti/Da sapere/Indici.md",
+                "file": "Appunti/Da sapere/Transazioni.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Appunti/Da sapere/Indici.md",
+                "file": "Appunti/Da sapere/Transazioni.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -126,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Appunti/Da sapere/Indici.md"
+                "file": "Appunti/Da sapere/Transazioni.md"
               }
             }
           }
@@ -149,6 +148,14 @@
   },
   "active": "e6ddfd3603a6a2fc",
   "lastOpenFiles": [
+    "Appunti/Da sapere/Basi di dati attive.md",
+    "Screenshot 2024-01-15 at 15.33.23.png",
+    "Appunti/Da sapere/Transazioni.md",
+    "Screenshot 2024-01-15 at 13.45.03.png",
+    "Appunti/Da sapere/Indici.md",
+    "Screenshot 2024-01-15 at 13.43.40.png",
+    "Screenshot 2024-01-15 at 13.43.31.png",
+    "Screenshot 2024-01-15 at 13.40.03.png",
     "Appunti/SQL/SQL Schema Operations.md",
     "Appunti/SQL/SQL Examples.md",
     "Appunti/SQL/SQL Data Operations.md",
@@ -159,7 +166,6 @@
     "Screenshot 2024-01-14 at 17.07.41.png",
     "Pasted image 20240114170706.png",
     "Appunti/Da sapere/Algebra e calcolo relazionale.md",
-    "Appunti/Da sapere/Indici.md",
     "Appunti/Algebra relazionale/Operators.md",
     "Appunti/Algebra relazionale/Examples.md",
     "Appunti/Da sapere/Modello relazionale.md",

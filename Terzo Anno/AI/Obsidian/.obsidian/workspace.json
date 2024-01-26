@@ -1,0 +1,185 @@
+{
+  "main": {
+    "id": "f70cfb5330b40633",
+    "type": "split",
+    "children": [
+      {
+        "id": "8490f9125aea3cb0",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ba669f947e1925e0",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "IAA/Approccio probabilistico.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "87c0b3eef53c6f4e",
+    "type": "split",
+    "children": [
+      {
+        "id": "b567d23cd0d8dc20",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "164ecd63729f43a2",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "c69e339396f4b004",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "residual",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "493aee81849a0d4a",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 284.5
+  },
+  "right": {
+    "id": "5fc6cd9bad02102d",
+    "type": "split",
+    "children": [
+      {
+        "id": "60c4ba033abb94b9",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "96f675f1385a030e",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "IAA/Approccio probabilistico.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "840f893c75947176",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "IAA/Approccio probabilistico.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "1e737c3e043b2634",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "48d68a4218439cba",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "IAA/Approccio probabilistico.md"
+              }
+            }
+          }
+        ],
+        "currentTab": 3
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "164ecd63729f43a2",
+  "lastOpenFiles": [
+    "IAA/Decision Trees.md",
+    "IAA/Approccio probabilistico.md",
+    "IAA/Reti neurali convoluzionali (CNNs).md",
+    "Pasted image 20231217175408.png",
+    "IAA/Modelli generativi.md",
+    "IAA/Autoencoders.md",
+    "What are Diffusion Models .mp4",
+    "Variational Autoencoders - EXPLAINED.mp4",
+    "Pasted image 20231217150649.png",
+    "Pasted image 20231217141317.png",
+    "Pasted image 20231217141104.png",
+    "Pasted image 20231217140936.png",
+    "IAA/Reti importanti.md",
+    "IAA/Object detection & segmentation.md",
+    "IAA/How to fool a neural network.md",
+    "IAA/Deep Learning.md",
+    "Pasted image 20231216205300.png",
+    "Pasted image 20231216205215.png",
+    "Pasted image 20231216204906.png",
+    "Pasted image 20231216204837.png",
+    "Pasted image 20231216191852.png",
+    "IAA/Scaletta.md",
+    "What are Convolutional Neural Networks (CNNs) (1).mp4",
+    "What are Convolutional Neural Networks (CNNs) .mp4",
+    "Gradient descent, how neural networks learn Chapter 2, Deep learning.mp4",
+    "Screen Recording 2023-12-14 at 18.54.44.mov",
+    "IAA/Foreste (Random forests).md",
+    "2023-12-13.md",
+    "Untitled 1.canvas",
+    "Untitled.canvas",
+    "Test.md",
+    "IAA"
+  ]
+}

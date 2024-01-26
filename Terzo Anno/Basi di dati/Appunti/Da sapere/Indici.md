@@ -62,7 +62,27 @@ Le label possono essere
 	- Tuttavia permette la presenza di blocchi di overflow
 - Il numero di bucket cresce in maniera lineare e non esponenziale
 	- Cresce di 1 ogni volta
-
+- L'indicatore principale é il record-bucket ratio, che rappresenta il fattore di load
+	- Dobbiamo scegliere il numero di bucket $n$ tale che non ci sono piú di $1.7*n$ record nel file
+### Ricerca 
+- Facciamo l'hash della chiave
+- Se il bucket risultante esiste (minore del bucket massimo) allora cerchiamo all'interno di quel bucket $m$
+- Se il bucket non esiste allora andiamo al bucket $m-2^{i-1}$
+### Inserimento
+- Contiamo il numero di record $r$ e il numero di buckets $n$
+- Se il ratio $r/n$ sorpassa 1.7 allora splittiamo un bucket aggiungendone uno nuovo
+- Se il numero di bucket $n$ é uguale a $2^i$ (bit della chiave) allora lo incrementiamo
+	- Ancora piú semplice, se la chiave dei bucket non riesce a indexare tutti i bucket allora aggiungiamo un bit
+	- 
 ## Document retrieval e inverted indexes
 - Problema: riuscire a trovare il testo che contiene delle parole chiave
-- 
+- Possiamo utilizzare indici per recuperare i documenti contenenti quel testo
+## Achievement
+Siamo interessati in:
+- Ritornare tutti i documenti che contengono un set di parole chiave ($K_1,... K_n$)
+- Ritornare tutti i documenti che contengono una sequenza di parole chiave
+	- In quello specifico ordine
+- Gli indici invertiti supportano questo tipo di operazioni in quanto invece di creare un indice separato per ogni attributo, rappresentano tutti i documenti in cui appare quella specifica parola
+- ![[Screenshot 2024-01-15 at 13.40.03.png]]
+  - In questo esempio abbiamo per ogni parola, il documento e la posizione in cui compare![[Screenshot 2024-01-15 at 13.43.31.png]]
+    ![[Screenshot 2024-01-15 at 13.43.40.png]]
