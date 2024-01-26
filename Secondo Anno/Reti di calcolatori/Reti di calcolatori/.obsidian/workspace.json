@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Network security.md",
+                "file": "Formule utili.md",
                 "mode": "source",
                 "source": false
               }
@@ -110,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Network security.md",
+                "file": "Formule utili.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -127,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Network security.md",
+                "file": "Formule utili.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Network security.md"
+                "file": "Formule utili.md"
               }
             }
           }
@@ -173,10 +173,11 @@
   },
   "active": "870e1488b42e140f",
   "lastOpenFiles": [
+    "Pasted image 20240126110331.png",
+    "Network security.md",
     "Formule utili.md",
     "SCR-20240124-qycp.png",
     "SCR-20240124-qxzg.png",
-    "Network security.md",
     "Wireless.md",
     "Introduzione alle reti di calcolatori.md",
     "SCR-20240119-octo.png",
