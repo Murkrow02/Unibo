@@ -1,7 +1,7 @@
 ### Lunghezza d'onda
 Utile quando si vuole cercare la differenza di fase tra due onde
 $$
-wave_{len}=\frac{e}{freq_{Hz}}=\frac{300.000.000}{freq_{Hz}}
+wavelen_{m}=\frac{e_{m/s}}{freq_{Hz}}=\frac{300.000.000}{freq_{Hz}}
 $$
 Una volta trovata, se abbiamo la distanza percorsa dalle 2 onde (d1 e d2) possiamo fare
 d1-d2 per trovare la differenza. Una volta ottenuta la possiamo dividere per la lunghezza d'onda, se troviamo un valore x.5 allora le onde sono in opposizione di fase
@@ -22,7 +22,7 @@ $$P_{dBm} = 10*log(P_{mW})$$
 $$P_{mW} = 10^{P_{dBm} / 10}$$
 #### Perdita di segnale (sulla terra)
 $$
-db_{loss}= 36.6 + (20 * log_{10}(freq_{Hz})) + (20 * log_{10}(dist_{miles}))
+db_{loss}= 36.6 + (20 * log_{10}(freq_{MHz})) + (20 * log_{10}(dist_{miles}))
 $$
 #### 6db rule
 Ogni qual volta la distanza tra 2 antenne raddoppia, perdiamo 6 decibel di segnale
@@ -50,3 +50,13 @@ $$P_c=n_{subcarr}*symbolrate$$
 Questi simboli rappresentano gli effettivi "bit" o "bit multipli" (in caso di QPSK) riusciamo a trasmettere ogni secondo sul canale
 #### Tabella
 ![[Pasted image 20240126110331.png]]
+
+### DECIMAL TO HEX
+Step-1: First, divide the given number by 16.
+
+Step-2: The remainder left here, will produce the hex value.
+
+Step-3: Take the quotient from above and repeat steps 1-3 till quotient becomes 0.
+
+Step-4: Write all the remainders in reverse order. This will be the Hexadecimal converted value.
+
