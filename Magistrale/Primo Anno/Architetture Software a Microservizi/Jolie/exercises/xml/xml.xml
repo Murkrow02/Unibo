@@ -1,0 +1,22 @@
+<degree>
+	<course>
+      <name>asd</name>
+      <cfu>12</cfu>
+      <professor>
+        <name>Maiz</name>
+        <id>12</id>
+      </professor>
+    </course>
+  	<course>
+      <name>asd</name>
+      <cfu>12</cfu>
+      <professor>
+        <name>Maiz</name>
+        <id>12</id>
+      </professor>
+      <professor>
+        <name>Maiz</name>
+        <id>12</id>
+      </professor>
+    </course>
+</degree>

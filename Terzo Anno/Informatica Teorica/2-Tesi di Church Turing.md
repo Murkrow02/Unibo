@@ -1,5 +1,5 @@
 # Enunciato
-``Se la soluzione di un dato problema può essere calcolata attraverso una procedura algoritmica, allora può essere calcolata da una macchina di Turing``
+>Se la soluzione di un dato problema può essere calcolata attraverso una procedura algoritmica, allora può essere calcolata da una macchina di Turing
 ## Riflessioni
 - Congettura -> non ancora dimostrata
 - Molto probabile che sia vera
@@ -12,7 +12,6 @@
 - Semplicemente la macchina di Turing sarà molto lenta rispetto a questi altri, ma questo non vuol dire nulla e non é rilevante con la definizione
 - Sono importanti le TM in quanto forniscono un modo rigoroso per poter definire un algoritmo
 - Se la tesi CT é vera allora sono capaci di simulare qualsiasi altra macchina di calcolo e possiamo quindi utilizzarle per dimostrare enunciati matematici sulle possibilità e limiti di ciò che é calcolabile
-
 # Variazioni della macchina di Turing
 Sostanzialmente gli scienziati testano un concetto come la sua capacità di rimanere invariato rispetto ai cambiamenti 
 - Cambiando qualcosa si rompe tutto? 
